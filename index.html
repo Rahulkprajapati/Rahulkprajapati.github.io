@@ -149,33 +149,5 @@
     </div>
     <div class="click-me" onclick="showSurprise()">Click Me for a Surprise, my Chotu don!</div>
     <div id="surprise" class="surprise">I LOVE YOU MORE THAN ANYTHING IN THIS WORLD! POM POM 💖😘</div>
-
-    <!-- Marriage Proposal -->
-    <div class="proposal">
-        <p>Will you marry me and be my life forever?</p>
-        <div class="proposal-button" onclick="showConfetti()">Yes, I will!</div>
-    </div>
-
-    <!-- Confetti Animation -->
-    <div id="confetti" class="confetti"></div>
-
-    <script>
-        function showSurprise() {
-            const surpriseElement = document.getElementById('surprise');
-            surpriseElement.style.display = 'block';
-        }
-
-        function showConfetti() {
-            const confettiElement = document.getElementById('confetti');
-            confettiElement.innerHTML = `
-                <style>
-                    .confetti {
-                        background: url('https://imgur.com/H9mFbYU') center/cover no-repeat;
-                    }
-                </style>
-            `;
-            alert("Yay! You've made me the happiest person in the world! 💖😘");
-        }
-    </script>
 </body>
 </html>
