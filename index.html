@@ -91,6 +91,51 @@
             box-shadow: 0 10px 25px rgba(255, 20, 147, 0.2);
         }
         
+        .password-prompt {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.98);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(255, 20, 147, 0.3);
+            z-index: 1000;
+            text-align: center;
+            animation: fadeInUp 0.5s ease-out;
+        }
+        
+        .password-input {
+            padding: 10px 15px;
+            margin: 15px 0;
+            border: 2px solid #FF69B4;
+            border-radius: 8px;
+            font-size: 1rem;
+            width: 200px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .password-input:focus {
+            border-color: #FF1493;
+            box-shadow: 0 0 10px rgba(255, 20, 147, 0.2);
+        }
+        
+        .password-hint {
+            color: #FF69B4;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        
+        .incorrect-password {
+            color: #FF1493;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            display: none;
+        }
+        
         .heart-float {
             position: absolute;
             font-size: 1.5rem;
@@ -308,6 +353,12 @@
     <div class="side-animation left" id="leftAnimation"></div>
     <div class="side-animation right" id="rightAnimation"></div>
     <div class="heart">♥</div>
+    <div class="password-prompt" id="passwordPrompt">
+        <h3>Enter the Password</h3>
+        <input type="password" id="passwordInput" class="password-input" placeholder="Enter password">
+        <div class="password-hint">Hint: fatu ❤️</div>
+        <div class="incorrect-password" id="incorrectPassword">Incorrect password, try again!</div>
+    </div>
     <div class="countdown-container">
         <div class="birthday-decorations">
             <div class="balloon" style="left: 10%; top: 20%;">🎈</div>
@@ -343,8 +394,7 @@
             <h2>✨ My Dearest Love ✨</h2>
             <p style="font-size: 1.2rem; line-height: 1.8; color: #FF1493;">
                 On your special day, I want to tell you how much you mean to me. Your smile brightens my darkest days, 
-                and your love makes every moment magical. You're not just my girlfriend; you're my best friend, my 
-                inspiration, and my greatest blessing. 
+                and your love makes every moment magical. You're my inspiration and my greatest blessing. 
             </p>
             <p style="font-size: 1.2rem; line-height: 1.8; color: #FF1493;">
                 May this birthday bring you all the joy, love, and happiness you deserve. 
@@ -400,24 +450,61 @@
         }
         
         function showBirthdayWish() {
-            const wish = document.getElementById('birthdayWish');
-            wish.style.display = 'block';
+            const passwordPrompt = document.getElementById('passwordPrompt');
+            passwordPrompt.style.display = 'block';
             
-            // Create floating hearts
-            for(let i = 0; i < 10; i++) {
-                setTimeout(() => {
-                    const heart = document.createElement('div');
-                    heart.className = 'heart-float';
-                    heart.innerHTML = '❤️';
-                    heart.style.left = Math.random() * 100 + '%';
-                    document.body.appendChild(heart);
-                    
+            const passwordInput = document.getElementById('passwordInput');
+            const incorrectPassword = document.getElementById('incorrectPassword');
+            
+            passwordInput.value = ''; // Clear previous input
+            incorrectPassword.style.display = 'none';
+            
+            passwordInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    checkPassword();
+                }
+            });
+        }
+        
+        function checkPassword() {
+            const passwordInput = document.getElementById('passwordInput');
+            const incorrectPassword = document.getElementById('incorrectPassword');
+            const passwordPrompt = document.getElementById('passwordPrompt');
+            
+            if (passwordInput.value === 'Motaa') {
+                passwordPrompt.style.display = 'none';
+                const wish = document.getElementById('birthdayWish');
+                wish.style.display = 'block';
+                
+                // Create floating hearts
+                for(let i = 0; i < 10; i++) {
                     setTimeout(() => {
-                        heart.remove();
-                    }, 4000);
-                }, i * 400);
+                        const heart = document.createElement('div');
+                        heart.className = 'heart-float';
+                        heart.innerHTML = '❤️';
+                        heart.style.left = Math.random() * 100 + '%';
+                        document.body.appendChild(heart);
+                        
+                        setTimeout(() => {
+                            heart.remove();
+                        }, 4000);
+                    }, i * 400);
+                }
+            } else {
+                incorrectPassword.style.display = 'block';
+                passwordInput.value = '';
             }
         }
+        
+        // Close password prompt when clicking outside
+        document.addEventListener('click', function(event) {
+            const passwordPrompt = document.getElementById('passwordPrompt');
+            const wishButton = document.querySelector('.wish-button');
+            
+            if (!passwordPrompt.contains(event.target) && event.target !== wishButton) {
+                passwordPrompt.style.display = 'none';
+            }
+        });
 
         function updateCountdown() {
             const targetDate = new Date('November 3, 2025 00:00:00').getTime();
