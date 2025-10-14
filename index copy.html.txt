@@ -15,34 +15,6 @@
             margin: 0;
             overflow-x: hidden;
         }
-        .countdown-container {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(255, 111, 97, 0.5);
-            margin: 20px auto;
-            max-width: 600px;
-            animation: fadeIn 2s ease-in-out;
-        }
-        
-        .countdown-box {
-            display: inline-block;
-            padding: 15px;
-            margin: 10px;
-            background: rgba(211, 47, 47, 0.1);
-            border-radius: 10px;
-        }
-        
-        .countdown-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #d32f2f;
-        }
-        
-        .countdown-label {
-            font-size: 1rem;
-            color: #d32f2f;
-        }
         h1 {
             font-family: 'Great Vibes', cursive;
             font-size: 4rem;
@@ -151,27 +123,6 @@
 <body>
     <h1>My Jaan, My Pride, My Shatabdi ❤️🧿🐥</h1>
     <div class="heart">♥</div>
-    <div class="countdown-container">
-        <h2>Counting down to our special day ❤️</h2>
-        <div id="countdown">
-            <div class="countdown-box">
-                <div id="days" class="countdown-number">00</div>
-                <div class="countdown-label">Days</div>
-            </div>
-            <div class="countdown-box">
-                <div id="hours" class="countdown-number">00</div>
-                <div class="countdown-label">Hours</div>
-            </div>
-            <div class="countdown-box">
-                <div id="minutes" class="countdown-number">00</div>
-                <div class="countdown-label">Minutes</div>
-            </div>
-            <div class="countdown-box">
-                <div id="seconds" class="countdown-number">00</div>
-                <div class="countdown-label">Seconds</div>
-            </div>
-        </div>
-    </div>
     <img src="./rasha.jpg" alt="Our Photo" class="photo" onclick="showSurprise()">
     <div class="love-text">
         <p>
@@ -190,35 +141,6 @@
             const surpriseElement = document.getElementById('surprise');
             surpriseElement.style.display = 'block';
         }
-
-        function updateCountdown() {
-            const targetDate = new Date('November 3, 2025 00:00:00').getTime();
-            
-            function update() {
-                const now = new Date().getTime();
-                const difference = targetDate - now;
-                
-                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-                
-                document.getElementById('days').textContent = days.toString().padStart(2, '0');
-                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-                
-                if (difference < 0) {
-                    clearInterval(timer);
-                    document.getElementById('countdown').innerHTML = "<h3>Our special day has arrived! ❤️</h3>";
-                }
-            }
-            
-            update();
-            const timer = setInterval(update, 1000);
-        }
-        
-        document.addEventListener('DOMContentLoaded', updateCountdown);
     </script>
 </body>
 </html>
