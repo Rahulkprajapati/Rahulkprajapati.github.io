@@ -6,11 +6,90 @@
     <title>My Honey ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #FF1493;
+            --secondary-color: #FF69B4;
+            --light-pink: #FFB6C1;
+            --red: #d32f2f;
+            --white: #fff;
+            --animation-timing: 0.3s ease;
+        }
+
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--secondary-color), var(--light-pink), #FFC0CB, var(--primary-color));
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(255, 20, 147, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid var(--light-pink);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .login-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(255, 20, 147, 0.2);
+        }
+
+        .login-button {
+            background: linear-gradient(145deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .login-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 20, 147, 0.4);
+        }
+
+        .login-error {
+            color: var(--red);
+            margin-top: 15px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .main-content {
+            display: none;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(45deg, #FF69B4, #FFB6C1, #FFC0CB, #FF1493);
+            background: linear-gradient(45deg, var(--secondary-color), var(--light-pink), #FFC0CB, var(--primary-color));
             background-size: 400% 400%;
-            color: #d32f2f;
+            color: var(--red);
             text-align: center;
             padding: 50px;
             margin: 0;
@@ -67,15 +146,50 @@
             50% { transform: translateX(0); }
         }
         
+        /* Common animations */
         @keyframes fadeInUp {
             from {
+                transform: translateY(20px) scale(0.95);
                 opacity: 0;
-                transform: translateY(20px);
             }
             to {
+                transform: translateY(0) scale(1);
                 opacity: 1;
-                transform: translateY(0);
             }
+        }
+
+        @keyframes shimmer {
+            from { transform: translateX(-100%) rotate(45deg); }
+            to { transform: translateX(100%) rotate(45deg); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* Common styles for containers */
+        .glass-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.3);
+            padding: 30px;
+            margin: 20px auto;
+            transition: all var(--animation-timing);
+        }
+
+        /* Common styles for interactive elements */
+        .interactive {
+            cursor: pointer;
+            transition: transform var(--animation-timing), 
+                      box-shadow var(--animation-timing);
+        }
+
+        .interactive:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 20, 147, 0.4);
         }
         
         .wish-button {
@@ -436,8 +550,20 @@
     </style>
 </head>
 <body>
-    <h1>My Jaan, My Pride, My Shatabdi ❤️🧿🐥</h1>
-    <div class="side-animation left" id="leftAnimation"></div>
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-container">
+            <h2>Welcome to Our Special Page ❤️</h2>
+            <p style="color: var(--primary-color);">Please login to view our beautiful memories</p>
+            <input type="text" id="username" class="login-input" placeholder="Username">
+            <input type="password" id="password" class="login-input" placeholder="Password">
+            <button class="login-button" onclick="checkLogin()">Login with Love ❤️</button>
+            <div class="login-error" id="loginError">Incorrect username or password</div>
+        </div>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <h1>My Jaan, My Pride, My Shatabdi ❤️🧿🐥</h1>
+        <div class="side-animation left" id="leftAnimation"></div>
     <div class="side-animation right" id="rightAnimation"></div>
     <div class="password-prompt" id="passwordPrompt">
         <h3>Enter the Password</h3>
@@ -503,82 +629,139 @@
     </div>
     <div class="click-me" onclick="showSurprise()">Click Me for a Surprise, my Chotu don!</div>
     <div id="surprise" class="surprise">I LOVE YOU MORE THAN ANYTHING IN THIS WORLD! POM POM 💖😘</div>
+    </div>
 
     <script>
-        function showSurprise() {
-            const surpriseElement = document.getElementById('surprise');
-            surpriseElement.style.display = 'block';
+        // Authentication constants
+        const AUTH_CREDENTIALS = {
+            username: 'shatabdi',
+            password: 'myjaan'
+        };
+
+        // Cache DOM elements
+        const elements = {
+            surprise: document.getElementById('surprise'),
+            loginOverlay: document.getElementById('loginOverlay'),
+            mainContent: document.getElementById('mainContent'),
+            loginError: document.getElementById('loginError'),
+            passwordPrompt: document.getElementById('passwordPrompt'),
+            passwordInput: document.getElementById('passwordInput'),
+            incorrectPassword: document.getElementById('incorrectPassword'),
+            birthdayWish: document.getElementById('birthdayWish'),
+            countdown: document.getElementById('countdown'),
+            leftAnimation: document.getElementById('leftAnimation'),
+            rightAnimation: document.getElementById('rightAnimation'),
+            wishButton: document.querySelector('.wish-button')
+        };
+
+        // Constants
+        const ANIMATION_DURATION = 4000;
+        const FLOWER_INTERVAL = 300;
+        const PASSWORD = 'Motaa';
+        const TARGET_DATE = new Date('November 3, 2025 00:00:00').getTime();
+
+        function showElement(element) {
+            element.style.display = 'block';
         }
-        
-        function createFlowers() {
-            const flowers = ['🌸', '🌺', '🌹', '🌷', '💐', '🌼'];
-            const leftSide = document.getElementById('leftAnimation');
-            const rightSide = document.getElementById('rightAnimation');
-            
-            function createFlower(side) {
-                const flower = document.createElement('div');
-                flower.className = 'flower';
-                flower.style.left = Math.random() * 100 + '%';
-                flower.style.top = Math.random() * 100 + '%';
-                flower.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
-                flower.style.animation = `fadeInUp ${1 + Math.random() * 2}s infinite`;
-                side.appendChild(flower);
-                
-                setTimeout(() => {
-                    flower.remove();
-                }, 3000);
+
+        function hideElement(element) {
+            element.style.display = 'none';
+        }
+
+        function checkLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === AUTH_CREDENTIALS.username && password === AUTH_CREDENTIALS.password) {
+                hideElement(elements.loginOverlay);
+                showElement(elements.mainContent);
+                // Start animations and countdown after successful login
+                createFlowers();
+                updateCountdown();
+            } else {
+                showElement(elements.loginError);
+                document.getElementById('password').value = '';
             }
-            
-            setInterval(() => {
-                createFlower(leftSide);
-                createFlower(rightSide);
-            }, 300);
+        }
+
+        // Handle Enter key in login form
+        document.getElementById('password').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                checkLogin();
+            }
+        });
+
+        // Hide login error when typing
+        document.getElementById('username').addEventListener('input', function() {
+            hideElement(elements.loginError);
+        });
+        document.getElementById('password').addEventListener('input', function() {
+            hideElement(elements.loginError);
+        });
+
+        function showSurprise() {
+            showElement(elements.surprise);
         }
         
+        const FLOWERS = ['🌸', '🌺', '🌹', '🌷', '💐', '🌼'];
+        
+        function getRandomFromArray(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        function createFlower(side) {
+            const flower = document.createElement('div');
+            flower.className = 'flower';
+            flower.style.left = Math.random() * 100 + '%';
+            flower.style.top = Math.random() * 100 + '%';
+            flower.innerHTML = getRandomFromArray(FLOWERS);
+            flower.style.animation = `fadeInUp ${1 + Math.random() * 2}s infinite`;
+            side.appendChild(flower);
+            
+            setTimeout(() => flower.remove(), 3000);
+        }
+
+        function createFlowers() {
+            const createFlowersForBothSides = () => {
+                createFlower(elements.leftAnimation);
+                createFlower(elements.rightAnimation);
+            };
+            
+            createFlowersForBothSides();
+            setInterval(createFlowersForBothSides, FLOWER_INTERVAL);
+        }
+        
+        function createFloatingElement(className, content) {
+            const element = document.createElement('div');
+            element.className = className;
+            element.innerHTML = content;
+            element.style.left = Math.random() * 100 + '%';
+            document.body.appendChild(element);
+            
+            setTimeout(() => element.remove(), ANIMATION_DURATION);
+            return element;
+        }
+
         function showBirthdayWish() {
-            const passwordPrompt = document.getElementById('passwordPrompt');
-            passwordPrompt.style.display = 'block';
-            
-            const passwordInput = document.getElementById('passwordInput');
-            const incorrectPassword = document.getElementById('incorrectPassword');
-            
-            passwordInput.value = ''; // Clear previous input
-            incorrectPassword.style.display = 'none';
-            
-            passwordInput.addEventListener('keyup', function(event) {
-                if (event.key === 'Enter') {
-                    checkPassword();
-                }
-            });
+            showElement(elements.passwordPrompt);
+            elements.passwordInput.value = '';
+            hideElement(elements.incorrectPassword);
         }
         
         function checkPassword() {
-            const passwordInput = document.getElementById('passwordInput');
-            const incorrectPassword = document.getElementById('incorrectPassword');
-            const passwordPrompt = document.getElementById('passwordPrompt');
-            
-            if (passwordInput.value === 'Motaa') {
-                passwordPrompt.style.display = 'none';
-                const wish = document.getElementById('birthdayWish');
-                wish.style.display = 'block';
+            if (elements.passwordInput.value === PASSWORD) {
+                hideElement(elements.passwordPrompt);
+                showElement(elements.birthdayWish);
                 
-                // Create floating hearts
+                // Create floating hearts with optimized animation
                 for(let i = 0; i < 10; i++) {
                     setTimeout(() => {
-                        const heart = document.createElement('div');
-                        heart.className = 'heart-float';
-                        heart.innerHTML = '❤️';
-                        heart.style.left = Math.random() * 100 + '%';
-                        document.body.appendChild(heart);
-                        
-                        setTimeout(() => {
-                            heart.remove();
-                        }, 4000);
+                        createFloatingElement('heart-float', '❤️');
                     }, i * 400);
                 }
             } else {
-                incorrectPassword.style.display = 'block';
-                passwordInput.value = '';
+                showElement(elements.incorrectPassword);
+                elements.passwordInput.value = '';
             }
         }
         
@@ -631,9 +814,10 @@
             const timer = setInterval(update, 1000);
         }
         
+        // Initialize the page
         document.addEventListener('DOMContentLoaded', () => {
-            updateCountdown();
-            createFlowers();
+            hideElement(elements.mainContent);
+            showElement(elements.loginOverlay);
         });
     </script>
 </body>
