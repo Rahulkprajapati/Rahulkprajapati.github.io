@@ -15,6 +15,102 @@
             margin: 0;
             overflow-x: hidden;
         }
+        
+        .side-animation {
+            position: fixed;
+            top: 0;
+            height: 100%;
+            width: 150px;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .side-animation.left {
+            left: 0;
+            animation: floatLeft 3s infinite ease-in-out;
+        }
+        
+        .side-animation.right {
+            right: 0;
+            animation: floatRight 3s infinite ease-in-out;
+        }
+        
+        .flower {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0;
+        }
+        
+        @keyframes floatLeft {
+            0%, 100% { transform: translateX(-10px); }
+            50% { transform: translateX(0); }
+        }
+        
+        @keyframes floatRight {
+            0%, 100% { transform: translateX(10px); }
+            50% { transform: translateX(0); }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .wish-button {
+            background: linear-gradient(145deg, #FF69B4, #FF1493);
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.3);
+        }
+        
+        .wish-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 20, 147, 0.4);
+        }
+        
+        .birthday-wish {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 20px auto;
+            max-width: 600px;
+            animation: fadeInUp 1s ease-out;
+            box-shadow: 0 10px 25px rgba(255, 20, 147, 0.2);
+        }
+        
+        .heart-float {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: floatUp 4s linear infinite;
+            opacity: 0;
+        }
+        
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1);
+                opacity: 0;
+            }
+        }
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-20px); }
@@ -209,6 +305,8 @@
 </head>
 <body>
     <h1>My Jaan, My Pride, My Shatabdi ❤️🧿🐥</h1>
+    <div class="side-animation left" id="leftAnimation"></div>
+    <div class="side-animation right" id="rightAnimation"></div>
     <div class="heart">♥</div>
     <div class="countdown-container">
         <div class="birthday-decorations">
@@ -240,6 +338,22 @@
                 <div class="countdown-label">Seconds</div>
             </div>
         </div>
+        <button class="wish-button" onclick="showBirthdayWish()">Click for a Special Birthday Wish 🎁</button>
+        <div id="birthdayWish" class="birthday-wish">
+            <h2>✨ My Dearest Love ✨</h2>
+            <p style="font-size: 1.2rem; line-height: 1.8; color: #FF1493;">
+                On your special day, I want to tell you how much you mean to me. Your smile brightens my darkest days, 
+                and your love makes every moment magical. You're not just my girlfriend; you're my best friend, my 
+                inspiration, and my greatest blessing. 
+            </p>
+            <p style="font-size: 1.2rem; line-height: 1.8; color: #FF1493;">
+                May this birthday bring you all the joy, love, and happiness you deserve. 
+                Thank you for being the most amazing person in my life. ❤️
+            </p>
+            <div style="font-size: 2rem; margin-top: 20px;">
+                🎂 🎈 🎁 💝 🌹
+            </div>
+        </div>
     </div>
     <img src="./rasha.jpg" alt="Our Photo" class="photo" onclick="showSurprise()">
     <div class="love-text">
@@ -258,6 +372,51 @@
         function showSurprise() {
             const surpriseElement = document.getElementById('surprise');
             surpriseElement.style.display = 'block';
+        }
+        
+        function createFlowers() {
+            const flowers = ['🌸', '🌺', '🌹', '🌷', '💐', '🌼'];
+            const leftSide = document.getElementById('leftAnimation');
+            const rightSide = document.getElementById('rightAnimation');
+            
+            function createFlower(side) {
+                const flower = document.createElement('div');
+                flower.className = 'flower';
+                flower.style.left = Math.random() * 100 + '%';
+                flower.style.top = Math.random() * 100 + '%';
+                flower.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
+                flower.style.animation = `fadeInUp ${1 + Math.random() * 2}s infinite`;
+                side.appendChild(flower);
+                
+                setTimeout(() => {
+                    flower.remove();
+                }, 3000);
+            }
+            
+            setInterval(() => {
+                createFlower(leftSide);
+                createFlower(rightSide);
+            }, 300);
+        }
+        
+        function showBirthdayWish() {
+            const wish = document.getElementById('birthdayWish');
+            wish.style.display = 'block';
+            
+            // Create floating hearts
+            for(let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart-float';
+                    heart.innerHTML = '❤️';
+                    heart.style.left = Math.random() * 100 + '%';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 4000);
+                }, i * 400);
+            }
         }
 
         function updateCountdown() {
@@ -299,7 +458,10 @@
             const timer = setInterval(update, 1000);
         }
         
-        document.addEventListener('DOMContentLoaded', updateCountdown);
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCountdown();
+            createFlowers();
+        });
     </script>
 </body>
 </html>
