@@ -569,6 +569,9 @@
         <h3>Enter the Password</h3>
         <input type="password" id="passwordInput" class="password-input" placeholder="Enter password">
         <div class="password-hint">Hint: fatu ❤️</div>
+        <button onclick="checkPassword()" class="wish-button" style="font-size: 1rem; padding: 10px 20px; margin: 15px 0;">
+            Unlock Birthday Wish 🎁
+        </button>
         <div class="incorrect-password" id="incorrectPassword">Incorrect password, try again!</div>
     </div>
     <div class="countdown-container">
@@ -746,6 +749,17 @@
             showElement(elements.passwordPrompt);
             elements.passwordInput.value = '';
             hideElement(elements.incorrectPassword);
+
+            // Remove any existing event listener
+            elements.passwordInput.removeEventListener('keyup', handlePasswordKeyup);
+            // Add new event listener
+            elements.passwordInput.addEventListener('keyup', handlePasswordKeyup);
+        }
+        
+        function handlePasswordKeyup(event) {
+            if (event.key === 'Enter') {
+                checkPassword();
+            }
         }
         
         function checkPassword() {
@@ -764,6 +778,11 @@
                 elements.passwordInput.value = '';
             }
         }
+
+        // Add a button click handler for the password prompt
+        elements.passwordPrompt.querySelector('.password-input').addEventListener('input', function() {
+            hideElement(elements.incorrectPassword);
+        });
         
         // Close password prompt when clicking outside
         document.addEventListener('click', function(event) {
