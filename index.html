@@ -621,7 +621,7 @@
             <div class="sparkle" style="right: 35%; top: 60%;"></div>
             <div class="sparkle" style="left: 40%; bottom: 30%;"></div>
         </div>
-        <h2>✨ Counting Down to My Love's Birthday ✨</h2>
+    <h2>✨ Happy Birthday to my Love ✨</h2>
         <h3>🎂 November 3rd, 2025 🎂</h3>
         <div id="countdown">
             <div class="countdown-box">
@@ -645,20 +645,12 @@
         <div id="birthdayWish" class="birthday-wish">
             <h2>✨ My Dearest Love ✨</h2>
             <p style="font-size: 1.2rem; line-height: 1.8; color: #FF1493;">
-                On your special day, I want to tell you how much you mean to me. Your smile brightens my darkest days, 
-                and your love makes every moment magical. You're my inspiration and my greatest blessing. 
-            </p>
-            <p style="font-size: 1.2rem; line-height: 1.8; color: #FF1493;">
-                May this birthday bring you all the joy, love, and happiness you deserve. 
-                Thank you for being the most amazing person in my life. ❤️
+                On your special day, I want to tell you how much you mean to me. Your smile lights up my world, 
+                and your love makes every moment sweeter. You're my inspiration and my greatest blessing. ❤️✨
             </p>
             <p style="font-size: 1.15rem; line-height: 1.9; color: #FF1493; margin-top: 10px;">
-                We've had our moments times when we argued and pushed against each other. But every disagreement
-                only taught me more about you and how much you matter to me. Our fights didn't weaken us; they
-                revealed the depth of our bond, showed me your strength, and made our love more honest and real.
-                Those difficult moments made me realize how precious you are, and how grateful I am to share a life
-                where even the hard days bring us closer. I love you more because of all of it — the laughter, the
-                the quiet understandings, and yes, even the storms that remind me you're irreplaceable.
+                We've grown through our ups and downs — every challenge made us stronger and closer. I cherish you, 
+                today and always. 💕🎂🎈
             </p>
             <div style="font-size: 2rem; margin-top: 20px;">
                 🎂 🎈 🎁 💝 🌹
@@ -740,6 +732,8 @@
                 // Start animations and countdown after successful login
                 createFlowers();
                 updateCountdown();
+                // start gentle confetti celebration on login if available
+                if (typeof window.startConfetti === 'function') window.startConfetti();
             } else {
                 showElement(elements.loginError);
                 document.getElementById('password').value = '';
@@ -817,6 +811,8 @@
                         createFloatingElement('heart-float', '❤️');
                     }, i * 400);
                 }
+                // burst confetti for the special reveal
+                if (typeof window.burstConfetti === 'function') window.burstConfetti();
             } else {
                 showElement(elements.incorrectPassword);
                 elements.passwordInput.value = '';
