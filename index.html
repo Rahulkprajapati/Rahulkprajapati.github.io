@@ -489,14 +489,24 @@
             animation: fadeIn 0.5s ease-in-out;
             box-shadow: 0 0 20px rgba(211, 47, 47, 0.8);
         }
-        /* Center gallery for three images */
+        /* Continuous left→right scrolling gallery */
         .gallery {
+            overflow: hidden;
+            width: 100%;
             display: flex;
             justify-content: center;
+            margin: 20px auto;
+        }
+
+        .gallery-track {
+            display: flex;
             gap: 20px;
             align-items: center;
-            margin: 20px auto;
-            max-width: 900px;
+            animation: scrollRight 12s linear infinite;
+        }
+
+        .gallery-track:hover {
+            animation-play-state: paused;
         }
 
         .gallery img {
@@ -505,17 +515,13 @@
             object-fit: cover;
             border-radius: 18px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-            transform: translateX(-100%);
-            animation: slideIn 1s ease forwards;
+            flex-shrink: 0;
+            transform: translateZ(0);
         }
 
-        .gallery img:nth-child(1) { animation-delay: 0.15s; }
-        .gallery img:nth-child(2) { animation-delay: 0.35s; }
-        .gallery img:nth-child(3) { animation-delay: 0.55s; }
-
-        @keyframes slideIn {
-            from { transform: translateX(-40px) scale(0.95); opacity: 0; }
-            to { transform: translateX(0) scale(1); opacity: 1; }
+        @keyframes scrollRight {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(50%); }
         }
         .click-me {
             font-size: 1.2rem;
@@ -644,16 +650,34 @@
                 May this birthday bring you all the joy, love, and happiness you deserve. 
                 Thank you for being the most amazing person in my life. ❤️
             </p>
+            <p style="font-size: 1.15rem; line-height: 1.9; color: #c2185b; margin-top: 10px;">
+                We've had our moments — times when we argued and pushed against each other. But every disagreement
+                only taught me more about you and how much you matter to me. Our fights didn't weaken us; they
+                revealed the depth of our bond, showed me your strength, and made our love more honest and real.
+                Those difficult moments made me realize how precious you are, and how grateful I am to share a life
+                where even the hard days bring us closer. I love you more because of all of it — the laughter, the
+                the quiet understandings, and yes, even the storms that remind me you're irreplaceable.
+            </p>
             <div style="font-size: 2rem; margin-top: 20px;">
                 🎂 🎈 🎁 💝 🌹
             </div>
         </div>
     </div>
-    <!-- Center gallery: three images (left → center → right) -->
-    <div class="gallery" id="centerGallery">
-        <img src="./sha.jpg" alt="Photo 1" class="gallery-img">
-        <img src="./sha-1.jpg" alt="Photo 2" class="gallery-img">
-        <img src="./sha-1.jpg" alt="Photo 3" class="gallery-img">
+    <!-- Continuous scrolling gallery: images scroll from left → right -->
+    <div class="gallery" id="centerGallery" aria-label="Photo gallery">
+        <div class="gallery-track">
+            <img src="./sha.jpg" alt="Photo 1" class="gallery-img">
+            <img src="./sha-1.jpg" alt="Photo 2" class="gallery-img">
+            <img src="./sha-2.jpg" alt="Photo 3" class="gallery-img">
+            <img src="./sha-3.jpg" alt="Photo 4" class="gallery-img">
+            <img src="./sha-4.jpg" alt="Photo 5" class="gallery-img">
+            <!-- duplicate set for seamless looping -->
+            <img src="./sha.jpg" alt="Photo 1" class="gallery-img">
+            <img src="./sha-1.jpg" alt="Photo 2" class="gallery-img">
+            <img src="./sha-2.jpg" alt="Photo 3" class="gallery-img">
+            <img src="./sha-3.jpg" alt="Photo 4" class="gallery-img">
+            <img src="./sha-4.jpg" alt="Photo 5" class="gallery-img">
+        </div>
     </div>
     <div class="love-text">
         <p>
