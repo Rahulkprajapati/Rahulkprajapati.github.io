@@ -609,6 +609,8 @@
         </button>
         <div class="incorrect-password" id="incorrectPassword">Incorrect password, try again!</div>
     </div>
+    <!-- Confetti canvas overlay -->
+    <canvas id="confettiCanvas" style="position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:9998;"></canvas>
     <div class="countdown-container">
         <div class="birthday-decorations">
             <div class="balloon" style="left: 10%; top: 20%;">🎈</div>
@@ -650,8 +652,8 @@
                 May this birthday bring you all the joy, love, and happiness you deserve. 
                 Thank you for being the most amazing person in my life. ❤️
             </p>
-            <p style="font-size: 1.15rem; line-height: 1.9; color: #c2185b; margin-top: 10px;">
-                We've had our moments — times when we argued and pushed against each other. But every disagreement
+            <p style="font-size: 1.15rem; line-height: 1.9; color: #FF1493; margin-top: 10px;">
+                We've had our moments times when we argued and pushed against each other. But every disagreement
                 only taught me more about you and how much you matter to me. Our fights didn't weaken us; they
                 revealed the depth of our bond, showed me your strength, and made our love more honest and real.
                 Those difficult moments made me realize how precious you are, and how grateful I am to share a life
@@ -880,6 +882,93 @@
             hideElement(elements.mainContent);
             showElement(elements.loginOverlay);
         });
+
+        /* Confetti / celebration animation */
+        (function() {
+            const canvas = document.getElementById('confettiCanvas');
+            const ctx = canvas.getContext('2d');
+            let confettiParticles = [];
+            let confettiTimer = null;
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            function random(min, max) { return Math.random() * (max - min) + min; }
+
+            function createParticle(x, y) {
+                return {
+                    x, y,
+                    size: random(6, 14),
+                    color: `hsl(${Math.floor(random(0,360))},85%,60%)`,
+                    velocityX: random(-1.5, 1.5),
+                    velocityY: random(-6, -2),
+                    rotation: random(0, 360),
+                    rotationSpeed: random(-10, 10),
+                    life: 0,
+                    ttl: random(60, 140)
+                };
+            }
+
+            function render() {
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                for (let i = confettiParticles.length -1; i >=0; i--) {
+                    const p = confettiParticles[i];
+                    p.life++;
+                    p.x += p.velocityX;
+                    p.y += p.velocityY + (p.life * 0.03);
+                    p.velocityY += 0.05; // gravity
+                    p.rotation += p.rotationSpeed * 0.1;
+
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rotation * Math.PI/180);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size * 0.6);
+                    ctx.restore();
+
+                    if (p.life > p.ttl || p.y > canvas.height + 50) confettiParticles.splice(i,1);
+                }
+            }
+
+            function startConfetti() {
+                if (confettiTimer) return;
+                confettiTimer = setInterval(() => {
+                    // spawn few particles from top center moving right
+                    const count = 6;
+                    for (let i=0;i<count;i++) {
+                        const x = random(canvas.width*0.3, canvas.width*0.7);
+                        const y = -10;
+                        confettiParticles.push(createParticle(x, y));
+                    }
+                    render();
+                }, 120);
+            }
+
+            function stopConfetti() {
+                clearInterval(confettiTimer);
+                confettiTimer = null;
+            }
+
+            function burstConfetti() {
+                // big burst
+                for (let i=0;i<120;i++) {
+                    const x = canvas.width / 2 + random(-200,200);
+                    const y = canvas.height / 3 + random(-50,50);
+                    confettiParticles.push(createParticle(x,y));
+                }
+                // single render to show burst immediately
+                render();
+            }
+
+            // expose functions to main scope
+            window.startConfetti = startConfetti;
+            window.stopConfetti = stopConfetti;
+            window.burstConfetti = burstConfetti;
+        })();
     </script>
 </body>
 </html>
