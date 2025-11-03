@@ -622,25 +622,7 @@
             <div class="sparkle" style="left: 40%; bottom: 30%;"></div>
         </div>
     <h2>✨ Happy Birthday to my Love ✨</h2>
-        <h3>🎂 November 3rd, 2025 🎂</h3>
-        <div id="countdown">
-            <div class="countdown-box">
-                <div id="days" class="countdown-number">00</div>
-                <div class="countdown-label">Days</div>
-            </div>
-            <div class="countdown-box">
-                <div id="hours" class="countdown-number">00</div>
-                <div class="countdown-label">Hours</div>
-            </div>
-            <div class="countdown-box">
-                <div id="minutes" class="countdown-number">00</div>
-                <div class="countdown-label">Minutes</div>
-            </div>
-            <div class="countdown-box">
-                <div id="seconds" class="countdown-number">00</div>
-                <div class="countdown-label">Seconds</div>
-            </div>
-        </div>
+        <!-- Countdown removed as requested -->
     <!-- Wish button removed; message displays automatically below -->
         <div id="birthdayWish" class="birthday-wish">
             <h2>✨ My Dearest Love ✨</h2>
@@ -703,16 +685,14 @@
             passwordInput: document.getElementById('passwordInput'),
             incorrectPassword: document.getElementById('incorrectPassword'),
             birthdayWish: document.getElementById('birthdayWish'),
-            countdown: document.getElementById('countdown'),
             leftAnimation: document.getElementById('leftAnimation'),
             rightAnimation: document.getElementById('rightAnimation')
         };
 
         // Constants
-        const ANIMATION_DURATION = 4000;
-        const FLOWER_INTERVAL = 300;
-        const PASSWORD = 'Motaa';
-        const TARGET_DATE = new Date('November 3, 2025 00:00:00').getTime();
+    const ANIMATION_DURATION = 4000;
+    const FLOWER_INTERVAL = 300;
+    const PASSWORD = 'Motaa';
 
         function showElement(element) {
             element.style.display = 'block';
@@ -729,9 +709,8 @@
             if (username === AUTH_CREDENTIALS.username && password === AUTH_CREDENTIALS.password) {
                 hideElement(elements.loginOverlay);
                 showElement(elements.mainContent);
-                // Start animations and countdown after successful login
+                // Start animations after successful login
                 createFlowers();
-                updateCountdown();
                 // start gentle confetti celebration on login if available
                 if (typeof window.startConfetti === 'function') window.startConfetti();
             } else {
@@ -834,44 +813,7 @@
             }
         });
 
-        function updateCountdown() {
-            const targetDate = new Date('November 3, 2025 00:00:00').getTime();
-            
-            function update() {
-                const now = new Date().getTime();
-                const difference = targetDate - now;
-                
-                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-                
-                document.getElementById('days').textContent = days.toString().padStart(2, '0');
-                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-                
-                if (difference < 0) {
-                    clearInterval(timer);
-                    document.getElementById('countdown').innerHTML = `
-                        <div style="font-size: 2.5rem; color: #FF1493; margin: 20px;">
-                            🎉 Happy Birthday, My Love! 🎉
-                            <br>
-                            <span style="font-size: 1.8rem; color: #FF69B4;">
-                                May your day be as beautiful as your smile and as sweet as your heart! ❤️ 
-                            </span>
-                            <br>
-                            <span style="font-size: 3rem; margin-top: 20px;">
-                                🎂 🎈 🎁 💝
-                            </span>
-                        </div>
-                    `;
-                }
-            }
-            
-            update();
-            const timer = setInterval(update, 1000);
-        }
+        /* Countdown removed — function intentionally deleted */
         
         // Initialize the page
         document.addEventListener('DOMContentLoaded', () => {
