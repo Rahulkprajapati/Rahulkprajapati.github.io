@@ -105,24 +105,10 @@ const About = () => {
                     </div>
                 </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="max-w-3xl mx-auto">
                     <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5 }}
-                        viewport={{ once: true }}
-                        className="bg-gray-50 dark:bg-gray-800 p-8 rounded-xl shadow-md"
-                    >
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Education</h3>
-                        <div className="mb-4">
-                            <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200">B.Tech in Electronics and Communication</h4>
-                            <p className="text-blue-600 dark:text-blue-400">KIET Group of Institutions</p>
-                            <p className="text-gray-500 dark:text-gray-400">March 2022 | CGPA: 7.9</p>
-                        </div>
-                    </motion.div>
-                    <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
                         viewport={{ once: true }}
                         className="bg-gray-50 dark:bg-gray-800 p-8 rounded-xl shadow-md"
