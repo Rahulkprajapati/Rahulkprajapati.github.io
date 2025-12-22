@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import profileImage from '../assets/profile.jpg';
 
 const Hero = () => {
     return (
@@ -49,10 +50,11 @@ const Hero = () => {
                         transition={{ duration: 0.5 }}
                         className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white dark:border-gray-700 shadow-2xl"
                     >
-                        {/* Placeholder for user image */}
-                        <div className="w-full h-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center text-gray-500 dark:text-gray-400 text-4xl">
-                            RP
-                        </div>
+                        <img
+                            src={profileImage}
+                            alt="Rahul Prajapati"
+                            className="w-full h-full object-cover"
+                        />
                     </motion.div>
                 </div>
             </div>
