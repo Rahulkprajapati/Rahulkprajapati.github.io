@@ -1,8 +1,26 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaEnvelope, FaGithub, FaLinkedin, FaTwitter, FaMobileAlt } from 'react-icons/fa';
+import { FaEnvelope, FaGithub, FaLinkedin, FaTwitter, FaMobileAlt, FaMedium, FaPaperPlane } from 'react-icons/fa';
 
 const Contact = () => {
+    const [formData, setFormData] = React.useState({
+        name: '',
+        email: '',
+        message: ''
+    });
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.id]: e.target.value });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const { name, email, message } = formData;
+        const subject = `Portfolio Contact from ${name}`;
+        const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${message}`;
+        window.location.href = `mailto:rahulkpkprajapati147@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+    };
+
     return (
         <section id="contact" className="py-20 bg-white dark:bg-gray-900">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -27,12 +45,15 @@ const Contact = () => {
                         viewport={{ once: true }}
                         className="w-full md:w-1/2 bg-gray-50 dark:bg-gray-800 p-8 rounded-xl shadow-lg"
                     >
-                        <form className="space-y-6">
+                        <form className="space-y-6" onSubmit={handleSubmit}>
                             <div>
                                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
                                 <input
                                     type="text"
                                     id="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    required
                                     className="mt-1 block w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-white"
                                     placeholder="Your Name"
                                 />
@@ -42,6 +63,9 @@ const Contact = () => {
                                 <input
                                     type="email"
                                     id="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    required
                                     className="mt-1 block w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-white"
                                     placeholder="your.email@example.com"
                                 />
@@ -51,6 +75,9 @@ const Contact = () => {
                                 <textarea
                                     id="message"
                                     rows="4"
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                    required
                                     className="mt-1 block w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-white"
                                     placeholder="Your message..."
                                 ></textarea>
@@ -99,8 +126,8 @@ const Contact = () => {
                                 <a href="https://linkedin.com/in/rahulkumarprajapati" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                                     <FaLinkedin size={32} />
                                 </a>
-                                <a href="https://medium.com/@rahulprajapti" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                                    <FaTwitter size={32} /> {/* Using Twitter icon for Medium as placeholder or I should import FaMedium */}
+                                <a href="https://medium.com/@rahulkprajapati" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                    <FaMedium size={32} />
                                 </a>
                             </div>
                         </div>

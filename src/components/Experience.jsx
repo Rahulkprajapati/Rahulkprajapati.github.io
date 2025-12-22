@@ -1,5 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import alteryxIcon from '../assets/alteryx-icon.png';
+import airasiaIcon from '../assets/airasia-icon.png';
+import searceIcon from '../assets/searce-icon.png';
+import zeotapIcon from '../assets/zeotap-icon.jpeg';
+import { FaBuilding } from 'react-icons/fa';
 
 const Experience = () => {
     const experiences = [
@@ -8,6 +13,7 @@ const Experience = () => {
             role: 'Cloud Engineer',
             period: 'Jun 2024 - Present',
             location: 'Bangalore, IN',
+            icon: alteryxIcon,
             description: [
                 'Automated multi-cloud infrastructure (GCP, AWS, Azure) across data, control, and management planes, reducing manual operations by 70%.',
                 'Built 30+ Terraform modules and CI/CD pipelines for infra provisioning, boosting deployment speed by 3x.',
@@ -23,6 +29,7 @@ const Experience = () => {
             role: 'DevOps Engineer',
             period: 'Nov 2023 - May 2024',
             location: 'Bangalore, IN',
+            icon: zeotapIcon,
             description: [
                 'Developed and implemented a system monitoring and alerting tool that reduced system downtime by 25% using New Relic, Grafana, and Google Managed Prometheus.',
                 'Implemented CI/CD pipelines with CircleCI and Harness to streamline artifact and workload builds.',
@@ -34,6 +41,7 @@ const Experience = () => {
             role: 'Software Engineer DevOps',
             period: 'April 2022 - Oct 2023',
             location: 'Bangalore, IN',
+            icon: airasiaIcon,
             description: [
                 'Designed new architecture for the flight’s Infra to achieve a 10X scaling strategy.',
                 'Enabled GitLab CI for builds, artifacts, Kubernetes deployments, and end-to-end automation.',
@@ -47,6 +55,7 @@ const Experience = () => {
             role: 'Cloud Engineer',
             period: 'Aug 2021 – March 2022',
             location: 'Mumbai, IN',
+            icon: searceIcon,
             description: [
                 'Developed infrastructure as code using Terraform with a fully modularized approach.',
                 'Built networking infrastructure, GKE clusters, load balancers, MIG, databases, and IAM.',
@@ -80,11 +89,20 @@ const Experience = () => {
                             className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg border-l-4 border-blue-600 dark:border-blue-400"
                         >
                             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
-                                <div>
-                                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{exp.role}</h3>
-                                    <p className="text-lg text-blue-600 dark:text-blue-400 font-medium">{exp.company}</p>
+                                <div className="flex items-center gap-4">
+                                    {exp.icon ? (
+                                        <img src={exp.icon} alt={exp.company} className="w-12 h-12 object-contain rounded-full bg-white p-1" />
+                                    ) : (
+                                        <div className="w-12 h-12 flex items-center justify-center bg-blue-100 dark:bg-blue-900 rounded-full text-blue-600 dark:text-blue-400">
+                                            <FaBuilding size={24} />
+                                        </div>
+                                    )}
+                                    <div>
+                                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{exp.role}</h3>
+                                        <p className="text-lg text-blue-600 dark:text-blue-400 font-medium">{exp.company}</p>
+                                    </div>
                                 </div>
-                                <div className="text-gray-500 dark:text-gray-400 mt-2 md:mt-0 text-sm md:text-base">
+                                <div className="text-gray-500 dark:text-gray-400 mt-2 md:mt-0 text-sm md:text-base ml-16 md:ml-0">
                                     <p>{exp.period}</p>
                                     <p>{exp.location}</p>
                                 </div>
