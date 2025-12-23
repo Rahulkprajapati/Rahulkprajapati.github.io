@@ -88,7 +88,7 @@ const Blogs = () => {
 
                 {loading && (
                     <div className="flex justify-center items-center h-64">
-                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-cyan-500"></div>
                     </div>
                 )}
 
@@ -96,7 +96,7 @@ const Blogs = () => {
                     <div className="text-center mb-8">
                         <p className="text-yellow-600 dark:text-yellow-400">{error}</p>
                         <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                            Check my <a href="https://medium.com/@rahulkprajapati" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Medium Profile</a> for all articles.
+                            Check my <a href="https://medium.com/@rahulkprajapati" target="_blank" rel="noopener noreferrer" className="underline hover:text-cyan-500">Medium Profile</a> for all articles.
                         </p>
                     </div>
                 )}
@@ -131,11 +131,11 @@ const Blogs = () => {
                                             <span>{new Date(blog.pubDate).toLocaleDateString()}</span>
                                             <FaMedium className="text-gray-400" />
                                         </div>
-                                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
+                                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-colors line-clamp-2">
                                             {blog.title}
                                         </h3>
                                         <div className="mt-auto pt-4">
-                                            <span className="text-blue-600 dark:text-blue-400 font-medium hover:underline">Read on Medium &rarr;</span>
+                                            <span className="text-cyan-500 dark:text-cyan-400 font-medium hover:underline">Read on Medium &rarr;</span>
                                         </div>
                                     </div>
                                 </motion.a>

@@ -4,7 +4,6 @@ import alteryxIcon from '../assets/alteryx-icon.png';
 import airasiaIcon from '../assets/airasia-icon.png';
 import searceIcon from '../assets/searce-icon.png';
 import zeotapIcon from '../assets/zeotap-icon.jpeg';
-import { FaBuilding } from 'react-icons/fa';
 
 const Experience = () => {
     const experiences = [
@@ -43,7 +42,7 @@ const Experience = () => {
             location: 'Bangalore, IN',
             icon: airasiaIcon,
             description: [
-                'Designed new architecture for the flight’s Infra to achieve a 10X scaling strategy.',
+                'Designed new architecture for the flight\'s Infra to achieve a 10X scaling strategy.',
                 'Enabled GitLab CI for builds, artifacts, Kubernetes deployments, and end-to-end automation.',
                 'Implemented Multi-cluster architecture to support canary traffic and HA.',
                 'Migrated applications from GKE Standard to GKE Autopilot to reduce costs. Introduced ASM (Istio).',
@@ -65,53 +64,74 @@ const Experience = () => {
     ];
 
     return (
-        <section id="experience" className="py-20 bg-gray-50 dark:bg-gray-800">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section id="experience" className="py-20 bg-white dark:bg-gray-900">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                     viewport={{ once: true }}
-                    className="text-center mb-12"
+                    className="text-center mb-16"
                 >
                     <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Work Experience</h2>
                     <p className="text-xl text-gray-600 dark:text-gray-300">My professional journey in Cloud and DevOps.</p>
                 </motion.div>
 
-                <div className="space-y-12">
+                {/* Timeline */}
+                <div className="relative">
+                    {/* Timeline line */}
+                    <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-cyan-500 via-cyan-400 to-cyan-500"></div>
+
                     {experiences.map((exp, index) => (
                         <motion.div
                             key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
                             viewport={{ once: true }}
-                            className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg border-l-4 border-blue-600 dark:border-blue-400"
+                            className={`relative mb-12 md:mb-16 ${index % 2 === 0 ? 'md:pr-1/2 md:text-right' : 'md:pl-1/2 md:text-left'}`}
                         >
-                            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
-                                <div className="flex items-center gap-4">
-                                    {exp.icon ? (
-                                        <img src={exp.icon} alt={exp.company} className="w-12 h-12 object-contain rounded-full bg-white p-1" />
-                                    ) : (
-                                        <div className="w-12 h-12 flex items-center justify-center bg-blue-100 dark:bg-blue-900 rounded-full text-blue-600 dark:text-blue-400">
-                                            <FaBuilding size={24} />
+                            {/* Timeline dot */}
+                            <div className="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-cyan-500 rounded-full border-4 border-white dark:border-gray-900 shadow-lg z-10"></div>
+
+                            {/* Content card */}
+                            <div className={`ml-20 md:ml-0 ${index % 2 === 0 ? 'md:mr-12' : 'md:ml-12'}`}>
+                                <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+                                    {/* Company header */}
+                                    <div className="flex items-center space-x-4 mb-4">
+                                        <img
+                                            src={exp.icon}
+                                            alt={exp.company}
+                                            className="w-12 h-12 rounded-lg object-contain bg-white p-1"
+                                        />
+                                        <div className="flex-1">
+                                            <h3 className="text-xl font-bold text-gray-900 dark:text-white">{exp.company}</h3>
+                                            <p className="text-cyan-500 font-semibold">{exp.role}</p>
                                         </div>
-                                    )}
-                                    <div>
-                                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{exp.role}</h3>
-                                        <p className="text-lg text-blue-600 dark:text-blue-400 font-medium">{exp.company}</p>
                                     </div>
-                                </div>
-                                <div className="text-gray-500 dark:text-gray-400 mt-2 md:mt-0 text-sm md:text-base ml-16 md:ml-0">
-                                    <p>{exp.period}</p>
-                                    <p>{exp.location}</p>
+
+                                    {/* Period and location */}
+                                    <div className="flex flex-wrap gap-2 mb-4 text-sm text-gray-600 dark:text-gray-400">
+                                        <span className="flex items-center">
+                                            📅 {exp.period}
+                                        </span>
+                                        <span>•</span>
+                                        <span className="flex items-center">
+                                            📍 {exp.location}
+                                        </span>
+                                    </div>
+
+                                    {/* Description */}
+                                    <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+                                        {exp.description.map((item, i) => (
+                                            <li key={i} className="flex items-start">
+                                                <span className="text-cyan-500 mr-2 flex-shrink-0">▸</span>
+                                                <span className="text-sm">{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
                             </div>
-                            <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300">
-                                {exp.description.map((item, i) => (
-                                    <li key={i}>{item}</li>
-                                ))}
-                            </ul>
                         </motion.div>
                     ))}
                 </div>

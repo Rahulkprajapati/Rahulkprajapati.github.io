@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaBars, FaTimes, FaMoon, FaSun } from 'react-icons/fa';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 
-const Navbar = ({ darkMode, toggleTheme }) => {
+const Navbar = () => {
+    const { darkMode, toggleTheme } = useTheme();
     const [isOpen, setIsOpen] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
@@ -47,7 +49,7 @@ const Navbar = ({ darkMode, toggleTheme }) => {
                                     <Link
                                         key={link.name}
                                         to={link.href}
-                                        className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                                        className="text-gray-700 dark:text-gray-300 hover:text-cyan-500 dark:hover:text-cyan-400 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                                     >
                                         {link.name}
                                     </Link>
@@ -80,7 +82,7 @@ const Navbar = ({ darkMode, toggleTheme }) => {
                         </button>
                         <button
                             onClick={toggleMenu}
-                            className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-gray-400 hover:text-blue-600 dark:hover:text-white focus:outline-none"
+                            className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-gray-400 hover:text-cyan-500 dark:hover:text-white focus:outline-none"
                         >
                             {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
                         </button>
@@ -102,7 +104,7 @@ const Navbar = ({ darkMode, toggleTheme }) => {
                                     key={link.name}
                                     to={link.href}
                                     onClick={() => setIsOpen(false)}
-                                    className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 block px-3 py-2 rounded-md text-base font-medium"
+                                    className="text-gray-700 dark:text-gray-300 hover:text-cyan-500 dark:hover:text-cyan-400 block px-3 py-2 rounded-md text-base font-medium"
                                 >
                                     {link.name}
                                 </Link>

@@ -46,15 +46,15 @@ const About = () => {
                     <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">About Me</h2>
                     <div className="text-left max-w-4xl mx-auto space-y-4 text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
                         <p>
-                            I’m a Cloud & DevOps Engineer currently driving infrastructure innovation at <span className="font-semibold text-blue-600 dark:text-blue-400">Alteryx</span>. With a background spanning AirAsia, Zeotap, and startups, I specialize in building scalable, automated multi-cloud environments (AWS & GCP).
+                            I’m a Cloud & DevOps Engineer currently driving infrastructure innovation at <span className="font-semibold text-cyan-500 dark:text-cyan-400">Alteryx</span>. With a background spanning AirAsia, Zeotap, and startups, I specialize in building scalable, automated multi-cloud environments (AWS & GCP).
                         </p>
                         <p>
-                            Beyond the code, I’m a passionate mentor at <a href="https://cloudclan.co" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">cloudclan.co</a> and a tech writer on Medium, sharing insights on Cloud Native tools, Security, and System Design.
+                            Beyond the code, I’m a passionate mentor at <a href="https://cloudclan.co" target="_blank" rel="noopener noreferrer" className="text-cyan-500 dark:text-cyan-400 hover:underline">cloudclan.co</a> and a tech writer on Medium, sharing insights on Cloud Native tools, Security, and System Design.
                         </p>
                         <p>
                             My core philosophy? <span className="font-bold text-gray-800 dark:text-white">Automate everything.</span> From CI/CD pipelines to complex infrastructure provisioning, I thrive on creating efficient, self-healing systems.
                         </p>
-                        <p className="font-semibold text-blue-600 dark:text-blue-400 pt-2">
+                        <p className="font-semibold text-cyan-500 dark:text-cyan-400 pt-2">
                             Let's connect and build something scalable together!
                         </p>
                     </div>
@@ -70,7 +70,7 @@ const About = () => {
                             viewport={{ once: true }}
                             className="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow text-center"
                         >
-                            <div className="text-4xl text-blue-600 dark:text-blue-400 mb-4 flex justify-center">
+                            <div className="text-4xl text-cyan-500 dark:text-cyan-400 mb-4 flex justify-center">
                                 {skill.icon}
                             </div>
                             <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{skill.name}</h3>
