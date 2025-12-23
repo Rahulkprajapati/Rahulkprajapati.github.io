@@ -52,7 +52,7 @@ const Terminal = ({ onClose }) => {
         term.writeln('');
 
         let currentLine = '';
-        const prompt = () => term.write('\r\n\x1b[1;32mrahul@portfolio\x1b[0m:\x1b[1;34m~\x1b[0m$ ');
+        const prompt = () => term.write('\r\n\x1b[1;32mmaster@rahul\x1b[0m:\x1b[1;34m~\x1b[0m$ ');
         prompt();
 
         const commands = {
@@ -158,7 +158,7 @@ const Terminal = ({ onClose }) => {
                         <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                         <div className="w-3 h-3 rounded-full bg-green-500"></div>
                     </div>
-                    <span className="text-gray-400 text-sm">rahul@portfolio:~</span>
+                    <span className="text-gray-400 text-sm">master@rahul:~</span>
                     <button
                         onClick={onClose}
                         className="text-gray-400 hover:text-white transition-colors"
