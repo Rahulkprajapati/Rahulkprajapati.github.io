@@ -14,7 +14,7 @@ const Experience = () => {
             location: 'Bangalore, IN',
             icon: alteryxIcon,
             description: [
-                'Automated multi-cloud infrastructure (GCP, AWS, Azure) across data, control, and management planes, reducing manual operations by 70%.',
+                'Automated multi-cloud infrastructure (GCP, AWS, Azure) across data, control, & management planes, reducing manual ops by 70%.',
                 'Built 30+ Terraform modules and CI/CD pipelines for infra provisioning, boosting deployment speed by 3x.',
                 'Developed internal tools for automated MR creation, compute disk cleanup, and service provisioning, cutting ops time by 40%.',
                 'Managed 100+ Kubernetes clusters with ArgoCD and Helm for GitOps-based deployments.',
