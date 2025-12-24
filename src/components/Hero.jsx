@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import Typewriter from 'typewriter-effect';
 import { FaGithub, FaLinkedin, FaMedium, FaTerminal } from 'react-icons/fa';
 import profileImage from '../assets/profile.jpg';
-import resumePdf from '../assets/resume.pdf';
 import Terminal from './Terminal';
 
 const Hero = () => {
@@ -76,7 +75,7 @@ const Hero = () => {
                                 <span>Try Terminal</span>
                             </button>
                             <a
-                                href={resumePdf}
+                                href="/Rahul_Prajapati.pdf"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="px-8 py-3 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 rounded-full hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors shadow-md hover:shadow-lg flex items-center space-x-2"
