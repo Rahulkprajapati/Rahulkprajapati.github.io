@@ -8,12 +8,14 @@ import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Blogs from './components/Blogs';
+import BackgroundAnimation from './components/BackgroundAnimation';
 
 function App() {
   return (
     <ThemeProvider>
       <Router>
-        <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+        <div className="min-h-screen bg-transparent transition-colors duration-300 relative">
+          <BackgroundAnimation />
           <Navbar />
           <main>
             <Routes>

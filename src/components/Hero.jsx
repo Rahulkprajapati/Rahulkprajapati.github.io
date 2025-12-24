@@ -10,7 +10,7 @@ const Hero = () => {
 
     return (
         <>
-            <section id="home" className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 pt-16">
+            <section id="home" className="min-h-screen flex items-center justify-center pt-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-center">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.5 }}
@@ -74,6 +74,13 @@ const Hero = () => {
                                 <FaTerminal />
                                 <span>Try Terminal</span>
                             </button>
+                            <a
+                                href="/resume.pdf"
+                                download="Rahul_Prajapati_Resume.pdf"
+                                className="px-8 py-3 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 rounded-full hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors shadow-md hover:shadow-lg flex items-center space-x-2"
+                            >
+                                <span>Download Resume</span>
+                            </a>
                             <button
                                 onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}
                                 className="px-8 py-3 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 rounded-full hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors shadow-md hover:shadow-lg"
