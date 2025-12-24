@@ -75,11 +75,12 @@ const Hero = () => {
                                 <span>Try Terminal</span>
                             </button>
                             <a
-                                href="/resume.pdf"
-                                download="Rahul_Prajapati_Resume.pdf"
+                                href="/Rahul_Prajapati.pdf"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="px-8 py-3 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 rounded-full hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors shadow-md hover:shadow-lg flex items-center space-x-2"
                             >
-                                <span>Download Resume</span>
+                                <span>View Resume</span>
                             </a>
                             <button
                                 onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}

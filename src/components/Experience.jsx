@@ -80,7 +80,13 @@ const Experience = () => {
                 {/* Timeline */}
                 <div className="relative">
                     {/* Timeline line */}
-                    <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-cyan-500 via-cyan-400 to-cyan-500"></div>
+                    <motion.div
+                        initial={{ height: 0 }}
+                        whileInView={{ height: '100%' }}
+                        transition={{ duration: 1.5, ease: "easeInOut" }}
+                        viewport={{ once: true }}
+                        className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 w-0.5 bg-gradient-to-b from-cyan-500 via-cyan-400 to-cyan-500 origin-top"
+                    ></motion.div>
 
                     {experiences.map((exp, index) => (
                         <motion.div
@@ -92,7 +98,13 @@ const Experience = () => {
                             className={`relative mb-12 md:mb-16 ${index % 2 === 0 ? 'md:pr-1/2 md:text-right' : 'md:pl-1/2 md:text-left'}`}
                         >
                             {/* Timeline dot */}
-                            <div className="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-cyan-500 rounded-full border-4 border-white dark:border-gray-900 shadow-lg z-10"></div>
+                            <motion.div
+                                initial={{ scale: 0 }}
+                                whileInView={{ scale: 1 }}
+                                transition={{ duration: 0.3, delay: index * 0.1 + 0.2 }}
+                                viewport={{ once: true }}
+                                className="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-cyan-500 rounded-full border-4 border-white dark:border-gray-900 shadow-lg z-10"
+                            ></motion.div>
 
                             {/* Content card */}
                             <div className={`ml-20 md:ml-0 ${index % 2 === 0 ? 'md:mr-12' : 'md:ml-12'}`}>

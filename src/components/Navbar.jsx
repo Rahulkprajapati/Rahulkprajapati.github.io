@@ -63,13 +63,6 @@ const Navbar = () => {
                                     </button>
                                 )
                             ))}
-                            <a
-                                href="/resume.pdf"
-                                download="Rahul_Prajapati_Resume.pdf"
-                                className="text-gray-700 dark:text-gray-300 hover:text-cyan-500 dark:hover:text-cyan-400 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                            >
-                                Resume
-                            </a>
                             <button
                                 onClick={toggleTheme}
                                 className="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none"

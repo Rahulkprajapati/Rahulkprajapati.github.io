@@ -46,7 +46,12 @@ const Contact = () => {
                         className="w-full md:w-1/2 bg-gray-50 dark:bg-gray-800 p-8 rounded-xl shadow-lg"
                     >
                         <form className="space-y-6" onSubmit={handleSubmit}>
-                            <div>
+                            <motion.div
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.3, delay: 0.1 }}
+                                viewport={{ once: true }}
+                            >
                                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
                                 <input
                                     type="text"
@@ -57,8 +62,13 @@ const Contact = () => {
                                     className="mt-1 block w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-white"
                                     placeholder="Your Name"
                                 />
-                            </div>
-                            <div>
+                            </motion.div>
+                            <motion.div
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.3, delay: 0.2 }}
+                                viewport={{ once: true }}
+                            >
                                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
                                 <input
                                     type="email"
@@ -69,8 +79,13 @@ const Contact = () => {
                                     className="mt-1 block w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-white"
                                     placeholder="your.email@example.com"
                                 />
-                            </div>
-                            <div>
+                            </motion.div>
+                            <motion.div
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.3, delay: 0.3 }}
+                                viewport={{ once: true }}
+                            >
                                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Message</label>
                                 <textarea
                                     id="message"
@@ -81,13 +96,17 @@ const Contact = () => {
                                     className="mt-1 block w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-white"
                                     placeholder="Your message..."
                                 ></textarea>
-                            </div>
-                            <button
+                            </motion.div>
+                            <motion.button
                                 type="submit"
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.3, delay: 0.4 }}
+                                viewport={{ once: true }}
                                 className="w-full px-8 py-3 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition-colors shadow-lg hover:shadow-xl font-medium"
                             >
                                 Send Message
-                            </button>
+                            </motion.button>
                         </form>
                     </motion.div>
 
