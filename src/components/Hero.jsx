@@ -4,6 +4,7 @@ import Typewriter from 'typewriter-effect';
 import { FaGithub, FaLinkedin, FaMedium, FaTerminal } from 'react-icons/fa';
 import profileImage from '../assets/profile.jpg';
 import Terminal from './Terminal';
+import PipelineAnimation from './PipelineAnimation';
 
 const Hero = () => {
     const [showTerminal, setShowTerminal] = useState(false);
@@ -51,6 +52,11 @@ const Hero = () => {
                                     delay: 80,
                                 }}
                             />
+                        </div>
+
+                        {/* DevOps Pipeline Animation */}
+                        <div className="mb-8 w-full max-w-lg">
+                            <PipelineAnimation />
                         </div>
 
                         {/* Social Links */}

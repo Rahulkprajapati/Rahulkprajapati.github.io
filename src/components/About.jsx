@@ -68,13 +68,24 @@ const About = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
                             viewport={{ once: true }}
-                            className="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow text-center"
+                            className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 hover:border-cyan-500 dark:hover:border-cyan-500 transition-colors text-left relative overflow-hidden group"
                         >
-                            <div className="text-4xl text-cyan-500 dark:text-cyan-400 mb-4 flex justify-center">
-                                {skill.icon}
+                            <div className="absolute top-0 left-0 w-1 h-full bg-green-500"></div>
+                            <div className="flex justify-between items-start mb-4">
+                                <div className="text-3xl text-cyan-600 dark:text-cyan-400">
+                                    {skill.icon}
+                                </div>
+                                <span className="text-xs font-mono text-green-500 flex items-center">
+                                    <span className="w-2 h-2 bg-green-500 rounded-full mr-1 animate-pulse"></span>
+                                    Running
+                                </span>
                             </div>
-                            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{skill.name}</h3>
-                            <p className="text-gray-600 dark:text-gray-300">{skill.description}</p>
+                            <h3 className="text-lg font-mono font-bold text-gray-900 dark:text-white mb-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+                                {skill.name.toLowerCase()}
+                            </h3>
+                            <p className="text-sm text-gray-600 dark:text-gray-300 font-mono">
+                                {skill.description}
+                            </p>
                         </motion.div>
                     ))}
                 </div>
