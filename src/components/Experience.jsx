@@ -58,7 +58,9 @@ const Experience = () => {
             description: [
                 'Developed infrastructure as code using Terraform with a fully modularized approach.',
                 'Built networking infrastructure, GKE clusters, load balancers, MIG, databases, and IAM.',
-                'Performed migration of AWS resources into Google Cloud and debugged migration issues.'
+                'Performed migration of AWS resources into Google Cloud and debugged migration issues.',
+                'Developed an DevOps pipeline using Jenkins and the GCP cloud build to update image of MIG.',
+                'Executed best practices on the cloud for managing GCP resources.'
             ]
         }
     ];
