@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Terminal as XTerm } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit';
 import 'xterm/css/xterm.css';
+import { experiences, profile } from '../data/profile';
 
 const Terminal = ({ onClose }) => {
     const terminalRef = useRef(null);
@@ -11,6 +12,7 @@ const Terminal = ({ onClose }) => {
         // Initialize terminal
         const term = new XTerm({
             cursorBlink: true,
+            convertEol: true,
             theme: {
                 background: '#1a1b26',
                 foreground: '#00D9FF',
@@ -44,75 +46,165 @@ const Terminal = ({ onClose }) => {
         xtermRef.current = term;
 
         // Welcome message
-        term.writeln('\x1b[1;36m╔═══════════════════════════════════════════════════════════╗\x1b[0m');
-        term.writeln('\x1b[1;36m║\x1b[0m  \x1b[1;37mWelcome to Rahul\'s Interactive Terminal\x1b[0m                  \x1b[1;36m║\x1b[0m');
-        term.writeln('\x1b[1;36m╚═══════════════════════════════════════════════════════════╝\x1b[0m');
+        term.writeln('\x1b[1;36m╔════════════════════════════════════════════════════════════════╗\x1b[0m');
+        term.writeln('\x1b[1;36m║\x1b[0m  \x1b[1;37mRahulOS: platform, SRE, AI agents, and cloud automation\x1b[0m  \x1b[1;36m║\x1b[0m');
+        term.writeln('\x1b[1;36m╚════════════════════════════════════════════════════════════════╝\x1b[0m');
         term.writeln('');
-        term.writeln('Type \x1b[1;33mhelp\x1b[0m to see available commands.');
+        term.writeln('Type \x1b[1;33mhelp\x1b[0m. Try \x1b[1;33mmove\x1b[0m, \x1b[1;33mai\x1b[0m, \x1b[1;33mtoolkit\x1b[0m, or \x1b[1;33mresume\x1b[0m.');
         term.writeln('');
 
         let currentLine = '';
-        const prompt = () => term.write('\r\n\x1b[1;32mmaster@rahul\x1b[0m:\x1b[1;34m~\x1b[0m$ ');
+        let commandHistory = [];
+        let historyIndex = -1;
+        const promptText = '\x1b[1;32mrahul@move\x1b[0m:\x1b[1;34m~/platform\x1b[0m$ ';
+        const prompt = () => term.write('\r\n' + promptText);
         prompt();
+
+        const rewriteLine = (value) => {
+            term.write('\r\x1b[2K' + promptText + value);
+            currentLine = value;
+        };
+
+        const writeSection = (title) => {
+            term.writeln(`\r\n\x1b[1;36m${title}\x1b[0m`);
+            term.writeln('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+        };
+
+        const writeList = (items) => {
+            items.forEach((item) => term.writeln(`  \x1b[36m▸\x1b[0m ${item}`));
+        };
+
+        const openUrl = (url) => {
+            window.open(url, '_blank', 'noopener,noreferrer');
+            term.writeln(`\r\nOpening ${url}`);
+        };
+
+        const currentExperience = experiences.find((exp) => exp.status === 'Current');
 
         const commands = {
             help: () => {
-                term.writeln('\r\n\x1b[1;36mAvailable Commands:\x1b[0m');
-                term.writeln('  \x1b[1;33mhelp\x1b[0m       - Show this help message');
-                term.writeln('  \x1b[1;33mabout\x1b[0m      - Learn about me');
-                term.writeln('  \x1b[1;33mskills\x1b[0m     - View my technical skills');
-                term.writeln('  \x1b[1;33mexperience\x1b[0m - Show work experience');
-                term.writeln('  \x1b[1;33mcontact\x1b[0m    - Get contact information');
-                term.writeln('  \x1b[1;33mclear\x1b[0m      - Clear terminal');
-                term.writeln('  \x1b[1;33mexit\x1b[0m       - Close terminal');
+                writeSection('Command Map');
+                term.writeln('  \x1b[1;33mabout\x1b[0m       - Who I am and what I build');
+                term.writeln('  \x1b[1;33mmove\x1b[0m        - Current AirAsia MOVE platform work');
+                term.writeln('  \x1b[1;33mai\x1b[0m          - AI agents and automation focus');
+                term.writeln('  \x1b[1;33mtoolkit\x1b[0m     - Daily platform stack');
+                term.writeln('  \x1b[1;33mexperience\x1b[0m  - Career timeline');
+                term.writeln('  \x1b[1;33mresume\x1b[0m      - Open resume PDF');
+                term.writeln('  \x1b[1;33mlinks\x1b[0m       - GitHub, LinkedIn, Medium');
+                term.writeln('  \x1b[1;33mcontact\x1b[0m     - Email and phone');
+                term.writeln('  \x1b[1;33mclear\x1b[0m       - Clear terminal');
+                term.writeln('  \x1b[1;33mexit\x1b[0m        - Close terminal');
+                term.writeln('');
+                term.writeln('  Shortcuts: \x1b[1;33mwhoami\x1b[0m, \x1b[1;33mskills\x1b[0m, \x1b[1;33mcv\x1b[0m, \x1b[1;33mgh\x1b[0m, \x1b[1;33mli\x1b[0m, \x1b[1;33mmedium\x1b[0m');
+                term.writeln('  Keyboard: up/down for history, tab for autocomplete');
             },
             about: () => {
-                term.writeln('\r\n\x1b[1;36m👨‍💻 About Me\x1b[0m');
-                term.writeln('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-                term.writeln('DevOps Engineer passionate about cloud infrastructure,');
-                term.writeln('automation, and building scalable systems. I specialize in');
-                term.writeln('AWS, GCP, Azure, Kubernetes, and CI/CD pipelines.');
+                writeSection('About Rahul');
+                term.writeln(profile.summary);
+                term.writeln(profile.current);
+                term.writeln('');
+                writeList([
+                    'Cloud systems that stay calm under pressure.',
+                    'Production-minded platform engineering across data, compute, delivery, and reliability.',
+                    'AI agents and automations for inventory, evidence, validation loops, and runbooks.',
+                ]);
             },
             skills: () => {
-                term.writeln('\r\n\x1b[1;36m🛠️  Technical Skills\x1b[0m');
-                term.writeln('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-                term.writeln('☁️  Cloud: AWS, GCP, Azure');
-                term.writeln('📦 Containers: Kubernetes, Docker');
-                term.writeln('🏗️  IaC: Terraform, Ansible');
-                term.writeln('🔄 CI/CD: Jenkins, GitLab, ArgoCD, CircleCI, Helm');
-                term.writeln('📊 Monitoring: Prometheus, Grafana, Datadog');
-                term.writeln('💻 Languages: Python, Go, Bash');
+                commands.toolkit();
+            },
+            toolkit: () => {
+                writeSection('Daily Platform Toolkit');
+                term.writeln('\x1b[1;33mCloud\x1b[0m       GCP, AWS, Azure, IAM, VPC, Cloud SQL');
+                term.writeln('\x1b[1;33mRuntime\x1b[0m     Kubernetes, GKE, Docker, Helm, ArgoCD');
+                term.writeln('\x1b[1;33mIaC\x1b[0m         Terraform, Ansible, GitOps');
+                term.writeln('\x1b[1;33mDelivery\x1b[0m    GitLab CI, Jenkins, CircleCI, GitHub Actions, Harness');
+                term.writeln('\x1b[1;33mData\x1b[0m        Cloud SQL, DMS, Redis/Memorystore, Firestore');
+                term.writeln('\x1b[1;33mSRE\x1b[0m         Prometheus, Grafana, Datadog, New Relic, Opsgenie');
+                term.writeln('\x1b[1;33mAI\x1b[0m          Agents, runbook automation, inventory and validation workflows');
+                term.writeln('\x1b[1;33mCode\x1b[0m        Python, Go, Bash, Linux');
+            },
+            move: () => {
+                writeSection('AirAsia MOVE Current Work');
+                if (currentExperience) {
+                    term.writeln(`\x1b[1;33m${currentExperience.role}\x1b[0m`);
+                    term.writeln(`${currentExperience.period} | ${currentExperience.location}`);
+                    term.writeln('');
+                    term.writeln(currentExperience.summary);
+                    term.writeln('');
+                }
+                writeList([
+                    'Cloud SQL consolidation and Landing Zone migration workstreams.',
+                    'Redis/Memorystore and Firestore migration planning.',
+                    'GKE foundation hardening, WIF/secrets Terraform updates, and GitOps validation.',
+                    'SRE response across P0 gateway, 5xx spikes, and Cloud NAT exhaustion.',
+                    'Kong, SSO/LB, Life GKE, Cloud Run, OTA, DNS, BigQuery, and scaling requests.',
+                ]);
+            },
+            ai: () => {
+                writeSection('AI Agents & Automation');
+                writeList([
+                    'Built agentic patterns for infra inventory and migration evidence.',
+                    'Automated validation loops for cutover readiness and operational checks.',
+                    'Turned runbook-heavy workflows into faster, repeatable command paths.',
+                    'Use AI as an ops amplifier: context gathering, diff review, documentation, and guardrails.',
+                ]);
+            },
+            resume: () => {
+                openUrl('/Rahul_Prajapati.pdf');
             },
             experience: () => {
-                term.writeln('\r\n\x1b[1;36m💼 Work Experience\x1b[0m');
-                term.writeln('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-                term.writeln('\x1b[1;33mAlteryx\x1b[0m - DevOps Engineer (2023 - Present)');
-                term.writeln('  • Cloud infrastructure management');
-                term.writeln('  • CI/CD pipeline optimization');
+                writeSection('Work Experience');
+                experiences.slice(0, 4).forEach((exp) => {
+                    term.writeln(`\x1b[1;33m${exp.company}\x1b[0m - ${exp.role} (${exp.period})`);
+                    term.writeln(`  - ${exp.summary}`);
+                    if (exp.status === 'Current') {
+                        term.writeln('  - Cloud SQL, Landing Zone, GKE, SRE, Redis, Firestore, AI automation');
+                    }
+                    term.writeln('');
+                });
+            },
+            links: () => {
+                writeSection('Links');
+                term.writeln(`GitHub:   ${profile.links.github}`);
+                term.writeln(`LinkedIn: ${profile.links.linkedin}`);
+                term.writeln(`Medium:   ${profile.links.medium}`);
                 term.writeln('');
-                term.writeln('\x1b[1;33mZeotap\x1b[0m - DevOps Engineer (2022 - 2023)');
-                term.writeln('  • Kubernetes cluster management');
-                term.writeln('  • Infrastructure automation');
+                term.writeln('Open directly with: gh, li, medium');
             },
             contact: () => {
-                term.writeln('\r\n\x1b[1;36m📧 Contact Information\x1b[0m');
-                term.writeln('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-                term.writeln('📧 Email: rahulkpkprajapati147@gmail.com');
-                term.writeln('💼 LinkedIn: linkedin.com/in/rahulkumarprajapati');
-                term.writeln('🐙 GitHub: github.com/Rahulkprajapati');
-                term.writeln('📝 Medium: medium.com/@rahulkprajapati');
+                writeSection('Contact Information');
+                term.writeln(`Email: ${profile.email}`);
+                term.writeln(`Phone: ${profile.phone}`);
+                term.writeln(`Location: ${profile.location}`);
+                term.writeln('');
+                term.writeln(`LinkedIn: ${profile.links.linkedin.replace('https://', '')}`);
+                term.writeln(`GitHub: ${profile.links.github.replace('https://', '')}`);
+                term.writeln(`Medium: ${profile.links.medium.replace('https://', '')}`);
             },
+            whoami: () => commands.about(),
+            cv: () => commands.resume(),
+            gh: () => openUrl(profile.links.github),
+            github: () => openUrl(profile.links.github),
+            li: () => openUrl(profile.links.linkedin),
+            linkedin: () => openUrl(profile.links.linkedin),
+            medium: () => openUrl(profile.links.medium),
             clear: () => {
                 term.clear();
             },
             exit: () => {
-                term.writeln('\r\n\x1b[1;32mGoodbye! 👋\x1b[0m');
+                term.writeln('\r\n\x1b[1;32mGoodbye!\x1b[0m');
                 setTimeout(onClose, 500);
             },
         };
 
+        const commandNames = Object.keys(commands);
+
         const handleCommand = (cmd) => {
             const trimmedCmd = cmd.trim().toLowerCase();
+            if (trimmedCmd) {
+                commandHistory = [trimmedCmd, ...commandHistory.filter((item) => item !== trimmedCmd)].slice(0, 20);
+                historyIndex = -1;
+            }
             if (commands[trimmedCmd]) {
                 commands[trimmedCmd]();
             } else if (trimmedCmd) {
@@ -124,10 +216,32 @@ const Terminal = ({ onClose }) => {
         };
 
         term.onData((data) => {
+            if (data === '\x1b[A') {
+                if (commandHistory.length > 0) {
+                    historyIndex = Math.min(historyIndex + 1, commandHistory.length - 1);
+                    rewriteLine(commandHistory[historyIndex]);
+                }
+                return;
+            }
+
+            if (data === '\x1b[B') {
+                if (historyIndex > 0) {
+                    historyIndex -= 1;
+                    rewriteLine(commandHistory[historyIndex]);
+                } else {
+                    historyIndex = -1;
+                    rewriteLine('');
+                }
+                return;
+            }
+
             const code = data.charCodeAt(0);
 
             if (code === 13) { // Enter
                 handleCommand(currentLine);
+            } else if (code === 9) { // Tab
+                const match = commandNames.find((name) => name.startsWith(currentLine.trim().toLowerCase()));
+                if (match) rewriteLine(match);
             } else if (code === 127) { // Backspace
                 if (currentLine.length > 0) {
                     currentLine = currentLine.slice(0, -1);
@@ -158,7 +272,7 @@ const Terminal = ({ onClose }) => {
                         <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                         <div className="w-3 h-3 rounded-full bg-green-500"></div>
                     </div>
-                    <span className="text-gray-400 text-sm">master@rahul:~</span>
+                    <span className="text-gray-400 text-sm">rahul@move:~/platform</span>
                     <button
                         onClick={onClose}
                         className="text-gray-400 hover:text-white transition-colors"

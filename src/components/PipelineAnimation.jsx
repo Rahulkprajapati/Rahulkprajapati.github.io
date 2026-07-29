@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { FaCode, FaCogs, FaCheckCircle, FaRocket } from 'react-icons/fa';
 
 const PipelineAnimation = () => {
@@ -11,11 +11,11 @@ const PipelineAnimation = () => {
     ];
 
     return (
-        <div className="flex items-center justify-center space-x-2 md:space-x-4 my-8 p-4 bg-white/10 dark:bg-black/20 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-800">
+        <div className="mt-5 flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-gray-50/80 p-3 backdrop-blur dark:border-white/10 dark:bg-white/5 sm:gap-4">
             {stages.map((stage, index) => (
                 <div key={index} className="flex items-center">
-                    <motion.div
-                        className={`flex flex-col items-center p-3 rounded-lg bg-white dark:bg-gray-800 shadow-sm ${stage.color}`}
+                    <Motion.div
+                        className={`flex h-16 w-16 flex-col items-center justify-center rounded-lg bg-white shadow-sm ring-1 ring-gray-100 dark:bg-gray-900 dark:ring-white/10 sm:h-20 sm:w-20 ${stage.color}`}
                         animate={{
                             scale: [1, 1.1, 1],
                             borderColor: ['transparent', 'currentColor', 'transparent'],
@@ -30,11 +30,11 @@ const PipelineAnimation = () => {
                     >
                         <span className="text-xl md:text-2xl mb-1">{stage.icon}</span>
                         <span className="text-xs font-mono font-semibold">{stage.label}</span>
-                    </motion.div>
+                    </Motion.div>
 
                     {index < stages.length - 1 && (
-                        <div className="w-8 md:w-12 h-1 bg-gray-200 dark:bg-gray-700 mx-2 relative overflow-hidden rounded-full">
-                            <motion.div
+                        <div className="relative mx-1 h-1 w-5 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700 sm:mx-2 sm:w-10">
+                            <Motion.div
                                 className="absolute top-0 left-0 h-full w-full bg-cyan-500"
                                 initial={{ x: '-100%' }}
                                 animate={{ x: '100%' }}

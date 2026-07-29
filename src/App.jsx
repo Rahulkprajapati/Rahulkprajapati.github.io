@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import Experience from './components/Experience';
+import PlatformLab from './components/PlatformLab';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Blogs from './components/Blogs';
@@ -14,15 +15,16 @@ function App() {
   return (
     <ThemeProvider>
       <Router>
-        <div className="min-h-screen bg-transparent transition-colors duration-300 relative">
+        <div className="min-h-screen bg-transparent transition-colors duration-300 relative isolate overflow-x-hidden">
           <BackgroundAnimation />
           <Navbar />
-          <main>
+          <main className="relative z-10">
             <Routes>
               <Route path="/" element={
                 <>
                   <Hero />
                   <About />
+                  <PlatformLab />
                   <Experience />
                   <Contact />
                 </>
@@ -30,7 +32,9 @@ function App() {
               <Route path="/blogs" element={<Blogs />} />
             </Routes>
           </main>
-          <Footer />
+          <div className="relative z-10">
+            <Footer />
+          </div>
         </div>
       </Router>
     </ThemeProvider>

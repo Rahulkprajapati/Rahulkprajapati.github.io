@@ -1,14 +1,15 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { FaCode, FaServer, FaMobileAlt, FaDatabase, FaAws, FaDocker, FaJenkins, FaLinux, FaGitAlt, FaGitlab, FaCloud } from 'react-icons/fa';
-import { SiGooglecloud, SiKubernetes, SiTerraform, SiAnsible, SiPrometheus, SiGrafana, SiArgo, SiHelm, SiCircleci, SiPython, SiGo, SiGnubash, SiDatadog } from 'react-icons/si';
+import { motion as Motion } from 'framer-motion';
+import { FaAws, FaCloud, FaCode, FaDocker, FaGitlab, FaJenkins, FaLinux, FaMobileAlt, FaRobot, FaServer } from 'react-icons/fa';
+import { SiGooglecloud, SiKubernetes, SiTerraform, SiAnsible, SiPrometheus, SiGrafana, SiArgo, SiHelm, SiCircleci, SiPython, SiGo, SiGnubash, SiDatadog, SiGithubactions, SiMysql, SiNewrelic, SiOpenai, SiRedis } from 'react-icons/si';
+import { certifications, profile } from '../data/profile';
 
 const About = () => {
     const skills = [
-        { name: 'Cloud', icon: <FaServer />, description: 'AWS, GCP, Azure' },
-        { name: 'DevOps Tools', icon: <FaCode />, description: 'Terraform, Docker, K8s, Jenkins, ArgoCD, GitLab, Helm' },
-        { name: 'Programming', icon: <FaDatabase />, description: 'Python, Go, Bash, Shell Scripting' },
-        { name: 'Observability', icon: <FaMobileAlt />, description: 'Prometheus, Grafana, Datadog' },
+        { name: 'Cloud Platforms', icon: <FaServer />, description: 'GCP, AWS, Azure, IAM, networking, cost controls', accent: 'bg-red-500' },
+        { name: 'Platform Engineering', icon: <FaCode />, description: 'Terraform, Kubernetes, Docker, Helm, ArgoCD', accent: 'bg-cyan-500' },
+        { name: 'Automation & AI', icon: <FaRobot />, description: 'Agents, Python, Go, Bash, GitLab CI, Jenkins, CircleCI', accent: 'bg-emerald-500' },
+        { name: 'Reliability', icon: <FaMobileAlt />, description: 'Prometheus, Grafana, Datadog, New Relic, SLOs', accent: 'bg-amber-500' },
     ];
 
     const tools = [
@@ -23,117 +24,129 @@ const About = () => {
         { name: 'GitLab', icon: <FaGitlab className="text-[#FC6D26]" /> },
         { name: 'ArgoCD', icon: <SiArgo className="text-[#EF7B4D]" /> },
         { name: 'CircleCI', icon: <SiCircleci className="text-[#343434]" /> },
+        { name: 'GitHub Actions', icon: <SiGithubactions className="text-[#2088FF]" /> },
         { name: 'Helm', icon: <SiHelm className="text-[#0F1689]" /> },
         { name: 'Prometheus', icon: <SiPrometheus className="text-[#E6522C]" /> },
         { name: 'Grafana', icon: <SiGrafana className="text-[#F46800]" /> },
         { name: 'Datadog', icon: <SiDatadog className="text-[#632CA6]" /> },
+        { name: 'New Relic', icon: <SiNewrelic className="text-[#1CE783]" /> },
+        { name: 'Cloud SQL / DMS', icon: <SiMysql className="text-[#4479A1]" /> },
+        { name: 'Redis / Memorystore', icon: <SiRedis className="text-[#DC382D]" /> },
+        { name: 'AI Agents', icon: <SiOpenai className="text-[#111827]" /> },
         { name: 'Python', icon: <SiPython className="text-[#3776AB]" /> },
         { name: 'Go', icon: <SiGo className="text-[#00ADD8]" /> },
         { name: 'Bash', icon: <SiGnubash className="text-[#4EAA25]" /> },
-        { name: 'Linux', icon: <FaLinux className="text-black dark:text-white" /> },
+        { name: 'Linux', icon: <FaLinux className="text-black" /> },
     ];
 
     return (
-        <section id="about" className="py-20 bg-white dark:bg-gray-900">
+        <section id="about" className="py-20 bg-white dark:bg-gray-950">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <motion.div
+                <Motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                     viewport={{ once: true }}
-                    className="text-center mb-16"
+                    className="mb-14 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end"
                 >
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">About Me</h2>
-                    <div className="text-left max-w-4xl mx-auto space-y-4 text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
+                    <div>
+                        <p className="text-sm font-black uppercase text-red-600 dark:text-red-300">About Rahul</p>
+                        <h2 className="mt-3 text-3xl md:text-5xl font-black text-gray-950 dark:text-white">Cloud systems that stay calm under pressure.</h2>
+                    </div>
+                    <div className="space-y-4 text-gray-600 dark:text-gray-300 text-base sm:text-lg leading-8">
                         <p>
-                            I’m a Cloud & DevOps Engineer currently driving infrastructure innovation at <span className="font-semibold text-cyan-500 dark:text-cyan-400">Alteryx</span>. With a background spanning AirAsia, Zeotap, and startups, I specialize in building scalable, automated multi-cloud environments (AWS & GCP).
+                            I build the parts users never see and teams feel immediately when they fail: <span className="font-black text-gray-950 dark:text-white">cloud platforms, data layers, release paths, reliability loops, and AI agents</span>.
                         </p>
                         <p>
-                            Beyond the code, I’m a passionate mentor at <a href="https://cloudclan.co" target="_blank" rel="noopener noreferrer" className="text-cyan-500 dark:text-cyan-400 hover:underline">cloudclan.co</a> and a tech writer on Medium, sharing insights on Cloud Native tools, Security, and System Design.
+                            My work lives at the intersection of <span className="font-black text-red-600 dark:text-red-300">scale, safety, and speed</span>: moving databases without drama, hardening Kubernetes without slowing teams down, and turning long operational runbooks into clear, repeatable automation.
                         </p>
                         <p>
-                            My core philosophy? <span className="font-bold text-gray-800 dark:text-white">Automate everything.</span> From CI/CD pipelines to complex infrastructure provisioning, I thrive on creating efficient, self-healing systems.
+                            I like systems that explain themselves. Dashboards that point to action. CI/CD that fails early. Terraform that encodes good defaults. Secrets that do not become folklore. AI agents that remove toil without removing engineering judgment.
                         </p>
-                        <p className="font-semibold text-cyan-500 dark:text-cyan-400 pt-2">
-                            Let's connect and build something scalable together!
+                        <p>
+                            I care about the quiet details that make engineering organizations faster: clean ownership, safer migrations, useful evidence, better defaults, sharper alerts, and platforms developers can trust without needing to understand every wire underneath.
+                        </p>
+                        <p>
+                            My taste is simple: <span className="font-black text-gray-950 dark:text-white">boring infrastructure for users, deeply intentional engineering underneath.</span> If a deploy, migration, or incident needs luck, the platform is not finished.
                         </p>
                     </div>
-                </motion.div>
+                </Motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 mb-16">
                     {skills.map((skill, index) => (
-                        <motion.div
+                        <Motion.div
                             key={skill.name}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
                             viewport={{ once: true }}
-                            className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 hover:border-cyan-500 dark:hover:border-cyan-500 transition-colors text-left relative overflow-hidden group"
+                            className="group relative overflow-hidden rounded-lg border border-gray-200 bg-gray-50 p-5 shadow-sm transition hover:-translate-y-1 hover:border-gray-300 hover:shadow-xl dark:border-white/10 dark:bg-white/5 dark:hover:border-white/20"
                         >
-                            <div className="absolute top-0 left-0 w-1 h-full bg-green-500"></div>
-                            <div className="flex justify-between items-start mb-4">
-                                <div className="text-3xl text-cyan-600 dark:text-cyan-400">
+                            <div className={`absolute left-0 top-0 h-full w-1 ${skill.accent}`} />
+                            <div className="flex items-start justify-between gap-4">
+                                <div className="grid h-12 w-12 place-items-center rounded-lg bg-white text-2xl text-gray-900 shadow-sm ring-1 ring-gray-100 dark:bg-gray-950 dark:text-white dark:ring-white/10">
                                     {skill.icon}
                                 </div>
-                                <span className="text-xs font-mono text-green-500 flex items-center">
-                                    <span className="w-2 h-2 bg-green-500 rounded-full mr-1 animate-pulse"></span>
-                                    Running
+                                <span className="rounded-md bg-emerald-50 px-2 py-1 text-xs font-black uppercase text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300">
+                                    Active
                                 </span>
                             </div>
-                            <h3 className="text-lg font-mono font-bold text-gray-900 dark:text-white mb-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
-                                {skill.name.toLowerCase()}
+                            <h3 className="mt-5 text-lg font-black text-gray-950 transition-colors group-hover:text-red-600 dark:text-white dark:group-hover:text-red-300">
+                                {skill.name}
                             </h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-300 font-mono">
+                            <p className="mt-2 text-sm leading-6 text-gray-600 dark:text-gray-300">
                                 {skill.description}
                             </p>
-                        </motion.div>
+                        </Motion.div>
                     ))}
                 </div>
 
-                {/* DevOps Toolkit Section */}
-                <motion.div
+                <Motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                     viewport={{ once: true }}
-                    className="mb-16"
+                    className="mb-16 rounded-2xl border border-gray-200 bg-gray-950 p-5 shadow-2xl shadow-gray-950/10 dark:border-white/10"
                 >
-                    <h3 className="text-2xl md:text-3xl font-bold text-center text-gray-900 dark:text-white mb-8">DevOps Toolkit</h3>
-                    <div className="flex flex-wrap justify-center gap-6 md:gap-8">
+                    <div className="flex flex-col gap-3 border-b border-white/10 pb-5 sm:flex-row sm:items-end sm:justify-between">
+                        <div>
+                            <p className="text-sm font-black uppercase text-cyan-300">Toolkit</p>
+                            <h3 className="mt-2 text-2xl md:text-3xl font-black text-white">Daily platform stack</h3>
+                        </div>
+                        <p className="max-w-xl text-sm leading-6 text-gray-300">{profile.title} across cloud, delivery, reliability, and automation.</p>
+                    </div>
+                    <div className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
                         {tools.map((tool, index) => (
-                            <motion.div
+                            <Motion.div
                                 key={tool.name}
-                                whileHover={{ scale: 1.1 }}
-                                className="flex flex-col items-center space-y-2"
+                                initial={{ opacity: 0, y: 12 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.3, delay: index * 0.02 }}
+                                viewport={{ once: true }}
+                                whileHover={{ y: -4 }}
+                                className="flex min-h-24 flex-col items-center justify-center gap-2 rounded-lg border border-white/10 bg-white p-3 text-center shadow-sm"
                                 title={tool.name}
                             >
-                                <div className="text-4xl md:text-5xl bg-gray-50 dark:bg-gray-800 p-4 rounded-xl shadow-sm hover:shadow-md transition-all">
-                                    {tool.icon}
-                                </div>
-                                <span className="text-sm font-medium text-gray-600 dark:text-gray-400">{tool.name}</span>
-                            </motion.div>
+                                <div className="text-3xl">{tool.icon}</div>
+                                <span className="text-xs font-black text-gray-700">{tool.name}</span>
+                            </Motion.div>
                         ))}
                     </div>
-                </motion.div>
+                </Motion.div>
 
-                <div className="max-w-3xl mx-auto">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                        viewport={{ once: true }}
-                        className="bg-gray-50 dark:bg-gray-800 p-8 rounded-xl shadow-md"
-                    >
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Certifications</h3>
-                        <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-2">
-                            <li>Google Cloud Certified Professional Cloud Architect</li>
-                            <li>Google Cloud Certified Professional DevOps Engineer</li>
-                            <li>Google Cloud Certified Associate Engineer</li>
-                            <li>GitOps with ArgoCD</li>
-                            <li>Microsoft Certified Azure Fundamentals</li>
-                        </ul>
-                    </motion.div>
-                </div>
+                <Motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    viewport={{ once: true }}
+                    className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5"
+                >
+                    {certifications.map((item) => (
+                        <div key={item} className="rounded-lg border border-gray-200 bg-white p-4 text-sm font-bold leading-6 text-gray-700 shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-gray-200">
+                            {item}
+                        </div>
+                    ))}
+                </Motion.div>
             </div>
         </section>
     );

@@ -1,6 +1,49 @@
 import React, { useEffect, useRef } from 'react';
 import { useTheme } from '../context/ThemeContext';
 
+const getPalette = (darkMode) => ({
+    bgTop: darkMode ? '#020617' : '#ffffff',
+    bgMid: darkMode ? '#07111f' : '#f8fafc',
+    bgBottom: darkMode ? '#0f172a' : '#eef6ff',
+    grid: darkMode ? 'rgba(148, 163, 184, 0.07)' : 'rgba(15, 23, 42, 0.05)',
+    gridAccent: darkMode ? 'rgba(34, 211, 238, 0.14)' : 'rgba(14, 165, 233, 0.12)',
+    trace: darkMode ? 'rgba(103, 232, 249, 0.18)' : 'rgba(8, 145, 178, 0.14)',
+    traceHot: darkMode ? 'rgba(248, 113, 113, 0.18)' : 'rgba(220, 38, 38, 0.12)',
+    text: darkMode ? 'rgba(226, 232, 240, 0.30)' : 'rgba(15, 23, 42, 0.28)',
+    panel: darkMode ? 'rgba(15, 23, 42, 0.36)' : 'rgba(255, 255, 255, 0.58)',
+    panelBorder: darkMode ? 'rgba(148, 163, 184, 0.14)' : 'rgba(15, 23, 42, 0.10)',
+    packet: darkMode ? '#67e8f9' : '#0891b2',
+    packetHot: darkMode ? '#fb7185' : '#dc2626',
+});
+
+const drawRoundedRect = (ctx, x, y, width, height, radius) => {
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + width - radius, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    ctx.lineTo(x + width, y + height - radius);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    ctx.lineTo(x + radius, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
+};
+
+const lerpPoint = (points, progress) => {
+    const segments = points.length - 1;
+    const raw = Math.min(progress, 0.999) * segments;
+    const index = Math.floor(raw);
+    const local = raw - index;
+    const from = points[index];
+    const to = points[index + 1];
+
+    return {
+        x: from.x + (to.x - from.x) * local,
+        y: from.y + (to.y - from.y) * local,
+    };
+};
+
 const BackgroundAnimation = () => {
     const canvasRef = useRef(null);
     const { darkMode } = useTheme();
@@ -8,254 +51,199 @@ const BackgroundAnimation = () => {
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const mouse = { x: 0, y: 0, active: false };
         let animationFrameId;
-        let mouse = { x: null, y: null, radius: 150 };
+        let width = 0;
+        let height = 0;
+        let dpr = 1;
+        let traces = [];
 
         const resizeCanvas = () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            dpr = Math.min(window.devicePixelRatio || 1, 2);
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = Math.floor(width * dpr);
+            canvas.height = Math.floor(height * dpr);
+            canvas.style.width = `${width}px`;
+            canvas.style.height = `${height}px`;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+            const right = width * 0.86;
+            const left = width * 0.58;
+            const low = height * 0.78;
+            const high = height * 0.28;
+            traces = [
+                {
+                    label: 'plan',
+                    hot: false,
+                    delay: 0.05,
+                    points: [
+                        { x: left, y: high },
+                        { x: right, y: high },
+                        { x: right, y: high + 118 },
+                    ],
+                },
+                {
+                    label: 'verify',
+                    hot: true,
+                    delay: 0.28,
+                    points: [
+                        { x: width * 0.70, y: low },
+                        { x: width * 0.92, y: low },
+                        { x: width * 0.92, y: low - 122 },
+                    ],
+                },
+                {
+                    label: 'agent',
+                    hot: false,
+                    delay: 0.52,
+                    points: [
+                        { x: width * 0.10, y: height * 0.76 },
+                        { x: width * 0.34, y: height * 0.76 },
+                        { x: width * 0.34, y: height * 0.58 },
+                    ],
+                },
+            ];
         };
 
         const handleMouseMove = (event) => {
-            mouse.x = event.x;
-            mouse.y = event.y;
+            mouse.x = event.clientX / Math.max(width, 1) - 0.5;
+            mouse.y = event.clientY / Math.max(height, 1) - 0.5;
+            mouse.active = true;
         };
 
-        window.addEventListener('resize', resizeCanvas);
-        window.addEventListener('mousemove', handleMouseMove);
-        resizeCanvas();
+        const handleMouseLeave = () => {
+            mouse.active = false;
+        };
 
-        const nodes = [];
-        const packets = [];
-        const nodeCount = 50; // Balanced density
-        const packetCount = 15; // Number of active data packets
+        const drawBackdrop = (palette) => {
+            const gradient = ctx.createLinearGradient(0, 0, width, height);
+            gradient.addColorStop(0, palette.bgTop);
+            gradient.addColorStop(0.58, palette.bgMid);
+            gradient.addColorStop(1, palette.bgBottom);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+        };
 
-        class Node {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                // Slower, smoother movement for nodes
-                this.vx = (Math.random() - 0.5) * 0.2;
-                this.vy = (Math.random() - 0.5) * 0.2;
-                this.size = Math.random() * 2 + 2;
-                this.baseX = this.x;
-                this.baseY = this.y;
-                this.density = (Math.random() * 20) + 5;
-            }
+        const drawBlueprintGrid = (palette, time, shiftX, shiftY) => {
+            const spacing = width < 760 ? 54 : 68;
+            const top = height * 0.08;
+            const horizon = height * 0.58;
+            const floor = height + spacing;
+            const drift = (time * 0.004) % spacing;
 
-            update() {
-                // Mouse interaction - gentle repulsion
-                if (mouse.x != null) {
-                    let dx = mouse.x - this.x;
-                    let dy = mouse.y - this.y;
-                    let distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < mouse.radius) {
-                        const maxDistance = mouse.radius;
-                        const force = (maxDistance - distance) / maxDistance;
-                        const directionX = (dx / distance) * force * this.density;
-                        const directionY = (dy / distance) * force * this.density;
-
-                        this.x -= directionX;
-                        this.y -= directionY;
-                    } else {
-                        // Return to base area gently
-                        if (this.x !== this.baseX) {
-                            let dx = this.x - this.baseX;
-                            this.x -= dx / 40;
-                        }
-                        if (this.y !== this.baseY) {
-                            let dy = this.y - this.baseY;
-                            this.y -= dy / 40;
-                        }
-                    }
-                }
-
-                this.x += this.vx;
-                this.y += this.vy;
-
-                // Seamless wraparound or bounce? Let's do bounce for stability
-                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-            }
-
-            draw() {
+            ctx.lineWidth = 1;
+            for (let x = -spacing * 2; x < width + spacing * 2; x += spacing) {
+                const isAccent = Math.round((x + drift) / spacing) % 4 === 0;
+                ctx.strokeStyle = isAccent ? palette.gridAccent : palette.grid;
                 ctx.beginPath();
-                ctx.rect(this.x - this.size / 2, this.y - this.size / 2, this.size, this.size);
-                // Subtle glow for nodes
-                ctx.shadowBlur = 5;
-                ctx.shadowColor = darkMode ? 'rgba(34, 211, 238, 0.3)' : 'rgba(6, 182, 212, 0.3)';
-                ctx.fillStyle = darkMode ? 'rgba(34, 211, 238, 0.5)' : 'rgba(6, 182, 212, 0.5)';
-                ctx.fill();
-                ctx.shadowBlur = 0; // Reset
-            }
-        }
-
-        class Packet {
-            constructor() {
-                this.trail = [];
-                this.trailLength = 10;
-                this.reset();
+                ctx.moveTo(x + drift + shiftX * 0.15, top);
+                ctx.lineTo(x * 1.18 - width * 0.09 + shiftX * 0.45, floor);
+                ctx.stroke();
             }
 
-            reset() {
-                if (nodes.length > 0) {
-                    this.targetIndex = Math.floor(Math.random() * nodes.length);
-                    this.currentX = nodes[this.targetIndex].x;
-                    this.currentY = nodes[this.targetIndex].y;
-                    this.progress = 0;
-                    this.speed = 0.03 + Math.random() * 0.04; // Random speeds
-                    this.sourceIndex = this.targetIndex;
-                    this.findNewTarget();
-                    this.trail = []; // Clear trail on reset
-                }
-            }
-
-            findNewTarget() {
-                let neighbors = [];
-                // Look for connected nodes (distance check)
-                for (let i = 0; i < nodes.length; i++) {
-                    if (i === this.sourceIndex) continue;
-                    let dx = nodes[i].x - nodes[this.sourceIndex].x;
-                    let dy = nodes[i].y - nodes[this.sourceIndex].y;
-                    let dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 200) { // Connection range
-                        neighbors.push(i);
-                    }
-                }
-
-                if (neighbors.length > 0) {
-                    this.targetIndex = neighbors[Math.floor(Math.random() * neighbors.length)];
-                } else {
-                    // Start over at a random node if stuck
-                    this.targetIndex = Math.floor(Math.random() * nodes.length);
-                    this.currentX = nodes[this.targetIndex].x;
-                    this.currentY = nodes[this.targetIndex].y;
-                    this.sourceIndex = this.targetIndex;
-                    this.trail = [];
-                }
-            }
-
-            update() {
-                if (nodes.length === 0) return;
-
-                const source = nodes[this.sourceIndex];
-                const target = nodes[this.targetIndex];
-
-                if (!source || !target) {
-                    this.reset();
-                    return;
-                }
-
-                if (this.sourceIndex === this.targetIndex) {
-                    this.findNewTarget();
-                    return;
-                }
-
-                // Add current position to trail
-                this.trail.push({ x: this.currentX, y: this.currentY });
-                if (this.trail.length > this.trailLength) {
-                    this.trail.shift();
-                }
-
-                this.progress += this.speed;
-                if (this.progress >= 1) {
-                    // Arrived at target
-                    this.sourceIndex = this.targetIndex;
-                    this.progress = 0;
-                    this.currentX = nodes[this.sourceIndex].x;
-                    this.currentY = nodes[this.sourceIndex].y;
-                    this.findNewTarget();
-                } else {
-                    // Move
-                    this.currentX = source.x + (target.x - source.x) * this.progress;
-                    this.currentY = source.y + (target.y - source.y) * this.progress;
-                }
-            }
-
-            draw() {
-                // Draw Trail
-                if (this.trail.length > 1) {
-                    ctx.beginPath();
-                    ctx.moveTo(this.trail[0].x, this.trail[0].y);
-                    for (let i = 1; i < this.trail.length; i++) {
-                        ctx.lineTo(this.trail[i].x, this.trail[i].y);
-                    }
-                    // Tapering opacity for trail
-                    const gradient = ctx.createLinearGradient(
-                        this.trail[0].x, this.trail[0].y,
-                        this.currentX, this.currentY
-                    );
-                    gradient.addColorStop(0, 'rgba(34, 211, 238, 0)');
-                    gradient.addColorStop(1, darkMode ? 'rgba(34, 211, 238, 0.8)' : 'rgba(37, 99, 235, 0.8)');
-
-                    ctx.strokeStyle = gradient;
-                    ctx.lineWidth = 2;
-                    ctx.stroke();
-                }
-
-                // Draw Head (Packet)
+            for (let y = horizon; y < floor; y += spacing * 0.72) {
+                const depth = (y - horizon) / Math.max(floor - horizon, 1);
+                ctx.strokeStyle = depth > 0.74 ? palette.gridAccent : palette.grid;
                 ctx.beginPath();
-                ctx.arc(this.currentX, this.currentY, 3, 0, Math.PI * 2);
-
-                // Glow Effect
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = darkMode ? '#22d3ee' : '#2563eb'; // Cyan or Royal Blue glow
-                ctx.fillStyle = '#ffffff'; // White center core
-                ctx.fill();
-
-                // Reset shadow for text/lines
-                ctx.shadowBlur = 0;
+                ctx.moveTo(0, y + shiftY * 0.25);
+                ctx.lineTo(width, y + shiftY * 0.25);
+                ctx.stroke();
             }
-        }
+        };
 
-        // Initialize
-        for (let i = 0; i < nodeCount; i++) {
-            nodes.push(new Node());
-        }
-        for (let i = 0; i < packetCount; i++) {
-            packets.push(new Packet());
-        }
+        const drawPanel = (ctx, palette, x, y, width, title, rows, phase) => {
+            drawRoundedRect(ctx, x, y, width, 88, 10);
+            ctx.fillStyle = palette.panel;
+            ctx.fill();
+            ctx.strokeStyle = palette.panelBorder;
+            ctx.stroke();
 
-        const animate = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.font = '800 11px Inter, system-ui, sans-serif';
+            ctx.fillStyle = palette.text;
+            ctx.fillText(title, x + 14, y + 22);
 
-            // Draw connections between nodes
-            nodes.forEach((node, index) => {
-                node.update();
-                node.draw();
+            rows.forEach((row, index) => {
+                const pulse = 0.35 + Math.sin(phase + index * 1.7) * 0.16;
+                ctx.fillStyle = index === 1 ? `rgba(103, 232, 249, ${pulse})` : palette.panelBorder;
+                drawRoundedRect(ctx, x + 14, y + 38 + index * 15, row, 4, 2);
+                ctx.fill();
+            });
+        };
 
-                for (let j = index + 1; j < nodes.length; j++) {
-                    const dx = node.x - nodes[j].x;
-                    const dy = node.y - nodes[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
+        const drawPanels = (palette, time, shiftX, shiftY) => {
+            drawPanel(ctx, palette, width * 0.68 + shiftX * 0.2, height * 0.18 + shiftY * 0.1, 178, 'AI RUNBOOK', [96, 126, 72], time * 0.002);
+            drawPanel(ctx, palette, width * 0.08 - shiftX * 0.15, height * 0.66 - shiftY * 0.1, 164, 'SRE CHECK', [84, 118, 62], time * 0.0025);
+            drawPanel(ctx, palette, width * 0.76 - shiftX * 0.18, height * 0.68 + shiftY * 0.12, 154, 'DMS SYNC', [72, 110, 92], time * 0.0018);
+        };
 
-                    if (distance < 200) {
-                        ctx.beginPath();
-                        // Darker/subtler lines so packets pop
-                        ctx.strokeStyle = darkMode ? `rgba(34, 211, 238, ${0.1 - distance / 2000})` : `rgba(100, 116, 139, ${0.15 - distance / 1500})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.moveTo(node.x, node.y);
-                        ctx.lineTo(nodes[j].x, nodes[j].y);
-                        ctx.stroke();
-                    }
-                }
+        const drawTrace = (palette, trace, time, shiftX, shiftY) => {
+            const points = trace.points.map((point) => ({
+                x: point.x + shiftX * 0.22,
+                y: point.y + shiftY * 0.18,
+            }));
+
+            ctx.strokeStyle = trace.hot ? palette.traceHot : palette.trace;
+            ctx.lineWidth = 1.25;
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            points.slice(1).forEach((point) => ctx.lineTo(point.x, point.y));
+            ctx.stroke();
+
+            points.forEach((point, index) => {
+                const alpha = 0.22 + Math.sin(time * 0.002 + index) * 0.08;
+                ctx.fillStyle = trace.hot ? `rgba(248, 113, 113, ${alpha})` : `rgba(103, 232, 249, ${alpha})`;
+                drawRoundedRect(ctx, point.x - 4, point.y - 4, 8, 8, 2);
+                ctx.fill();
             });
 
-            // Draw Packets on top
-            packets.forEach(packet => {
-                packet.update();
-                packet.draw();
-            });
+            const speed = reducedMotion ? 0.00005 : 0.00011;
+            const progress = (trace.delay + time * speed) % 1;
+            const packet = lerpPoint(points, progress);
+            ctx.shadowBlur = 18;
+            ctx.shadowColor = trace.hot ? palette.packetHot : palette.packet;
+            ctx.fillStyle = trace.hot ? palette.packetHot : palette.packet;
+            ctx.beginPath();
+            ctx.arc(packet.x, packet.y, 3.5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        };
+
+        const drawScanBand = (palette, time) => {
+            const y = ((time * 0.018) % (height + 220)) - 120;
+            const gradient = ctx.createLinearGradient(0, y, width, y + 140);
+            gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
+            gradient.addColorStop(0.48, darkMode ? 'rgba(34, 211, 238, 0.045)' : 'rgba(14, 165, 233, 0.035)');
+            gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, y, width, 140);
+        };
+
+        const animate = (time) => {
+            const palette = getPalette(darkMode);
+            const shiftX = mouse.active ? mouse.x * 34 : Math.sin(time * 0.0002) * 10;
+            const shiftY = mouse.active ? mouse.y * 28 : Math.cos(time * 0.00018) * 8;
+
+            drawBackdrop(palette);
+            drawBlueprintGrid(palette, time, shiftX, shiftY);
+            drawScanBand(palette, time);
+            drawPanels(palette, time, shiftX, shiftY);
+            traces.forEach((trace) => drawTrace(palette, trace, time, shiftX, shiftY));
 
             animationFrameId = requestAnimationFrame(animate);
         };
 
-        animate();
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseleave', handleMouseLeave);
+        resizeCanvas();
+        animationFrameId = requestAnimationFrame(animate);
 
         return () => {
             window.removeEventListener('resize', resizeCanvas);
             window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseleave', handleMouseLeave);
             cancelAnimationFrame(animationFrameId);
         };
     }, [darkMode]);
@@ -263,12 +251,8 @@ const BackgroundAnimation = () => {
     return (
         <canvas
             ref={canvasRef}
-            className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none transition-colors duration-500"
-            style={{
-                background: darkMode
-                    ? 'radial-gradient(circle at 50% 50%, #0f172a 0%, #020617 100%)'
-                    : 'radial-gradient(circle at 50% 50%, #f8fafc 0%, #e2e8f0 100%)'
-            }}
+            aria-hidden="true"
+            className="fixed top-0 left-0 z-0 w-full h-full pointer-events-none transition-colors duration-500"
         />
     );
 };

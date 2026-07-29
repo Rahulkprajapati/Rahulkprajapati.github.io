@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { FaMedium } from 'react-icons/fa';
 
 const Blogs = () => {
@@ -36,7 +36,7 @@ const Blogs = () => {
                     ]);
                     setError('No blogs found in feed. Showing samples.');
                 }
-            } catch (err) {
+            } catch {
                 // Fallback on error
                 setBlogs([
                     {
@@ -76,7 +76,7 @@ const Blogs = () => {
     return (
         <section className="py-20 bg-gray-50 dark:bg-gray-800 min-h-screen pt-24">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <motion.div
+                <Motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
@@ -84,7 +84,7 @@ const Blogs = () => {
                 >
                     <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">My Blogs</h2>
                     <p className="text-xl text-gray-600 dark:text-gray-300">Thoughts and tutorials on Cloud, DevOps, and Tech.</p>
-                </motion.div>
+                </Motion.div>
 
                 {loading && (
                     <div className="flex justify-center items-center h-64">
@@ -108,7 +108,7 @@ const Blogs = () => {
                             const displayImage = blog.thumbnail || extractImage(blog.description) || extractImage(blog.content) || 'https://miro.medium.com/max/1400/1*s9l9z9z9z9z9z9z9z9z9z9.png';
 
                             return (
-                                <motion.a
+                                <Motion.a
                                     key={index}
                                     href={blog.link}
                                     target="_blank"
@@ -138,7 +138,7 @@ const Blogs = () => {
                                             <span className="text-cyan-500 dark:text-cyan-400 font-medium hover:underline">Read on Medium &rarr;</span>
                                         </div>
                                     </div>
-                                </motion.a>
+                                </Motion.a>
                             );
                         })}
                     </div>
