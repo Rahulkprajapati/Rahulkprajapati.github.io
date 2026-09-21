@@ -1,12 +1,70 @@
 import React from 'react';
+import { FaArrowUp, FaGithub, FaLinkedin, FaMedium } from 'react-icons/fa';
+import { profile } from '../data/profile';
+
+const socials = [
+    { key: 'github', label: 'GitHub', icon: FaGithub },
+    { key: 'linkedin', label: 'LinkedIn', icon: FaLinkedin },
+    { key: 'medium', label: 'Medium', icon: FaMedium },
+];
 
 const Footer = () => {
     return (
-        <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 py-8">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <p className="text-gray-600 dark:text-gray-400">
-                    &copy; {new Date().getFullYear()} Rahul Prajapati. All rights reserved.
-                </p>
+        <footer className="relative" style={{ borderTop: '1px solid var(--border)' }}>
+            <div className="shell py-12">
+                <div className="flex flex-col items-center gap-8 md:flex-row md:items-center md:justify-between">
+                    <div className="text-center md:text-left">
+                        <div className="flex items-center justify-center gap-3 md:justify-start">
+                            <span
+                                className="grid h-9 w-9 place-items-center rounded-xl text-xs font-bold text-white"
+                                style={{ background: 'linear-gradient(135deg, var(--accent), var(--tech))' }}
+                            >
+                                RP
+                            </span>
+                            <span className="text-sm font-semibold tracking-tight" style={{ color: 'var(--text)' }}>
+                                {profile.name}
+                            </span>
+                        </div>
+                        <p className="mt-3 text-sm" style={{ color: 'var(--text-muted)' }}>
+                            {profile.title} &middot; {profile.location}
+                        </p>
+                    </div>
+
+                    <div className="flex items-center gap-2.5">
+                        {socials.map((social) => {
+                            const Icon = social.icon;
+                            return (
+                            <a
+                                key={social.key}
+                                href={profile.links[social.key]}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={social.label}
+                                className="grid h-10 w-10 place-items-center rounded-xl transition-transform duration-200 hover:-translate-y-0.5"
+                                style={{ border: '1px solid var(--border)', background: 'var(--surface-muted)', color: 'var(--text-muted)' }}
+                            >
+                                <Icon size={17} />
+                            </a>
+                            );
+                        })}
+                        <button
+                            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                            aria-label="Back to top"
+                            className="ml-1 grid h-10 w-10 cursor-pointer place-items-center rounded-xl transition-transform duration-200 hover:-translate-y-0.5"
+                            style={{ border: '1px solid var(--border)', background: 'var(--surface-muted)', color: 'var(--text-muted)' }}
+                        >
+                            <FaArrowUp size={15} />
+                        </button>
+                    </div>
+                </div>
+
+                <div
+                    className="mt-10 flex flex-col items-center justify-between gap-2 pt-6 text-center text-xs sm:flex-row sm:text-left"
+                    style={{ borderTop: '1px solid var(--border)', color: 'var(--text-subtle)' }}
+                >
+                    <p>&copy; {new Date().getFullYear()} {profile.name}. All rights reserved.</p>
+                    <p className="font-mono">Built with React, Vite &amp; Tailwind</p>
+                </div>
             </div>
         </footer>
     );

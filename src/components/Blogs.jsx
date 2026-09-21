@@ -74,29 +74,30 @@ const Blogs = () => {
     };
 
     return (
-        <section className="py-20 bg-gray-50 dark:bg-gray-800 min-h-screen pt-24">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="section section-divider min-h-screen pt-28">
+            <div className="shell">
                 <Motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="text-center mb-12"
+                    className="text-center mb-14"
                 >
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">My Blogs</h2>
-                    <p className="text-xl text-gray-600 dark:text-gray-300">Thoughts and tutorials on Cloud, DevOps, and Tech.</p>
+                    <p className="eyebrow">Writing</p>
+                    <h2 className="mt-4 text-3xl font-bold leading-[1.1] tracking-tight md:text-5xl" style={{ color: 'var(--text)' }}>My Blogs</h2>
+                    <p className="mx-auto mt-5 max-w-2xl text-base leading-[1.75] sm:text-lg" style={{ color: 'var(--text-muted)' }}>Thoughts and tutorials on Cloud, DevOps, and Tech.</p>
                 </Motion.div>
 
                 {loading && (
                     <div className="flex justify-center items-center h-64">
-                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-cyan-500"></div>
+                        <div className="h-10 w-10 animate-spin rounded-full" style={{ border: '2px solid var(--border)', borderTopColor: 'var(--accent)' }}></div>
                     </div>
                 )}
 
                 {error && (
                     <div className="text-center mb-8">
-                        <p className="text-yellow-600 dark:text-yellow-400">{error}</p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                            Check my <a href="https://medium.com/@rahulkprajapati" target="_blank" rel="noopener noreferrer" className="underline hover:text-cyan-500">Medium Profile</a> for all articles.
+                        <p className="text-sm font-medium" style={{ color: 'var(--accent)' }}>{error}</p>
+                        <p className="mt-2 text-sm" style={{ color: 'var(--text-muted)' }}>
+                            Check my <a href="https://medium.com/@rahulkprajapati" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4" style={{ color: 'var(--tech)' }}>Medium Profile</a> for all articles.
                         </p>
                     </div>
                 )}
@@ -116,26 +117,26 @@ const Blogs = () => {
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                                    className="block bg-white dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow border border-gray-100 dark:border-gray-700 flex flex-col h-full"
+                                    className="surface lift group flex h-full flex-col overflow-hidden"
                                 >
-                                    <div className="h-48 overflow-hidden bg-gray-200 dark:bg-gray-800">
+                                    <div className="h-48 overflow-hidden" style={{ background: 'var(--surface-inset)' }}>
                                         <img
                                             src={displayImage}
                                             alt={blog.title}
-                                            className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                                             onError={(e) => { e.target.src = 'https://miro.medium.com/max/1400/1*s9l9z9z9z9z9z9z9z9z9z9.png'; }} // Fallback on load error
                                         />
                                     </div>
                                     <div className="p-6 flex-1 flex flex-col">
-                                        <div className="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
+                                        <div className="mb-3 flex items-center justify-between text-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
                                             <span>{new Date(blog.pubDate).toLocaleDateString()}</span>
-                                            <FaMedium className="text-gray-400" />
+                                            <FaMedium style={{ color: 'var(--text-subtle)' }} />
                                         </div>
-                                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-colors line-clamp-2">
+                                        <h3 className="mb-2 line-clamp-2 text-lg font-semibold leading-snug tracking-tight transition-colors" style={{ color: 'var(--text)' }}>
                                             {blog.title}
                                         </h3>
                                         <div className="mt-auto pt-4">
-                                            <span className="text-cyan-500 dark:text-cyan-400 font-medium hover:underline">Read on Medium &rarr;</span>
+                                            <span className="text-sm font-semibold" style={{ color: 'var(--accent)' }}>Read on Medium &rarr;</span>
                                         </div>
                                     </div>
                                 </Motion.a>

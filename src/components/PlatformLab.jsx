@@ -110,7 +110,7 @@ const PlatformLab = () => {
     const [activeNode, setActiveNode] = useState(null);
 
     return (
-        <section id="platform-lab" className="py-20 bg-gray-50 dark:bg-gray-900">
+        <section id="platform-lab" className="section section-divider">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <Motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -120,10 +120,10 @@ const PlatformLab = () => {
                     className="mb-12 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"
                 >
                     <div>
-                        <p className="text-sm font-black uppercase text-red-600 dark:text-red-300">Platform Lab</p>
-                        <h2 className="mt-3 text-3xl md:text-5xl font-black text-gray-950 dark:text-white">A sanitized view of how I think.</h2>
+                        <p className="eyebrow">Platform Lab</p>
+                        <h2 className="mt-4 text-3xl font-bold leading-[1.1] tracking-tight md:text-5xl" style={{ color: 'var(--text)' }}>A sanitized view of how I think.</h2>
                     </div>
-                    <p className="max-w-2xl text-base leading-7 text-gray-600 dark:text-gray-300">
+                    <p className="max-w-2xl text-base leading-[1.75]" style={{ color: 'var(--text-muted)' }}>
                         A portfolio surface for the usually invisible work: architecture tradeoffs, self-service DevEx, GitOps delivery, observability, migration evidence, and efficiency.
                     </p>
                 </Motion.div>
@@ -134,17 +134,17 @@ const PlatformLab = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
                         viewport={{ once: true }}
-                        className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-gray-950"
+                        className="surface p-6"
                     >
                         <div className="flex items-center justify-between gap-4">
                             <div>
-                                <div className="flex items-center gap-2 text-sm font-black uppercase text-cyan-700 dark:text-cyan-300">
+                                <div className="eyebrow flex items-center gap-2" style={{ color: 'var(--tech)' }}>
                                     <FaProjectDiagram />
                                     Interactive Architecture
                                 </div>
-                                <h3 className="mt-2 text-2xl font-black text-gray-950 dark:text-white">Production platform control plane</h3>
+                                <h3 className="mt-2.5 text-2xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>Production platform control plane</h3>
                             </div>
-                            <span className="rounded-md bg-red-50 px-3 py-2 text-xs font-black uppercase text-red-700 dark:bg-red-400/10 dark:text-red-300">Sanitized</span>
+                            <span className="rounded-full px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-wider" style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}>Sanitized</span>
                         </div>
 
                         <div className="relative mt-6 min-h-[440px] overflow-hidden rounded-lg border border-gray-200 bg-gray-950 dark:border-white/10">
@@ -170,14 +170,14 @@ const PlatformLab = () => {
                                         type="button"
                                         onMouseEnter={() => setActiveNode(node)}
                                         onFocus={() => setActiveNode(node)}
-                                        className={`rounded-lg border px-3 py-2 text-left text-sm font-black shadow-lg transition hover:-translate-y-1 ${activeNode?.id === node.id ? 'border-cyan-300 bg-cyan-300 text-gray-950' : 'border-white/10 bg-white/10 text-white hover:border-cyan-300/60'}`}
+                                        className={`rounded-lg border px-3 py-2 text-left text-sm font-semibold shadow-lg transition hover:-translate-y-1 ${activeNode?.id === node.id ? 'border-cyan-300 bg-cyan-300 text-gray-950' : 'border-white/10 bg-white/10 text-white hover:border-cyan-300/60'}`}
                                     >
                                         {node.label}
                                     </button>
 
                                     {activeNode?.id === node.id && (
                                         <div className={`absolute z-50 w-80 max-w-[min(20rem,80vw)] rounded-lg border border-white/10 bg-gray-950/95 p-4 text-left shadow-2xl backdrop-blur ${node.tooltip === 'left' ? 'right-0' : 'left-0'} ${node.vertical === 'top' ? 'bottom-12' : 'top-12'}`}>
-                                            <p className="text-xs font-black uppercase text-cyan-300">{node.label}</p>
+                                            <p className="text-[0.68rem] font-semibold uppercase tracking-wider text-cyan-300">{node.label}</p>
                                             <p className="mt-2 text-sm font-medium leading-6 text-gray-200">{node.detail}</p>
                                         </div>
                                     )}
@@ -192,22 +192,22 @@ const PlatformLab = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: 0.1 }}
                             viewport={{ once: true }}
-                            className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-gray-950"
+                            className="surface p-6"
                         >
-                            <div className="flex items-center gap-2 text-sm font-black uppercase text-red-600 dark:text-red-300">
+                            <div className="eyebrow flex items-center gap-2">
                                 <FaLayerGroup />
                                 Mock IDP
                             </div>
-                            <h3 className="mt-2 text-2xl font-black text-gray-950 dark:text-white">Service catalog mindset</h3>
+                            <h3 className="mt-2.5 text-2xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>Service catalog mindset</h3>
                             <div className="mt-5 grid gap-3">
                                 {serviceCatalog.map((service) => (
-                                    <div key={service.name} className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-white/10 dark:bg-white/5">
+                                    <div key={service.name} className="surface-flat p-4">
                                         <div className="flex flex-wrap items-center justify-between gap-2">
-                                            <p className="font-black text-gray-950 dark:text-white">{service.name}</p>
-                                            <span className="rounded-md bg-emerald-50 px-2 py-1 text-xs font-black uppercase text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300">{service.status}</span>
+                                            <p className="text-sm font-semibold" style={{ color: 'var(--text)' }}>{service.name}</p>
+                                            <span className="rounded-full px-2.5 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wider" style={{ background: 'var(--ok-soft)', color: 'var(--ok)' }}>{service.status}</span>
                                         </div>
-                                        <p className="mt-1 text-xs font-bold uppercase text-gray-500 dark:text-gray-400">{service.owner}</p>
-                                        <p className="mt-2 text-sm leading-6 text-gray-600 dark:text-gray-300">{service.action}</p>
+                                        <p className="mt-1 text-[0.68rem] font-medium uppercase tracking-wider" style={{ color: 'var(--text-subtle)' }}>{service.owner}</p>
+                                        <p className="mt-2 text-sm leading-[1.7]" style={{ color: 'var(--text-muted)' }}>{service.action}</p>
                                     </div>
                                 ))}
                             </div>
@@ -221,10 +221,10 @@ const PlatformLab = () => {
                             className="grid grid-cols-2 gap-3"
                         >
                             {evidenceItems.map((item) => (
-                                <div key={item.label} className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-gray-950">
-                                    <div className="text-xl text-red-600 dark:text-red-300">{item.icon}</div>
-                                    <p className="mt-3 text-sm font-black text-gray-950 dark:text-white">{item.value}</p>
-                                    <p className="mt-1 text-xs font-bold uppercase text-gray-500 dark:text-gray-400">{item.label}</p>
+                                <div key={item.label} className="surface-flat p-4">
+                                    <div className="text-xl" style={{ color: 'var(--accent)' }}>{item.icon}</div>
+                                    <p className="mt-3 text-sm font-semibold" style={{ color: 'var(--text)' }}>{item.value}</p>
+                                    <p className="mt-1 text-[0.68rem] font-medium uppercase tracking-wider" style={{ color: 'var(--text-subtle)' }}>{item.label}</p>
                                 </div>
                             ))}
                         </Motion.div>
@@ -237,20 +237,20 @@ const PlatformLab = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
                         viewport={{ once: true }}
-                        className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-gray-950"
+                        className="surface p-6"
                     >
-                        <div className="flex items-center gap-2 text-sm font-black uppercase text-cyan-700 dark:text-cyan-300">
+                        <div className="eyebrow flex items-center gap-2" style={{ color: 'var(--tech)' }}>
                             <SiGithubactions />
                             CI/CD Visualizer
                         </div>
                         <div className="mt-5 grid gap-3">
                             {pipelineStages.map((stage, index) => (
                                 <div key={stage} className="flex items-center gap-3">
-                                    <span className="grid h-8 w-8 place-items-center rounded-lg bg-gray-950 text-xs font-black text-white dark:bg-white dark:text-gray-950">{index + 1}</span>
-                                    <div className="h-2 flex-1 overflow-hidden rounded-full bg-gray-100 dark:bg-white/10">
-                                        <div className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-red-400" style={{ width: `${52 + index * 6}%` }} />
+                                    <span className="grid h-8 w-8 flex-shrink-0 place-items-center rounded-lg font-mono text-xs font-semibold" style={{ background: 'var(--surface-inset)', color: 'var(--text)' }}>{index + 1}</span>
+                                    <div className="h-1.5 flex-1 overflow-hidden rounded-full" style={{ background: 'var(--surface-inset)' }}>
+                                        <div className="h-full rounded-full" style={{ background: 'linear-gradient(90deg, var(--tech), var(--accent))', width: `${52 + index * 6}%` }} />
                                     </div>
-                                    <span className="w-24 text-sm font-bold text-gray-700 dark:text-gray-300">{stage}</span>
+                                    <span className="w-24 text-sm font-medium" style={{ color: 'var(--text-muted)' }}>{stage}</span>
                                 </div>
                             ))}
                         </div>
@@ -261,9 +261,9 @@ const PlatformLab = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.1 }}
                         viewport={{ once: true }}
-                        className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-gray-950"
+                        className="surface p-6"
                     >
-                        <div className="flex items-center gap-2 text-sm font-black uppercase text-cyan-700 dark:text-cyan-300">
+                        <div className="eyebrow flex items-center gap-2" style={{ color: 'var(--tech)' }}>
                             <SiTerraform />
                             IaC Showcase
                         </div>
@@ -278,7 +278,7 @@ const PlatformLab = () => {
     audit_labels = local.labels
   }
 }`}</code></pre>
-                        <p className="mt-4 text-sm leading-6 text-gray-600 dark:text-gray-300">
+                        <p className="mt-4 text-sm leading-[1.7]" style={{ color: 'var(--text-muted)' }}>
                             The point is not just provisioning. It is repeatable defaults, audit labels, secrets discipline, and safer promotion paths.
                         </p>
                     </Motion.div>
@@ -288,9 +288,9 @@ const PlatformLab = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
                         viewport={{ once: true }}
-                        className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-gray-950"
+                        className="surface p-6"
                     >
-                        <div className="flex items-center gap-2 text-sm font-black uppercase text-cyan-700 dark:text-cyan-300">
+                        <div className="eyebrow flex items-center gap-2" style={{ color: 'var(--tech)' }}>
                             <SiGrafana />
                             Observability
                         </div>
@@ -300,13 +300,13 @@ const PlatformLab = () => {
                                 { label: 'Signals', value: 'Logs · Metrics · Traces' },
                                 { label: 'Response', value: 'Alert → Runbook → Evidence' },
                             ].map((metric) => (
-                                <div key={metric.label} className="rounded-lg bg-gray-50 p-4 dark:bg-white/5">
-                                    <p className="text-sm font-black text-gray-950 dark:text-white">{metric.value}</p>
-                                    <p className="mt-1 text-xs font-bold uppercase text-gray-500 dark:text-gray-400">{metric.label}</p>
+                                <div key={metric.label} className="surface-flat p-4">
+                                    <p className="text-sm font-semibold" style={{ color: 'var(--text)' }}>{metric.value}</p>
+                                    <p className="mt-1 text-[0.68rem] font-medium uppercase tracking-wider" style={{ color: 'var(--text-subtle)' }}>{metric.label}</p>
                                 </div>
                             ))}
                         </div>
-                        <div className="mt-5 flex items-center gap-3 text-sm font-bold text-gray-600 dark:text-gray-300">
+                        <div className="mt-5 flex items-center gap-3 text-sm font-medium" style={{ color: 'var(--text-muted)' }}>
                             <SiKubernetes className="text-[#326CE5]" />
                             Production operations designed for boring days.
                         </div>

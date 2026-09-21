@@ -1,119 +1,244 @@
 import React, { useState } from 'react';
 import { motion as Motion } from 'framer-motion';
 import Typewriter from 'typewriter-effect';
-import { FaArrowRight, FaDownload, FaGithub, FaLinkedin, FaMedium, FaPlaneDeparture, FaTerminal } from 'react-icons/fa';
+import { FaArrowRight, FaDownload, FaGithub, FaLinkedin, FaMedium, FaTerminal } from 'react-icons/fa';
 import profileImage from '../assets/profile.jpg';
 import Terminal from './Terminal';
 import PipelineAnimation from './PipelineAnimation';
 import { highlights, profile } from '../data/profile';
+
+const socials = [
+    { key: 'github', label: 'GitHub', icon: FaGithub },
+    { key: 'linkedin', label: 'LinkedIn', icon: FaLinkedin },
+    { key: 'medium', label: 'Medium', icon: FaMedium },
+];
+
+const fadeUp = {
+    hidden: { opacity: 0, y: 22 },
+    show: (i = 0) => ({
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] },
+    }),
+};
 
 const Hero = () => {
     const [showTerminal, setShowTerminal] = useState(false);
 
     return (
         <>
-            <section id="home" className="min-h-screen flex items-center pt-24 pb-12 overflow-hidden">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[1.08fr_0.92fr] gap-10 lg:gap-16 items-center">
-                    <Motion.div
-                        initial={{ opacity: 0, y: 24 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        className="text-center lg:text-left"
-                    >
-                        <div className="inline-flex items-center gap-2 rounded-lg border border-red-200 bg-red-50/80 px-3 py-2 text-sm font-semibold text-red-700 shadow-sm dark:border-red-400/20 dark:bg-red-950/30 dark:text-red-200">
-                            <FaPlaneDeparture className="text-red-600 dark:text-red-300" />
-                            AirAsia MOVE - building cloud platforms at travel scale
-                        </div>
-                        <h1 className="mt-6 text-4xl sm:text-5xl lg:text-7xl font-black tracking-normal text-gray-950 dark:text-white">
-                            Rahul Prajapati
-                        </h1>
-                        <div className="mt-5 min-h-10 text-xl sm:text-2xl font-semibold text-gray-700 dark:text-gray-200">
+            <section id="home" className="relative flex min-h-screen items-center overflow-hidden pt-28 pb-20">
+                {/* Soft accent wash anchoring the fold */}
+                <div
+                    aria-hidden
+                    className="pointer-events-none absolute -top-40 left-1/2 h-[38rem] w-[70rem] -translate-x-1/2 opacity-60 blur-3xl"
+                    style={{
+                        background:
+                            'radial-gradient(45% 50% at 30% 40%, var(--accent-soft), transparent 70%), radial-gradient(40% 45% at 72% 55%, var(--tech-soft), transparent 70%)',
+                    }}
+                />
+
+                <div className="shell relative grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+                    <div className="text-center lg:text-left">
+                        <Motion.div variants={fadeUp} initial="hidden" animate="show" custom={0}>
+                            <span
+                                className="inline-flex items-center gap-2.5 rounded-full px-3.5 py-1.5 text-xs font-medium"
+                                style={{
+                                    border: '1px solid var(--border)',
+                                    background: 'var(--surface-muted)',
+                                    color: 'var(--text-muted)',
+                                }}
+                            >
+                                <span className="relative flex h-2 w-2">
+                                    <span
+                                        className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-70"
+                                        style={{ background: 'var(--accent)' }}
+                                    />
+                                    <span className="relative inline-flex h-2 w-2 rounded-full" style={{ background: 'var(--accent)' }} />
+                                </span>
+                                Building cloud platforms at travel scale &mdash; AirAsia MOVE
+                            </span>
+                        </Motion.div>
+
+                        <Motion.h1
+                            variants={fadeUp}
+                            initial="hidden"
+                            animate="show"
+                            custom={1}
+                            className="mt-7 text-5xl font-extrabold leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl"
+                            style={{ color: 'var(--text)' }}
+                        >
+                            Rahul
+                            <br />
+                            <span
+                                style={{
+                                    background: 'linear-gradient(120deg, var(--accent), var(--tech))',
+                                    WebkitBackgroundClip: 'text',
+                                    backgroundClip: 'text',
+                                    color: 'transparent',
+                                }}
+                            >
+                                Prajapati
+                            </span>
+                        </Motion.h1>
+
+                        <Motion.div
+                            variants={fadeUp}
+                            initial="hidden"
+                            animate="show"
+                            custom={2}
+                            className="mt-5 flex min-h-8 items-center justify-center font-mono text-base sm:text-lg lg:justify-start"
+                            style={{ color: 'var(--tech)' }}
+                        >
+                            <span aria-hidden className="mr-2 opacity-50">&gt;</span>
                             <Typewriter
                                 options={{
                                     strings: [
-                                        'Senior Software Engineer Platform',
+                                        'Senior Software Engineer, Platform',
                                         'Kubernetes Platform Builder',
                                         'Terraform Automation Engineer',
                                         'GitOps & Observability Specialist',
                                     ],
                                     autoStart: true,
                                     loop: true,
-                                    deleteSpeed: 50,
-                                    delay: 80,
+                                    deleteSpeed: 40,
+                                    delay: 70,
                                 }}
                             />
-                        </div>
+                        </Motion.div>
 
-                        <p className="mt-6 max-w-2xl text-base sm:text-lg leading-8 text-gray-600 dark:text-gray-300">
+                        <Motion.p
+                            variants={fadeUp}
+                            initial="hidden"
+                            animate="show"
+                            custom={3}
+                            className="mx-auto mt-6 max-w-2xl text-base leading-[1.75] sm:text-lg lg:mx-0"
+                            style={{ color: 'var(--text-muted)' }}
+                        >
                             {profile.summary} {profile.current}
-                        </p>
+                        </Motion.p>
 
-                        <div className="mt-8 flex flex-wrap gap-3 justify-center lg:justify-start">
-                            <button
-                                onClick={() => setShowTerminal(true)}
-                                className="inline-flex min-h-12 items-center gap-2 rounded-lg bg-gray-950 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-gray-950/15 transition hover:-translate-y-0.5 hover:bg-gray-800 dark:bg-white dark:text-gray-950 dark:hover:bg-gray-100"
-                            >
-                                <FaTerminal />
-                                <span>Try Terminal</span>
+                        <Motion.div
+                            variants={fadeUp}
+                            initial="hidden"
+                            animate="show"
+                            custom={4}
+                            className="mt-9 flex flex-wrap justify-center gap-3 lg:justify-start"
+                        >
+                            <button onClick={() => setShowTerminal(true)} className="btn btn-primary">
+                                <FaTerminal size={14} />
+                                <span>Try the terminal</span>
                             </button>
-                            <a
-                                href="/Rahul_Prajapati.pdf"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex min-h-12 items-center gap-2 rounded-lg border border-gray-200 bg-white px-5 py-3 text-sm font-bold text-gray-950 shadow-sm transition hover:-translate-y-0.5 hover:border-red-300 hover:text-red-700 dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:border-red-300/50"
-                            >
-                                <FaDownload />
+                            <a href="/Rahul_Prajapati.pdf" target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
+                                <FaDownload size={14} />
                                 <span>Resume</span>
                             </a>
                             <button
-                                onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}
-                                className="inline-flex min-h-12 items-center gap-2 rounded-lg border border-gray-200 bg-white px-5 py-3 text-sm font-bold text-gray-950 shadow-sm transition hover:-translate-y-0.5 hover:border-emerald-300 hover:text-emerald-700 dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:border-emerald-300/50"
+                                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                                className="btn btn-ghost group"
                             >
-                                <span>Contact</span>
-                                <FaArrowRight />
+                                <span>Get in touch</span>
+                                <FaArrowRight size={13} className="transition-transform duration-200 group-hover:translate-x-1" />
                             </button>
-                        </div>
+                        </Motion.div>
 
-                        <div className="mt-7 flex items-center justify-center gap-3 lg:justify-start">
-                            <a href={profile.links.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="grid h-11 w-11 place-items-center rounded-lg border border-gray-200 bg-white text-gray-700 shadow-sm transition hover:-translate-y-0.5 hover:text-gray-950 dark:border-white/10 dark:bg-white/10 dark:text-gray-300 dark:hover:text-white">
-                                <FaGithub size={22} />
-                            </a>
-                            <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="grid h-11 w-11 place-items-center rounded-lg border border-gray-200 bg-white text-gray-700 shadow-sm transition hover:-translate-y-0.5 hover:text-blue-700 dark:border-white/10 dark:bg-white/10 dark:text-gray-300 dark:hover:text-blue-300">
-                                <FaLinkedin size={22} />
-                            </a>
-                            <a href={profile.links.medium} target="_blank" rel="noopener noreferrer" aria-label="Medium" className="grid h-11 w-11 place-items-center rounded-lg border border-gray-200 bg-white text-gray-700 shadow-sm transition hover:-translate-y-0.5 hover:text-emerald-700 dark:border-white/10 dark:bg-white/10 dark:text-gray-300 dark:hover:text-emerald-300">
-                                <FaMedium size={22} />
-                            </a>
-                        </div>
+                        <Motion.div
+                            variants={fadeUp}
+                            initial="hidden"
+                            animate="show"
+                            custom={5}
+                            className="mt-7 flex items-center justify-center gap-2.5 lg:justify-start"
+                        >
+                            {socials.map((social) => {
+                                const Icon = social.icon;
+                                return (
+                                <a
+                                    key={social.key}
+                                    href={profile.links[social.key]}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={social.label}
+                                    className="grid h-11 w-11 place-items-center rounded-xl transition-all duration-200 hover:-translate-y-0.5"
+                                    style={{
+                                        border: '1px solid var(--border)',
+                                        background: 'var(--surface-muted)',
+                                        color: 'var(--text-muted)',
+                                    }}
+                                    onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.borderColor = 'var(--accent-ring)'; }}
+                                    onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-muted)'; e.currentTarget.style.borderColor = 'var(--border)'; }}
+                                >
+                                    <Icon size={19} />
+                                </a>
+                                );
+                            })}
+                        </Motion.div>
 
-                        <div className="mt-9 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                        <Motion.div
+                            variants={fadeUp}
+                            initial="hidden"
+                            animate="show"
+                            custom={6}
+                            className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4"
+                        >
                             {highlights.map((item) => (
-                                <div key={item.label} className="rounded-lg border border-gray-200 bg-white/80 p-4 text-left shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/10">
-                                    <div className="text-2xl font-black text-gray-950 dark:text-white">{item.value}</div>
-                                    <div className="mt-1 text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">{item.label}</div>
+                                <div key={item.label} className="surface-flat lift p-4 text-left">
+                                    <div
+                                        className="font-mono text-[0.7rem] font-semibold tracking-[0.18em]"
+                                        style={{ color: 'var(--accent)' }}
+                                    >
+                                        {item.value}
+                                    </div>
+                                    <div className="mt-1.5 text-sm font-medium leading-snug" style={{ color: 'var(--text)' }}>
+                                        {item.label}
+                                    </div>
                                 </div>
                             ))}
-                        </div>
-                    </Motion.div>
+                        </Motion.div>
+                    </div>
 
                     <Motion.div
                         initial={{ opacity: 0, scale: 0.96, y: 24 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
-                        transition={{ duration: 0.65, delay: 0.15 }}
+                        transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
                         className="relative"
                     >
-                        <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-red-500/20 via-cyan-400/15 to-emerald-400/20 blur-2xl" />
-                        <div className="relative overflow-hidden rounded-2xl border border-white/60 bg-white shadow-2xl shadow-gray-950/10 dark:border-white/10 dark:bg-gray-950">
-                            <div className="aspect-[4/3] overflow-hidden">
-                                <img src={profileImage} alt="Rahul Prajapati" className="h-full w-full object-cover" />
+                        <div
+                            aria-hidden
+                            className="absolute -inset-5 rounded-[2.5rem] opacity-70 blur-2xl"
+                            style={{
+                                background:
+                                    'linear-gradient(140deg, var(--accent-soft), var(--tech-soft), var(--ok-soft))',
+                            }}
+                        />
+                        <div className="surface relative overflow-hidden" style={{ borderRadius: 'var(--r-xl)' }}>
+                            <div className="relative aspect-[4/3] overflow-hidden">
+                                <img
+                                    src={profileImage}
+                                    alt="Rahul Prajapati"
+                                    className="h-full w-full object-cover"
+                                    loading="eager"
+                                />
+                                <div
+                                    aria-hidden
+                                    className="absolute inset-0"
+                                    style={{ background: 'linear-gradient(to top, rgba(3,7,18,0.45), transparent 55%)' }}
+                                />
                             </div>
-                            <div className="border-t border-gray-100 bg-white p-5 dark:border-white/10 dark:bg-gray-950">
+
+                            <div className="p-5" style={{ borderTop: '1px solid var(--border)' }}>
                                 <div className="flex items-center justify-between gap-4">
                                     <div>
-                                        <p className="text-sm font-semibold uppercase text-gray-500 dark:text-gray-400">Current Focus</p>
-                                        <p className="mt-1 text-lg font-black text-gray-950 dark:text-white">AirAsia MOVE Platform</p>
+                                        <p className="eyebrow" style={{ color: 'var(--text-subtle)' }}>Current focus</p>
+                                        <p className="mt-1.5 text-lg font-semibold tracking-tight" style={{ color: 'var(--text)' }}>
+                                            AirAsia MOVE Platform
+                                        </p>
                                     </div>
-                                    <div className="rounded-lg bg-red-600 px-3 py-2 text-sm font-black text-white">2026</div>
+                                    <span
+                                        className="rounded-xl px-3 py-1.5 font-mono text-sm font-semibold"
+                                        style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}
+                                    >
+                                        2026
+                                    </span>
                                 </div>
                                 <PipelineAnimation />
                             </div>

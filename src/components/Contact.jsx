@@ -66,8 +66,8 @@ ${message}`;
     const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(profile.email)}&su=${encodeURIComponent(`Portfolio Contact from ${formData.name || 'Visitor'}`)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)}`;
 
     return (
-        <section id="contact" className="py-20 bg-white dark:bg-gray-950">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section id="contact" className="section section-divider">
+            <div className="shell">
                 <Motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -75,9 +75,9 @@ ${message}`;
                     viewport={{ once: true }}
                     className="mb-14 text-center"
                 >
-                    <p className="text-sm font-black uppercase text-red-600 dark:text-red-300">Contact</p>
-                    <h2 className="mt-3 text-3xl md:text-5xl font-black text-gray-950 dark:text-white">Let us build something reliable.</h2>
-                    <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-gray-600 dark:text-gray-300">
+                    <p className="eyebrow">Contact</p>
+                    <h2 className="mt-4 text-3xl font-bold leading-[1.1] tracking-tight md:text-5xl" style={{ color: 'var(--text)' }}>Let’s build something reliable.</h2>
+                    <p className="mx-auto mt-5 max-w-2xl text-base leading-[1.75]" style={{ color: 'var(--text-muted)' }}>
                         Reach out for platform engineering, DevOps automation, Kubernetes reliability, or cloud architecture conversations.
                     </p>
                 </Motion.div>
@@ -88,7 +88,7 @@ ${message}`;
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5 }}
                         viewport={{ once: true }}
-                        className="rounded-xl border border-gray-200 bg-gray-50 p-5 shadow-sm dark:border-white/10 dark:bg-white/5 sm:p-8"
+                        className="surface p-6 sm:p-8"
                     >
                         <form className="space-y-6" onSubmit={handleSubmit}>
                             <Motion.div
@@ -97,14 +97,15 @@ ${message}`;
                                 transition={{ duration: 0.3, delay: 0.1 }}
                                 viewport={{ once: true }}
                             >
-                                <label htmlFor="name" className="block text-sm font-bold text-gray-700 dark:text-gray-300">Name</label>
+                                <label htmlFor="name" className="block text-sm font-medium" style={{ color: 'var(--text)' }}>Name</label>
                                 <input
                                     type="text"
                                     id="name"
                                     value={formData.name}
                                     onChange={handleChange}
                                     required
-                                    className="mt-2 block w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-gray-950 shadow-sm outline-none transition focus:border-red-400 focus:ring-4 focus:ring-red-100 dark:border-white/10 dark:bg-gray-950 dark:text-white dark:focus:ring-red-400/10"
+                                    className="mt-2 block w-full rounded-xl px-4 py-3 text-base outline-none transition-colors duration-200"
+                                    style={{ border: '1px solid var(--border)', background: 'var(--surface-strong)', color: 'var(--text)' }}
                                     placeholder="Your Name"
                                 />
                             </Motion.div>
@@ -114,14 +115,15 @@ ${message}`;
                                 transition={{ duration: 0.3, delay: 0.2 }}
                                 viewport={{ once: true }}
                             >
-                                <label htmlFor="email" className="block text-sm font-bold text-gray-700 dark:text-gray-300">Email</label>
+                                <label htmlFor="email" className="block text-sm font-medium" style={{ color: 'var(--text)' }}>Email</label>
                                 <input
                                     type="email"
                                     id="email"
                                     value={formData.email}
                                     onChange={handleChange}
                                     required
-                                    className="mt-2 block w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-gray-950 shadow-sm outline-none transition focus:border-red-400 focus:ring-4 focus:ring-red-100 dark:border-white/10 dark:bg-gray-950 dark:text-white dark:focus:ring-red-400/10"
+                                    className="mt-2 block w-full rounded-xl px-4 py-3 text-base outline-none transition-colors duration-200"
+                                    style={{ border: '1px solid var(--border)', background: 'var(--surface-strong)', color: 'var(--text)' }}
                                     placeholder="your.email@example.com"
                                 />
                             </Motion.div>
@@ -131,14 +133,15 @@ ${message}`;
                                 transition={{ duration: 0.3, delay: 0.3 }}
                                 viewport={{ once: true }}
                             >
-                                <label htmlFor="message" className="block text-sm font-bold text-gray-700 dark:text-gray-300">Message</label>
+                                <label htmlFor="message" className="block text-sm font-medium" style={{ color: 'var(--text)' }}>Message</label>
                                 <textarea
                                     id="message"
                                     rows="4"
                                     value={formData.message}
                                     onChange={handleChange}
                                     required
-                                    className="mt-2 block w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-gray-950 shadow-sm outline-none transition focus:border-red-400 focus:ring-4 focus:ring-red-100 dark:border-white/10 dark:bg-gray-950 dark:text-white dark:focus:ring-red-400/10"
+                                    className="mt-2 block w-full rounded-xl px-4 py-3 text-base outline-none transition-colors duration-200"
+                                    style={{ border: '1px solid var(--border)', background: 'var(--surface-strong)', color: 'var(--text)' }}
                                     placeholder="Your message..."
                                 ></textarea>
                             </Motion.div>
@@ -149,19 +152,20 @@ ${message}`;
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.3, delay: 0.4 }}
                                 viewport={{ once: true }}
-                                className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-gray-950 px-8 py-3 font-black text-white shadow-lg shadow-gray-950/15 transition hover:-translate-y-0.5 hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white dark:text-gray-950 dark:hover:bg-gray-100"
+                                className="btn btn-primary w-full disabled:cursor-not-allowed disabled:opacity-60"
                             >
                                 <FaPaperPlane />
                                 <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
                             </Motion.button>
                             {submitStatus && (
-                                <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-sm font-semibold leading-6 text-emerald-800 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-200">
+                                <div className="rounded-xl p-4 text-sm leading-[1.7]"
+                                    style={{ border: '1px solid var(--border)', background: 'var(--ok-soft)', color: 'var(--text)' }}>
                                     {submitStatus}
                                     <a
                                         href={gmailComposeUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="ml-2 font-black underline underline-offset-4"
+                                        className="ml-2 font-semibold underline underline-offset-4" style={{ color: 'var(--accent)' }}
                                     >
                                         Open Gmail compose
                                     </a>
@@ -175,48 +179,48 @@ ${message}`;
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5 }}
                         viewport={{ once: true }}
-                        className="rounded-xl border border-gray-200 bg-gray-950 p-6 text-white shadow-2xl shadow-gray-950/10 dark:border-white/10"
+                        className="surface h-fit p-6"
                     >
                         <div className="space-y-5">
-                            <div className="flex items-center gap-4 rounded-lg border border-white/10 bg-white/5 p-4">
-                                <div className="grid h-11 w-11 place-items-center rounded-lg bg-red-500/15 text-red-200">
+                            <div className="surface-flat flex items-center gap-4 p-4">
+                                <div className="grid h-11 w-11 flex-shrink-0 place-items-center rounded-xl" style={{ background: 'var(--surface-inset)', color: 'var(--accent)' }}>
                                     <FaEnvelope size={22} />
                                 </div>
                                 <div className="min-w-0">
-                                    <h3 className="text-sm font-black uppercase text-gray-400">Email</h3>
-                                    <p className="break-words text-white">{profile.email}</p>
+                                    <h3 className="eyebrow" style={{ color: 'var(--text-subtle)' }}>Email</h3>
+                                    <p className="mt-0.5 break-words text-sm font-medium" style={{ color: 'var(--text)' }}>{profile.email}</p>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-4 rounded-lg border border-white/10 bg-white/5 p-4">
-                                <div className="grid h-11 w-11 place-items-center rounded-lg bg-cyan-500/15 text-cyan-200">
+                            <div className="surface-flat flex items-center gap-4 p-4">
+                                <div className="grid h-11 w-11 flex-shrink-0 place-items-center rounded-xl" style={{ background: 'var(--surface-inset)', color: 'var(--tech)' }}>
                                     <FaMobileAlt size={22} />
                                 </div>
                                 <div>
-                                    <h3 className="text-sm font-black uppercase text-gray-400">Phone</h3>
-                                    <p className="text-white">{profile.phone}</p>
+                                    <h3 className="eyebrow" style={{ color: 'var(--text-subtle)' }}>Phone</h3>
+                                    <p className="mt-0.5 text-sm font-medium" style={{ color: 'var(--text)' }}>{profile.phone}</p>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-4 rounded-lg border border-white/10 bg-white/5 p-4">
-                                <div className="grid h-11 w-11 place-items-center rounded-lg bg-emerald-500/15 text-emerald-200">
+                            <div className="surface-flat flex items-center gap-4 p-4">
+                                <div className="grid h-11 w-11 flex-shrink-0 place-items-center rounded-xl" style={{ background: 'var(--surface-inset)', color: 'var(--ok)' }}>
                                     <FaMapMarkerAlt size={22} />
                                 </div>
                                 <div>
-                                    <h3 className="text-sm font-black uppercase text-gray-400">Location</h3>
-                                    <p className="text-white">{profile.location}</p>
+                                    <h3 className="eyebrow" style={{ color: 'var(--text-subtle)' }}>Location</h3>
+                                    <p className="mt-0.5 text-sm font-medium" style={{ color: 'var(--text)' }}>{profile.location}</p>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="mt-8 border-t border-white/10 pt-6">
-                            <h3 className="text-sm font-black uppercase text-gray-400">Follow</h3>
+                        <div className="mt-8 pt-6" style={{ borderTop: '1px solid var(--border)' }}>
+                            <h3 className="eyebrow" style={{ color: 'var(--text-subtle)' }}>Follow</h3>
                             <div className="mt-4 flex gap-3">
-                                <a href={profile.links.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="grid h-11 w-11 place-items-center rounded-lg border border-white/10 bg-white/5 text-gray-200 transition hover:-translate-y-0.5 hover:bg-white hover:text-gray-950">
+                                <a href={profile.links.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="grid h-11 w-11 place-items-center rounded-xl transition-transform duration-200 hover:-translate-y-0.5" style={{ border: '1px solid var(--border)', background: 'var(--surface-inset)', color: 'var(--text-muted)' }}>
                                     <FaGithub size={22} />
                                 </a>
-                                <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="grid h-11 w-11 place-items-center rounded-lg border border-white/10 bg-white/5 text-gray-200 transition hover:-translate-y-0.5 hover:bg-white hover:text-blue-700">
+                                <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="grid h-11 w-11 place-items-center rounded-xl transition-transform duration-200 hover:-translate-y-0.5" style={{ border: '1px solid var(--border)', background: 'var(--surface-inset)', color: 'var(--text-muted)' }}>
                                     <FaLinkedin size={22} />
                                 </a>
-                                <a href={profile.links.medium} target="_blank" rel="noopener noreferrer" aria-label="Medium" className="grid h-11 w-11 place-items-center rounded-lg border border-white/10 bg-white/5 text-gray-200 transition hover:-translate-y-0.5 hover:bg-white hover:text-emerald-700">
+                                <a href={profile.links.medium} target="_blank" rel="noopener noreferrer" aria-label="Medium" className="grid h-11 w-11 place-items-center rounded-xl transition-transform duration-200 hover:-translate-y-0.5" style={{ border: '1px solid var(--border)', background: 'var(--surface-inset)', color: 'var(--text-muted)' }}>
                                     <FaMedium size={22} />
                                 </a>
                             </div>

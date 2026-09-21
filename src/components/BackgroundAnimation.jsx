@@ -249,11 +249,25 @@ const BackgroundAnimation = () => {
     }, [darkMode]);
 
     return (
-        <canvas
-            ref={canvasRef}
-            aria-hidden="true"
-            className="fixed top-0 left-0 z-0 w-full h-full pointer-events-none transition-colors duration-500"
-        />
+        <>
+            <canvas
+                ref={canvasRef}
+                aria-hidden="true"
+                className="fixed top-0 left-0 z-0 h-full w-full pointer-events-none transition-opacity duration-500"
+                style={{ opacity: darkMode ? 0.55 : 0.5 }}
+            />
+            {/* Scrim: keeps the canvas a texture rather than something that
+                competes with body copy for legibility. */}
+            <div
+                aria-hidden="true"
+                className="fixed inset-0 z-0 pointer-events-none"
+                style={{
+                    background:
+                        'radial-gradient(120% 80% at 50% 0%, transparent 0%, var(--bg) 100%)',
+                    opacity: 0.55,
+                }}
+            />
+        </>
     );
 };
 
