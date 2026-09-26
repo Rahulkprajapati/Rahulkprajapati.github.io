@@ -3,6 +3,7 @@ import { motion as Motion } from 'framer-motion';
 import { FaArrowRight, FaCheck, FaCopy, FaGithub, FaLinkedin, FaMedium, FaPaperPlane } from 'react-icons/fa';
 import { profile } from '../data/profile';
 import { SectionHeader } from './Frame';
+import { track } from '../lib/analytics';
 
 const Contact = () => {
     const [submitStatus, setSubmitStatus] = React.useState('');
@@ -17,6 +18,7 @@ const Contact = () => {
     const copyEmail = async () => {
         try {
             await navigator.clipboard.writeText(profile.email);
+            track('email-copy', 'Email copied');
             setCopied(true);
             setTimeout(() => setCopied(false), 1800);
         } catch {
@@ -65,6 +67,7 @@ ${message}`;
                 throw new Error('Message delivery failed');
             }
 
+            track('contact-form-sent', 'Contact form sent');
             setSubmitStatus('Message sent. I will get back to you soon.');
             setFormData({ name: '', email: '', message: '' });
         } catch {

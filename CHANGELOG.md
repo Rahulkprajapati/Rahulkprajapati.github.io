@@ -16,6 +16,26 @@ Each release gets a version bump in `package.json`, an entry here, and an annota
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-09-26
+
+### Added
+
+- Private, cookie-free visitor analytics via GoatCounter. The dashboard is only
+  visible to the owner at https://rahulprajapati.goatcounter.com. No cookies or
+  personal data, so UK/EU visitors see no consent banner.
+- Page views counted on every client-side route change (`src/lib/analytics.js`),
+  since GoatCounter's default only counts the first load of a single-page app.
+- Interest events: `resume-download`, `email-copy`, `email-click`,
+  `phone-click`, `contact-form-sent`, `outbound-<site>` for profile links,
+  `terminal-open-button` / `terminal-open-shortcut`, and `terminal-cmd-<name>`
+  for each terminal command run.
+
+### Notes
+
+- Localhost visits are never counted. To exclude your own browsers, open
+  `https://rahulkprajapati.github.io/#toggle-goatcounter` once on each device.
+- Ad-blockers hide some visits; treat counts as a floor.
+
 ## [2.0.0] - 2026-09-26
 
 A second visual redesign in the instrument-panel style of the Neuform featured
@@ -137,6 +157,7 @@ First versioned release. A full visual redesign built on a real design system.
   `@theme` inside `src/index.css`.
 - The production JS bundle is ~806 kB (~245 kB gzipped) and is not yet code-split.
 
-[Unreleased]: https://github.com/Rahulkprajapati/Rahulkprajapati.github.io/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/Rahulkprajapati/Rahulkprajapati.github.io/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/Rahulkprajapati/Rahulkprajapati.github.io/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/Rahulkprajapati/Rahulkprajapati.github.io/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/Rahulkprajapati/Rahulkprajapati.github.io/releases/tag/v1.0.0

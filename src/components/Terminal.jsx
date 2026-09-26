@@ -5,6 +5,7 @@ import { Terminal as XTerm } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit';
 import 'xterm/css/xterm.css';
 import { certifications, experiences, metrics, profile } from '../data/profile';
+import { track } from '../lib/analytics';
 
 // ── ANSI helpers ────────────────────────────────────────────────────────────
 // Truecolor escapes so the terminal uses the site's instrument palette exactly.
@@ -142,6 +143,8 @@ const Terminal = ({ onClose }) => {
                 const row = (label, value, width = 14) => w(`  ${dim(label.padEnd(width))}${value}`);
                 const bullet = (text) => w(`  ${mint('›')} ${text}`);
                 const openUrl = (url, label = url) => {
+                    if (url.endsWith('.pdf')) track('resume-download', 'Résumé download');
+                    else track(`outbound-${new URL(url).hostname.replace(/^www\./, '')}`, `Outbound: ${label}`);
                     window.open(url, '_blank', 'noopener,noreferrer');
                     w(`  ${dim('opening')} ${lilac(label)}`);
                 };
@@ -342,6 +345,7 @@ const Terminal = ({ onClose }) => {
                         cursor = -1;
                     }
                     if (commands[cmd]) {
+                        track(`terminal-cmd-${cmd}`, `Terminal: ${cmd}`);
                         commands[cmd](args.join(' '));
                     } else if (cmd) {
                         const best = names

@@ -6,6 +6,7 @@ import IdBadge from './IdBadge';
 import ParticleSphere from './ParticleSphere';
 import { Panel, Readout } from './Frame';
 import { metrics, profile } from '../data/profile';
+import { track } from '../lib/analytics';
 
 // xterm is ~300 kB; only fetch it when someone actually opens the terminal
 const Terminal = lazy(() => import('./Terminal'));
@@ -46,6 +47,10 @@ const LocalTime = () => {
 
 const Hero = () => {
     const [showTerminal, setShowTerminal] = useState(false);
+    const openTerminal = (via) => {
+        track(`terminal-open-${via}`, `Terminal opened (${via})`);
+        setShowTerminal(true);
+    };
 
     // ` opens the terminal from anywhere, unless the visitor is typing in a field
     useEffect(() => {
@@ -54,7 +59,7 @@ const Hero = () => {
             const el = e.target;
             if (el instanceof HTMLElement && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName))) return;
             e.preventDefault();
-            setShowTerminal(true);
+            openTerminal('shortcut');
         };
         window.addEventListener('keydown', onKey);
         return () => window.removeEventListener('keydown', onKey);
@@ -138,7 +143,7 @@ const Hero = () => {
                                     <span>Résumé</span>
                                     <span className="micro">PDF</span>
                                 </a>
-                                <button onClick={() => setShowTerminal(true)} className="btn btn-ghost hidden sm:inline-flex" aria-label="Open interactive terminal">
+                                <button onClick={() => openTerminal('button')} className="btn btn-ghost hidden sm:inline-flex" aria-label="Open interactive terminal">
                                     <FaTerminal size={12} />
                                     <span className="font-mono text-sm">~/rp</span>
                                     <kbd
