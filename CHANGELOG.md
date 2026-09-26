@@ -41,12 +41,23 @@ in its structured data signals job-seeking, relocation or visa status.
 - `en-GB` language, `og:locale`, profile Open Graph tags and a new 1200×630
   preview card for LinkedIn and other link unfurls.
 - Build version shown in the footer.
+- Terminal rebuilt in the instrument style: boot sequence, clickable command
+  chips so nobody has to type, status bar, and new commands (`status`, `certs`,
+  `experience <n>`, `ls`/`cat`, `date` with London and Berlin times, `history`),
+  with "did you mean" suggestions for typos. Opens from anywhere with the
+  backtick key.
+- Email copy button and labelled profile links on the contact card.
 
 ### Changed
 
 - **Breaking visual change:** new token values. Dark mode is a near-black
   instrument panel with a mint signal accent; light mode is a warm-paper manifest.
 - Experience rebuilt as a numbered manifest ledger with expandable entries.
+- Hero figure is more compact: the ID card sits on the left, in front of a
+  shorter fleet-topology panel that holds the sphere on the right, with the
+  figure caption underneath.
+- Capabilities, toolkit and certifications rebuilt as ruled spec-sheet grids;
+  certifications are a ledger with issuers.
 - Page title and descriptions now use the terms recruiters search for
   ("Senior Platform Engineer", SRE, GCP, Kubernetes, Terraform).
 - `profile.js` is now pure data (logos mapped in `logos.js`), so it is the single
@@ -68,11 +79,15 @@ in its structured data signals job-seeking, relocation or visa status.
   PNG (11 kB).
 - Unlayered custom CSS was silently overriding Tailwind utilities, including
   `tracking-tight` on headings.
+- Terminal backdrop was solid black: `bg-opacity-70` is Tailwind v3 syntax and
+  does nothing in v4. Escape now closes the terminal, page scroll is locked
+  while it is open, focus is restored afterwards, and it is marked up as a modal
+  dialog.
+- xterm's `dimensions` error in development (React StrictMode double mount):
+  the terminal now opens asynchronously after the web font loads.
 
 ### Known issues
 
-- In development only, opening the terminal logs an xterm `dimensions` error caused
-  by React StrictMode's double mount. Production builds are unaffected.
 - `tailwind.config.js` is still dead configuration under Tailwind v4.
 
 ## [1.0.0] - 2026-09-21

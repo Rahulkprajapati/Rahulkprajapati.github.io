@@ -87,7 +87,7 @@ const IdBadge = ({ photo, name, role, badgeId = 'RP-2021-BLR', className = '' })
                     boxShadow: 'var(--shadow-lg)',
                     transformStyle: 'preserve-3d',
                 }}
-                className="group relative m-0 w-[16.5rem] overflow-hidden rounded-[18px] p-4 backdrop-blur-xl sm:w-[17.5rem]"
+                className="group relative m-0 w-[14rem] overflow-hidden rounded-[16px] p-3.5 backdrop-blur-xl xl:w-[15rem]"
             >
                 {/* Lanyard slot */}
                 <div className="mx-auto mb-3 h-1.5 w-12 rounded-full" style={{ background: 'var(--border-strong)' }} />
@@ -101,7 +101,7 @@ const IdBadge = ({ photo, name, role, badgeId = 'RP-2021-BLR', className = '' })
                 </div>
 
                 <div
-                    className="relative mt-3 aspect-[4/5] overflow-hidden rounded-[10px]"
+                    className="relative mt-3 aspect-square overflow-hidden rounded-[10px]"
                     style={{ border: '1px solid var(--border)' }}
                 >
                     {/* Full colour underneath, revealed on hover */}
@@ -158,7 +158,7 @@ const IdBadge = ({ photo, name, role, badgeId = 'RP-2021-BLR', className = '' })
                     <Field label="Badge" value={badgeId} />
                     <Field label="Base" value="BLR · IST" />
                     <Field label="Since" value="2021" />
-                    <Field label="Scope" value="GCP · AWS · AZ" />
+                    <Field label="Scope" value="GCP/AWS/AZ" />
                 </dl>
 
                 <div className="mt-4 flex h-8 items-stretch overflow-hidden" aria-hidden>

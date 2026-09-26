@@ -1,8 +1,9 @@
 import React from 'react';
 import { motion as Motion } from 'framer-motion';
-import { FaAws, FaCertificate, FaCloud, FaCode, FaDocker, FaGitlab, FaJenkins, FaLinux, FaChartLine, FaRobot, FaServer } from 'react-icons/fa';
+import { FaAws, FaCloud, FaCode, FaDocker, FaGitlab, FaJenkins, FaLinux, FaChartLine, FaRobot, FaServer } from 'react-icons/fa';
 import { SiGooglecloud, SiKubernetes, SiTerraform, SiAnsible, SiPrometheus, SiGrafana, SiArgo, SiHelm, SiCircleci, SiPython, SiGo, SiGnubash, SiDatadog, SiGithubactions, SiMysql, SiNewrelic, SiOpenai, SiRedis } from 'react-icons/si';
-import { certifications, profile } from '../data/profile';
+import { certifications } from '../data/profile';
+import { Panel } from './Frame';
 
 const skills = [
     {
@@ -58,6 +59,26 @@ const tools = [
     { name: 'Linux', icon: <FaLinux className="text-[#111827] dark:text-white" /> },
 ];
 
+const pad = (n) => String(n).padStart(2, '0');
+
+const reveal = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+    viewport: { once: true, margin: '-60px' },
+};
+
+// Split "Google Cloud Certified Professional Cloud Architect" into issuer and
+// name for the ledger. Only known prefixes are split; nothing is invented.
+const ISSUERS = [
+    ['Google Cloud Certified ', 'Google Cloud'],
+    ['Microsoft Certified ', 'Microsoft'],
+];
+const parseCert = (raw) => {
+    const match = ISSUERS.find(([prefix]) => raw.startsWith(prefix));
+    return match ? { issuer: match[1], name: raw.slice(match[0].length) } : { issuer: '—', name: raw };
+};
+
 const About = () => {
     return (
         <section id="about" className="section section-divider">
@@ -109,95 +130,108 @@ const About = () => {
                     </div>
                 </Motion.div>
 
-                <div className="mb-16 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-                    {skills.map((skill, index) => (
-                        <Motion.div
-                            key={skill.name}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
-                            viewport={{ once: true, margin: '-60px' }}
-                            className="surface lift group relative overflow-hidden p-6"
-                        >
-                            <div
-                                aria-hidden
-                                className="absolute inset-x-0 top-0 h-0.5 opacity-70"
-                                style={{ background: skill.tone }}
-                            />
-                            <div
-                                className="grid h-12 w-12 place-items-center rounded-xl text-xl transition-transform duration-300 group-hover:scale-110"
-                                style={{ background: 'var(--surface-inset)', color: skill.tone }}
-                            >
-                                {skill.icon}
-                            </div>
-                            <h3 className="mt-5 text-base font-semibold tracking-tight" style={{ color: 'var(--text)' }}>
-                                {skill.name}
-                            </h3>
-                            <p className="mt-2 text-sm leading-[1.7]" style={{ color: 'var(--text-muted)' }}>
-                                {skill.description}
-                            </p>
-                        </Motion.div>
-                    ))}
-                </div>
+                {/* Capabilities as a ruled spec grid: cells draw their own top/left
+                    hairlines and the panel clips the outer ones */}
+                <Motion.div {...reveal} className="mb-16">
+                    <Panel className="overflow-hidden">
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-4">
+                            {skills.map((skill, index) => (
+                                <div
+                                    key={skill.name}
+                                    className="group relative p-6 pt-7 transition-colors duration-300 hover:bg-[var(--surface-inset)]"
+                                    style={{ boxShadow: '-1px 0 0 var(--border), 0 -1px 0 var(--border)' }}
+                                >
+                                    <div className="flex items-center justify-between">
+                                        <span className="micro" style={{ color: skill.tone }}>A.{pad(index + 1)}</span>
+                                        <span className="text-base opacity-70 transition-opacity group-hover:opacity-100" style={{ color: skill.tone }}>
+                                            {skill.icon}
+                                        </span>
+                                    </div>
+                                    <h3 className="mt-8 text-lg font-semibold tracking-tight" style={{ color: 'var(--text)' }}>
+                                        {skill.name}
+                                    </h3>
+                                    <p className="mt-2 text-sm leading-[1.7]" style={{ color: 'var(--text-muted)' }}>
+                                        {skill.description}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </Panel>
+                </Motion.div>
 
-                <Motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                    viewport={{ once: true, margin: '-60px' }}
-                    className="surface mb-16 overflow-hidden p-6 sm:p-8"
-                >
-                    <div className="flex flex-col gap-3 pb-6 sm:flex-row sm:items-end sm:justify-between" style={{ borderBottom: '1px solid var(--border)' }}>
+                <Motion.div {...reveal} className="mb-16">
+                    <div className="mb-5 flex items-end justify-between gap-6">
                         <div>
-                            <p className="eyebrow" style={{ color: 'var(--tech)' }}>Toolkit</p>
-                            <h3 className="mt-2 text-2xl font-bold tracking-tight md:text-3xl" style={{ color: 'var(--text)' }}>
+                            <p className="micro" style={{ color: 'var(--tech)' }}>Toolkit · {tools.length} tools</p>
+                            <h3 className="mt-3 text-2xl font-semibold tracking-tight md:text-3xl" style={{ color: 'var(--text)' }}>
                                 Daily platform stack
                             </h3>
                         </div>
-                        <p className="max-w-md text-sm leading-[1.7]" style={{ color: 'var(--text-muted)' }}>
-                            {profile.title} across cloud, delivery, reliability, and automation.
+                        <p className="hidden max-w-sm text-right text-sm leading-[1.7] md:block" style={{ color: 'var(--text-muted)' }}>
+                            Cloud, delivery, reliability and automation. Hover for colour.
                         </p>
                     </div>
 
-                    <div className="mt-7 grid grid-cols-3 gap-2.5 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
-                        {tools.map((tool, index) => (
-                            <Motion.div
-                                key={tool.name}
-                                initial={{ opacity: 0, scale: 0.92 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.3, delay: index * 0.015 }}
-                                viewport={{ once: true }}
-                                whileHover={{ y: -4 }}
-                                className="group flex min-h-24 flex-col items-center justify-center gap-2 rounded-lg p-3 text-center transition-colors duration-200"
-                                style={{ background: 'var(--surface-inset)', border: '1px solid var(--border)' }}
-                                title={tool.name}
-                            >
-                                <div className="text-[1.5rem] opacity-60 grayscale transition-all duration-300 group-hover:opacity-100 group-hover:grayscale-0">{tool.icon}</div>
-                                <span className="font-mono text-[0.62rem] uppercase leading-tight tracking-wider" style={{ color: 'var(--text-muted)' }}>
-                                    {tool.name}
-                                </span>
-                            </Motion.div>
-                        ))}
-                    </div>
+                    {/* 24 tools divide evenly into 3, 4, 6 and 8 columns, so the ruled
+                        grid never ends on a ragged row */}
+                    <Panel className="overflow-hidden">
+                        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
+                            {tools.map((tool) => (
+                                <div
+                                    key={tool.name}
+                                    title={tool.name}
+                                    className="group flex min-h-[6.5rem] flex-col items-center justify-center gap-2.5 p-3 text-center transition-colors duration-200 hover:bg-[var(--surface-inset)]"
+                                    style={{ boxShadow: '-1px 0 0 var(--border), 0 -1px 0 var(--border)' }}
+                                >
+                                    <div className="text-[1.45rem] opacity-55 grayscale transition-all duration-300 group-hover:scale-110 group-hover:opacity-100 group-hover:grayscale-0">
+                                        {tool.icon}
+                                    </div>
+                                    <span className="font-mono text-[0.6rem] uppercase leading-tight tracking-wider" style={{ color: 'var(--text-muted)' }}>
+                                        {tool.name}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    </Panel>
                 </Motion.div>
 
-                <Motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    viewport={{ once: true, margin: '-60px' }}
-                >
-                    <p className="eyebrow mb-5">Certifications</p>
-                    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-                        {certifications.map((item) => (
-                            <div key={item} className="surface-flat lift flex items-start gap-3 p-4">
-                                <FaCertificate className="mt-0.5 flex-shrink-0" style={{ color: 'var(--accent)' }} size={15} />
-                                <span className="text-sm font-medium leading-[1.6]" style={{ color: 'var(--text)' }}>
-                                    {item}
-                                </span>
-                            </div>
-                        ))}
+                <Motion.div {...reveal}>
+                    <div className="mb-5 flex items-end justify-between gap-6">
+                        <div>
+                            <p className="micro" style={{ color: 'var(--accent)' }}>Credentials · {pad(certifications.length)}</p>
+                            <h3 className="mt-3 text-2xl font-semibold tracking-tight md:text-3xl" style={{ color: 'var(--text)' }}>
+                                Certifications
+                            </h3>
+                        </div>
                     </div>
+                    <Panel className="overflow-hidden">
+                        <div className="hidden grid-cols-[4rem_1fr_12rem] gap-4 px-6 pb-3 pt-9 sm:grid">
+                            <span className="micro">No.</span>
+                            <span className="micro">Credential</span>
+                            <span className="micro text-right">Issuer</span>
+                        </div>
+                        <ol className="m-0 list-none p-0 pt-5 sm:pt-0">
+                            {certifications.map((raw, index) => {
+                                const cert = parseCert(raw);
+                                return (
+                                    <li
+                                        key={raw}
+                                        className="grid grid-cols-[3rem_1fr] items-center gap-x-4 gap-y-1 px-6 py-4 transition-colors duration-200 hover:bg-[var(--surface-inset)] sm:grid-cols-[4rem_1fr_12rem]"
+                                        style={{ borderTop: '1px solid var(--border)' }}
+                                    >
+                                        <span className="micro flex items-center gap-2">
+                                            <span className="signal-dot" style={{ width: 5, height: 5 }} />
+                                            C.{pad(index + 1)}
+                                        </span>
+                                        <span className="text-[0.95rem] font-medium" style={{ color: 'var(--text)' }}>
+                                            {cert.name}
+                                        </span>
+                                        <span className="micro col-start-2 sm:col-start-auto sm:text-right">{cert.issuer}</span>
+                                    </li>
+                                );
+                            })}
+                        </ol>
+                    </Panel>
                 </Motion.div>
             </div>
         </section>
