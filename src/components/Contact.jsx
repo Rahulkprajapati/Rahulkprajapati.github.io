@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion as Motion } from 'framer-motion';
-import { FaEnvelope, FaGithub, FaLinkedin, FaMapMarkerAlt, FaMedium, FaMobileAlt, FaPaperPlane } from 'react-icons/fa';
+import { FaArrowRight, FaCheck, FaCopy, FaGithub, FaLinkedin, FaMedium, FaPaperPlane } from 'react-icons/fa';
 import { profile } from '../data/profile';
 import { SectionHeader } from './Frame';
 
@@ -12,6 +12,17 @@ const Contact = () => {
         email: '',
         message: '',
     });
+
+    const [copied, setCopied] = React.useState(false);
+    const copyEmail = async () => {
+        try {
+            await navigator.clipboard.writeText(profile.email);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 1800);
+        } catch {
+            window.location.href = `mailto:${profile.email}`;
+        }
+    };
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -175,52 +186,82 @@ ${message}`;
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5 }}
                         viewport={{ once: true }}
-                        className="surface h-fit p-6"
+                        className="panel h-fit overflow-hidden"
                     >
-                        <div className="space-y-5">
-                            <div className="surface-flat flex items-center gap-4 p-4">
-                                <div className="grid h-11 w-11 flex-shrink-0 place-items-center rounded-xl" style={{ background: 'var(--surface-inset)', color: 'var(--accent)' }}>
-                                    <FaEnvelope size={22} />
-                                </div>
-                                <div className="min-w-0">
-                                    <h3 className="eyebrow" style={{ color: 'var(--text-subtle)' }}>Email</h3>
-                                    <p className="mt-0.5 break-words text-sm font-medium" style={{ color: 'var(--text)' }}>{profile.email}</p>
-                                </div>
-                            </div>
-                            <div className="surface-flat flex items-center gap-4 p-4">
-                                <div className="grid h-11 w-11 flex-shrink-0 place-items-center rounded-xl" style={{ background: 'var(--surface-inset)', color: 'var(--tech)' }}>
-                                    <FaMobileAlt size={22} />
-                                </div>
-                                <div>
-                                    <h3 className="eyebrow" style={{ color: 'var(--text-subtle)' }}>Phone</h3>
-                                    <p className="mt-0.5 text-sm font-medium" style={{ color: 'var(--text)' }}>{profile.phone}</p>
-                                </div>
-                            </div>
-                            <div className="surface-flat flex items-center gap-4 p-4">
-                                <div className="grid h-11 w-11 flex-shrink-0 place-items-center rounded-xl" style={{ background: 'var(--surface-inset)', color: 'var(--ok)' }}>
-                                    <FaMapMarkerAlt size={22} />
-                                </div>
-                                <div>
-                                    <h3 className="eyebrow" style={{ color: 'var(--text-subtle)' }}>Location</h3>
-                                    <p className="mt-0.5 text-sm font-medium" style={{ color: 'var(--text)' }}>{profile.location}</p>
-                                </div>
-                            </div>
+                        <span aria-hidden className="ticks" />
+                        <div className="px-6 pb-3 pt-7">
+                            <span className="micro">Direct line</span>
                         </div>
+                        <dl className="m-0">
+                            <div className="grid grid-cols-[5.5rem_1fr_auto] items-center gap-3 px-6 py-4" style={{ borderTop: '1px solid var(--border)' }}>
+                                <dt className="micro">Email</dt>
+                                <dd className="m-0 min-w-0">
+                                    <a href={`mailto:${profile.email}`} className="block truncate text-sm font-medium underline-offset-4 hover:underline" style={{ color: 'var(--text)' }}>
+                                        {profile.email}
+                                    </a>
+                                </dd>
+                                <button
+                                    type="button"
+                                    onClick={copyEmail}
+                                    aria-label={copied ? 'Email copied' : 'Copy email address'}
+                                    className="flex cursor-pointer items-center gap-1.5 rounded-full px-2.5 py-1 font-mono text-[0.62rem] uppercase tracking-wider transition-colors"
+                                    style={{
+                                        border: '1px solid var(--border-strong)',
+                                        color: copied ? 'var(--on-accent)' : 'var(--text-muted)',
+                                        background: copied ? 'var(--accent)' : 'transparent',
+                                    }}
+                                >
+                                    {copied ? <FaCheck size={9} /> : <FaCopy size={9} />}
+                                    {copied ? 'Copied' : 'Copy'}
+                                </button>
+                            </div>
+                            <div className="grid grid-cols-[5.5rem_1fr] items-center gap-3 px-6 py-4" style={{ borderTop: '1px solid var(--border)' }}>
+                                <dt className="micro">Phone</dt>
+                                <dd className="m-0">
+                                    <a href={`tel:${profile.phone.replace(/\s+/g, '')}`} className="text-sm font-medium underline-offset-4 hover:underline" style={{ color: 'var(--text)' }}>
+                                        {profile.phone}
+                                    </a>
+                                </dd>
+                            </div>
+                            <div className="grid grid-cols-[5.5rem_1fr] items-center gap-3 px-6 py-4" style={{ borderTop: '1px solid var(--border)' }}>
+                                <dt className="micro">Base</dt>
+                                <dd className="m-0 text-sm font-medium" style={{ color: 'var(--text)' }}>
+                                    {profile.location} <span className="micro ml-1">IST · UTC+5:30</span>
+                                </dd>
+                            </div>
+                        </dl>
 
-                        <div className="mt-8 pt-6" style={{ borderTop: '1px solid var(--border)' }}>
-                            <h3 className="eyebrow" style={{ color: 'var(--text-subtle)' }}>Follow</h3>
-                            <div className="mt-4 flex gap-3">
-                                <a href={profile.links.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="grid h-11 w-11 place-items-center rounded-xl transition-transform duration-200 hover:-translate-y-0.5" style={{ border: '1px solid var(--border)', background: 'var(--surface-inset)', color: 'var(--text-muted)' }}>
-                                    <FaGithub size={22} />
-                                </a>
-                                <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="grid h-11 w-11 place-items-center rounded-xl transition-transform duration-200 hover:-translate-y-0.5" style={{ border: '1px solid var(--border)', background: 'var(--surface-inset)', color: 'var(--text-muted)' }}>
-                                    <FaLinkedin size={22} />
-                                </a>
-                                <a href={profile.links.medium} target="_blank" rel="noopener noreferrer" aria-label="Medium" className="grid h-11 w-11 place-items-center rounded-xl transition-transform duration-200 hover:-translate-y-0.5" style={{ border: '1px solid var(--border)', background: 'var(--surface-inset)', color: 'var(--text-muted)' }}>
-                                    <FaMedium size={22} />
-                                </a>
-                            </div>
+                        <div className="px-6 pb-3 pt-7" style={{ borderTop: '1px solid var(--border)' }}>
+                            <span className="micro">Elsewhere</span>
                         </div>
+                        <ul className="m-0 list-none p-0 pb-2">
+                            {[
+                                { label: 'GitHub', icon: FaGithub, href: profile.links.github },
+                                { label: 'LinkedIn', icon: FaLinkedin, href: profile.links.linkedin },
+                                { label: 'Medium', icon: FaMedium, href: profile.links.medium },
+                            ].map((link) => {
+                                const Icon = link.icon;
+                                return (
+                                    <li key={link.label} style={{ borderTop: '1px solid var(--border)' }}>
+                                        <a
+                                            href={link.href}
+                                            target="_blank"
+                                            rel="noopener noreferrer me"
+                                            className="group grid grid-cols-[5.5rem_1fr_auto] items-center gap-3 px-6 py-3.5 transition-colors hover:bg-[var(--surface-inset)]"
+                                        >
+                                            <span className="micro flex items-center gap-2">
+                                                <Icon size={12} />
+                                                {link.label}
+                                            </span>
+                                            <span className="truncate font-mono text-xs" style={{ color: 'var(--text-muted)' }}>
+                                                {link.href.replace(/^https?:\/\//, '')}
+                                            </span>
+                                            <FaArrowRight size={10} className="-rotate-45 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" style={{ color: 'var(--accent)' }} />
+                                        </a>
+                                    </li>
+                                );
+                            })}
+                        </ul>
                     </Motion.div>
                 </div>
             </div>

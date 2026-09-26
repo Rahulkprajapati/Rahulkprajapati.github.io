@@ -37,7 +37,9 @@ const ORBITS = [
     { tilt: -0.6, yaw: -0.9, speed: -0.00031 },
 ];
 
-const ParticleSphere = ({ className = '', count = 760 }) => {
+// desktopFocusX: horizontal centre (0–1) from lg up, where the ID card covers
+// the panel's left edge; below lg the sphere is centred behind the card.
+const ParticleSphere = ({ className = '', count = 760, desktopFocusX = 0.5 }) => {
     const canvasRef = useRef(null);
     const { darkMode } = useTheme();
 
@@ -91,10 +93,14 @@ const ParticleSphere = ({ className = '', count = 760 }) => {
             const { accent, tech, ink } = colors;
             ctx.clearRect(0, 0, width, height);
 
-            // On desktop the ID badge sits on the left, so the sphere shifts right
-            const cx = width * (desktop.matches ? 0.665 : 0.5);
-            const cy = height * (desktop.matches ? 0.52 : 0.6);
-            const R = Math.min(width, height) * (desktop.matches ? 0.28 : 0.34);
+            const side = desktop.matches && desktopFocusX !== 0.5;
+            const cx = width * (side ? desktopFocusX : 0.5);
+            const cy = height / 2;
+            // Beside the card, fit the sphere to the uncovered area; centred
+            // behind it, make it a little wider so the limb shows on both sides
+            const R = side
+                ? Math.min(height * 0.36, width * (1 - desktopFocusX) * 0.62)
+                : Math.min(Math.min(width, height) * 0.46, width * 0.36);
 
             const cosY = Math.cos(rotY);
             const sinY = Math.sin(rotY);
@@ -247,7 +253,7 @@ const ParticleSphere = ({ className = '', count = 760 }) => {
             canvas.removeEventListener('pointerup', onPointerUp);
             canvas.removeEventListener('pointercancel', onPointerUp);
         };
-    }, [darkMode, count]);
+    }, [darkMode, count, desktopFocusX]);
 
     return (
         <canvas

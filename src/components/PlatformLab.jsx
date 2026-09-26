@@ -163,14 +163,14 @@ const PlatformLab = () => {
                                         type="button"
                                         onMouseEnter={() => setActiveNode(node)}
                                         onFocus={() => setActiveNode(node)}
-                                        className={`rounded-lg border px-3 py-2 text-left text-sm font-semibold shadow-lg transition hover:-translate-y-1 ${activeNode?.id === node.id ? 'border-cyan-300 bg-cyan-300 text-gray-950' : 'border-white/10 bg-white/10 text-white hover:border-cyan-300/60'}`}
+                                        className={`rounded-lg border px-3 py-2 text-left text-sm font-semibold shadow-lg transition hover:-translate-y-1 ${activeNode?.id === node.id ? 'border-[#7cf5c6] bg-[#7cf5c6] text-[#04130d]' : 'border-white/10 bg-white/10 text-white hover:border-[#7cf5c6]/60'}`}
                                     >
                                         {node.label}
                                     </button>
 
                                     {activeNode?.id === node.id && (
                                         <div className={`absolute z-50 w-80 max-w-[min(20rem,80vw)] rounded-lg border border-white/10 bg-gray-950/95 p-4 text-left shadow-2xl backdrop-blur ${node.tooltip === 'left' ? 'right-0' : 'left-0'} ${node.vertical === 'top' ? 'bottom-12' : 'top-12'}`}>
-                                            <p className="text-[0.68rem] font-semibold uppercase tracking-wider text-cyan-300">{node.label}</p>
+                                            <p className="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-[#7cf5c6]">{node.label}</p>
                                             <p className="mt-2 text-sm font-medium leading-6 text-gray-200">{node.detail}</p>
                                         </div>
                                     )}

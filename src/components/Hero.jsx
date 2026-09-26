@@ -47,6 +47,19 @@ const LocalTime = () => {
 const Hero = () => {
     const [showTerminal, setShowTerminal] = useState(false);
 
+    // ` opens the terminal from anywhere, unless the visitor is typing in a field
+    useEffect(() => {
+        const onKey = (e) => {
+            if (e.key !== '`' || e.metaKey || e.ctrlKey || e.altKey) return;
+            const el = e.target;
+            if (el instanceof HTMLElement && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName))) return;
+            e.preventDefault();
+            setShowTerminal(true);
+        };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    }, []);
+
     return (
         <>
             <section id="home" className="relative overflow-hidden pt-20 pb-16 lg:pb-20">
@@ -61,7 +74,7 @@ const Hero = () => {
                         <LocalTime />
                     </div>
 
-                    <div className="grid items-center gap-14 pt-12 lg:grid-cols-[1fr_1fr] lg:gap-8 lg:pt-16 xl:gap-14">
+                    <div className="grid items-center gap-14 pt-12 lg:grid-cols-[1fr_1fr] lg:gap-10 lg:pt-16 xl:grid-cols-[1.08fr_0.92fr] xl:gap-14">
                         <div>
                             <Motion.div variants={fadeUp} initial="hidden" animate="show" custom={0} className="flex items-center gap-2.5">
                                 <span className="signal-dot" />
@@ -128,6 +141,12 @@ const Hero = () => {
                                 <button onClick={() => setShowTerminal(true)} className="btn btn-ghost hidden sm:inline-flex" aria-label="Open interactive terminal">
                                     <FaTerminal size={12} />
                                     <span className="font-mono text-sm">~/rp</span>
+                                    <kbd
+                                        className="rounded px-1.5 py-px font-mono text-[0.65rem] leading-4"
+                                        style={{ border: '1px solid var(--border-strong)', color: 'var(--text-subtle)' }}
+                                    >
+                                        `
+                                    </kbd>
                                 </button>
                             </Motion.div>
 
@@ -161,11 +180,18 @@ const Hero = () => {
                             initial={{ opacity: 0, y: 24 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.9, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                            className="relative"
+                            className="pt-4 lg:pt-0"
                         >
-                            {/* On mobile the badge sits above the panel; on desktop it floats inside it */}
-                            <div className="relative z-20 flex justify-center lg:absolute lg:-left-[2%] lg:top-1/2 xl:-left-[3%] lg:block lg:-translate-y-1/2">
+                            {/* The card is in normal flow and sets the figure's height, so the
+                                caption below always clears it. On desktop the panel sits behind
+                                it offset to the right: photo on the left, topology on the right.
+                                On mobile the panel spans the full width behind a centred card. */}
+                            <div className="relative flex justify-center py-2 lg:justify-start">
+                                <Panel className="grid-paper absolute inset-x-0 top-1/2 h-[19rem] -translate-y-1/2 overflow-hidden sm:h-[21rem] lg:left-[22%] xl:h-[22rem]">
+                                    <ParticleSphere className="absolute inset-0 h-full w-full" desktopFocusX={0.64} />
+                                </Panel>
                                 <Motion.div
+                                    className="relative z-10"
                                     initial={{ rotate: 0 }}
                                     animate={{ rotate: -3 }}
                                     transition={{ duration: 1.2, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
@@ -174,29 +200,18 @@ const Hero = () => {
                                 </Motion.div>
                             </div>
 
-                            <Panel
-                                className="grid-paper -mt-28 aspect-square w-full overflow-hidden sm:aspect-[4/3] lg:mt-0 lg:aspect-square"
-                                // Annotations live on the right: the badge covers the left edge on desktop
-                                tr={
-                                    <span className="hidden flex-col items-end gap-1 lg:flex">
-                                        <span style={{ color: 'var(--text)' }}>Fig. 01 — Fleet topology</span>
-                                        <span>100+ clusters · 3 clouds</span>
-                                    </span>
-                                }
-                                // On mobile the badge covers the top of the panel, so the
-                                // figure caption moves to the bottom-left corner instead
-                                bl={<span className="lg:hidden">Fig. 01 — Fleet topology</span>}
-                                br={
-                                    <span className="flex items-center gap-1.5">
-                                        <span className="hidden sm:inline">Drag to rotate</span>
-                                        <span aria-hidden className="hidden sm:inline" style={{ color: 'var(--border-strong)' }}>/</span>
-                                        <span className="signal-dot" style={{ width: 5, height: 5 }} />
-                                        Live
-                                    </span>
-                                }
-                            >
-                                <ParticleSphere className="absolute inset-0 h-full w-full" />
-                            </Panel>
+                            {/* Figure caption sits below the panel, where the card can't cover it */}
+                            <div className="mt-5 flex items-start justify-between gap-4">
+                                <span className="micro whitespace-nowrap">
+                                    <span style={{ color: 'var(--text)' }}>Fig. 01</span> — Fleet topology
+                                </span>
+                                <span className="micro hidden flex-shrink-0 items-center gap-1.5 sm:flex">
+                                    Drag to rotate
+                                    <span aria-hidden style={{ color: 'var(--border-strong)' }}>/</span>
+                                    <span className="signal-dot" style={{ width: 5, height: 5 }} />
+                                    Live
+                                </span>
+                            </div>
                         </Motion.div>
                     </div>
 
