@@ -140,17 +140,17 @@ const PlatformLab = () => {
                             <span className="rounded-full px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-wider" style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}>Sanitised</span>
                         </div>
 
-                        <div className="relative mt-6 min-h-[440px] overflow-hidden rounded-lg border border-gray-200 bg-gray-950 dark:border-white/10">
-                            <div className="absolute inset-0 opacity-30" style={{
-                                backgroundImage: 'linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px)',
-                                backgroundSize: '42px 42px',
-                            }} />
+                        <div
+                            className="relative mt-6 min-h-[440px] overflow-hidden rounded-lg"
+                            style={{ background: 'var(--surface-inset)', border: '1px solid var(--border)' }}
+                        >
+                            <div className="grid-paper absolute inset-0 opacity-70" style={{ backgroundSize: '42px 42px' }} />
                             <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                                <path d="M11 26 C24 27, 24 38, 35 41 S55 22, 69 22" fill="none" stroke="rgba(103,232,249,.32)" strokeWidth="0.45" />
-                                <path d="M35 41 C47 47, 60 50, 73 51 S83 43, 89 38" fill="none" stroke="rgba(248,113,113,.28)" strokeWidth="0.45" />
-                                <path d="M18 64 C28 67, 31 71, 35 72 S48 79, 57 79" fill="none" stroke="rgba(16,185,129,.28)" strokeWidth="0.45" />
-                                <path d="M57 79 C68 77, 76 76, 85 75" fill="none" stroke="rgba(103,232,249,.24)" strokeWidth="0.45" />
-                                <path d="M69 22 C73 30, 74 40, 73 51" fill="none" stroke="rgba(250,204,21,.24)" strokeWidth="0.45" />
+                                <path d="M11 26 C24 27, 24 38, 35 41 S55 22, 69 22" fill="none" style={{ stroke: 'var(--tech)' }} strokeOpacity="0.55" strokeWidth="0.45" />
+                                <path d="M35 41 C47 47, 60 50, 73 51 S83 43, 89 38" fill="none" style={{ stroke: 'var(--alert)' }} strokeOpacity="0.55" strokeWidth="0.45" />
+                                <path d="M18 64 C28 67, 31 71, 35 72 S48 79, 57 79" fill="none" style={{ stroke: 'var(--accent)' }} strokeOpacity="0.55" strokeWidth="0.45" />
+                                <path d="M57 79 C68 77, 76 76, 85 75" fill="none" style={{ stroke: 'var(--tech)' }} strokeOpacity="0.55" strokeWidth="0.45" />
+                                <path d="M69 22 C73 30, 74 40, 73 51" fill="none" style={{ stroke: 'var(--accent)' }} strokeOpacity="0.55" strokeWidth="0.45" />
                             </svg>
 
                             {architectureNodes.map((node) => (
@@ -163,15 +163,23 @@ const PlatformLab = () => {
                                         type="button"
                                         onMouseEnter={() => setActiveNode(node)}
                                         onFocus={() => setActiveNode(node)}
-                                        className={`rounded-lg border px-3 py-2 text-left text-sm font-semibold shadow-lg transition hover:-translate-y-1 ${activeNode?.id === node.id ? 'border-[#7cf5c6] bg-[#7cf5c6] text-[#04130d]' : 'border-white/10 bg-white/10 text-white hover:border-[#7cf5c6]/60'}`}
+                                        className="rounded-lg border px-3 py-2 text-left text-sm font-semibold transition hover:-translate-y-1"
+                                        style={
+                                            activeNode?.id === node.id
+                                                ? { background: 'var(--accent)', borderColor: 'var(--accent)', color: 'var(--on-accent)', boxShadow: 'var(--shadow-md)' }
+                                                : { background: 'var(--surface-strong)', borderColor: 'var(--border-strong)', color: 'var(--text)', boxShadow: 'var(--shadow-sm)' }
+                                        }
                                     >
                                         {node.label}
                                     </button>
 
                                     {activeNode?.id === node.id && (
-                                        <div className={`absolute z-50 w-80 max-w-[min(20rem,80vw)] rounded-lg border border-white/10 bg-gray-950/95 p-4 text-left shadow-2xl backdrop-blur ${node.tooltip === 'left' ? 'right-0' : 'left-0'} ${node.vertical === 'top' ? 'bottom-12' : 'top-12'}`}>
-                                            <p className="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-[#7cf5c6]">{node.label}</p>
-                                            <p className="mt-2 text-sm font-medium leading-6 text-gray-200">{node.detail}</p>
+                                        <div
+                                            className={`absolute z-50 w-80 max-w-[min(20rem,80vw)] rounded-lg p-4 text-left backdrop-blur ${node.tooltip === 'left' ? 'right-0' : 'left-0'} ${node.vertical === 'top' ? 'bottom-12' : 'top-12'}`}
+                                            style={{ background: 'var(--surface-overlay)', border: '1px solid var(--border-strong)', boxShadow: 'var(--shadow-lg)' }}
+                                        >
+                                            <p className="micro" style={{ color: 'var(--accent)' }}>{node.label}</p>
+                                            <p className="mt-2 text-sm font-medium leading-6" style={{ color: 'var(--text)' }}>{node.detail}</p>
                                         </div>
                                     )}
                                 </div>
@@ -260,7 +268,10 @@ const PlatformLab = () => {
                             <SiTerraform />
                             IaC Showcase
                         </div>
-                        <pre className="mt-5 overflow-hidden rounded-lg bg-gray-950 p-4 text-xs leading-6 text-gray-200"><code>{`module "service_db" {
+                        <pre
+                            className="mt-5 overflow-x-auto rounded-lg p-4 font-mono text-xs leading-6"
+                            style={{ background: 'var(--surface-inset)', border: '1px solid var(--border)', color: 'var(--text)' }}
+                        ><code>{`module "service_db" {
   source  = "app.terraform.io/platform/cloud-sql/google"
   version = "~> 2.4"
   env     = var.environment

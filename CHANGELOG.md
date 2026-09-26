@@ -16,6 +16,15 @@ Each release gets a version bump in `package.json`, an entry here, and an annota
 
 ## [Unreleased]
 
+## [2.1.2] - 2026-09-27
+
+### Fixed
+
+- The Platform Lab control-plane diagram and IaC code block stayed dark in the
+  light theme. Both now use the theme tokens: canvas, grid, connection lines,
+  nodes, tooltips and the code block all follow light and dark mode.
+- The IaC code block scrolls horizontally instead of cutting off long lines.
+
 ## [2.1.1] - 2026-09-27
 
 ### Changed
@@ -164,7 +173,8 @@ First versioned release. A full visual redesign built on a real design system.
   `@theme` inside `src/index.css`.
 - The production JS bundle is ~806 kB (~245 kB gzipped) and is not yet code-split.
 
-[Unreleased]: https://github.com/Rahulkprajapati/Rahulkprajapati.github.io/compare/v2.1.1...HEAD
+[Unreleased]: https://github.com/Rahulkprajapati/Rahulkprajapati.github.io/compare/v2.1.2...HEAD
+[2.1.2]: https://github.com/Rahulkprajapati/Rahulkprajapati.github.io/compare/v2.1.1...v2.1.2
 [2.1.1]: https://github.com/Rahulkprajapati/Rahulkprajapati.github.io/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/Rahulkprajapati/Rahulkprajapati.github.io/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/Rahulkprajapati/Rahulkprajapati.github.io/compare/v1.0.0...v2.0.0
