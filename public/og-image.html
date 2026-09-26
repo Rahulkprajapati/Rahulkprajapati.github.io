@@ -1,122 +1,161 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rahul Prajapati Open Graph Image</title>
+  <!-- Source template for og-image.png (rendered with headless Chrome at 1200x630).
+       Deployed alongside the site, so keep it out of search results. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Rahul Prajapati — Open Graph card</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=block" rel="stylesheet" />
   <style>
-    * {
-      box-sizing: border-box;
+    :root {
+      --bg: #07090b;
+      --text: #e8efeb;
+      --muted: #9aa8a2;
+      --subtle: #64716c;
+      --border: rgba(206, 230, 219, 0.10);
+      --border-strong: rgba(206, 230, 219, 0.20);
+      --accent: #7cf5c6;
+      --tech: #b4a4ff;
     }
-
+    * { box-sizing: border-box; margin: 0; }
+    html, body { width: 1200px; height: 630px; overflow: hidden; }
     body {
-      margin: 0;
-      width: 1200px;
-      height: 630px;
-      overflow: hidden;
       background:
-        radial-gradient(circle at 78% 18%, rgba(0, 217, 255, 0.24), transparent 28%),
-        radial-gradient(circle at 8% 86%, rgba(239, 68, 68, 0.28), transparent 30%),
-        linear-gradient(135deg, #020617 0%, #0f172a 58%, #111827 100%);
-      color: #ffffff;
-      font-family: Inter, Arial, Helvetica, sans-serif;
-    }
-
-    .frame {
+        radial-gradient(60% 70% at 78% 48%, rgba(124, 245, 198, 0.08), transparent 70%),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
       position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      width: 100%;
-      height: 100%;
-      padding: 72px;
     }
-
     .grid {
-      position: absolute;
-      inset: 0;
-      opacity: 0.22;
+      position: absolute; inset: 0;
       background-image:
-        linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-      background-size: 56px 56px;
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 30px 30px;
+      background-position: -1px -1px;
+      mask-image: radial-gradient(70% 90% at 78% 50%, #000 30%, transparent 85%);
+      -webkit-mask-image: radial-gradient(70% 90% at 78% 50%, #000 30%, transparent 85%);
     }
+    .micro {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--subtle);
+    }
+    .ticks { position: absolute; inset: 22px; --t: var(--border-strong);
+      background:
+        linear-gradient(var(--t),var(--t)) top left/16px 1px no-repeat,
+        linear-gradient(var(--t),var(--t)) top left/1px 16px no-repeat,
+        linear-gradient(var(--t),var(--t)) top right/16px 1px no-repeat,
+        linear-gradient(var(--t),var(--t)) top right/1px 16px no-repeat,
+        linear-gradient(var(--t),var(--t)) bottom left/16px 1px no-repeat,
+        linear-gradient(var(--t),var(--t)) bottom left/1px 16px no-repeat,
+        linear-gradient(var(--t),var(--t)) bottom right/16px 1px no-repeat,
+        linear-gradient(var(--t),var(--t)) bottom right/1px 16px no-repeat; }
+    .rail { position: absolute; left: 64px; right: 64px; top: 50px;
+      display: flex; justify-content: space-between; padding-bottom: 16px;
+      border-bottom: 1px solid var(--border); }
+    .left { position: absolute; left: 64px; top: 130px; width: 640px; }
+    .status { display: flex; align-items: center; gap: 12px; }
+    .dot { width: 8px; height: 8px; border-radius: 99px; background: var(--accent); box-shadow: 0 0 14px var(--accent); }
+    h1 { margin-top: 26px; font-size: 104px; font-weight: 600; line-height: 0.9; letter-spacing: -0.05em; }
+    h1 span { color: var(--accent); }
+    .role { margin-top: 28px; font-family: 'JetBrains Mono', monospace; font-size: 23px; }
+    .role em { font-style: normal; color: var(--subtle); }
+    .readout { position: absolute; left: 64px; width: 660px; bottom: 50px; display: flex;
+      border-top: 1px solid var(--border); }
+    .cell { flex: 1; padding: 20px 22px 0; box-shadow: -1px 0 0 var(--border); }
+    .cell:first-child { box-shadow: none; padding-left: 0; }
+    .cell .micro { font-size: 12px; white-space: nowrap; }
+    .num { margin-top: 12px; font-size: 44px; font-weight: 500; letter-spacing: -0.03em; }
+    .num small { font-family: 'JetBrains Mono', monospace; font-size: 16px; color: var(--accent); margin-left: 4px; }
 
-    .badge {
-      position: relative;
-      width: max-content;
-      border: 1px solid rgba(248, 113, 113, 0.5);
-      border-radius: 14px;
-      padding: 12px 16px;
-      color: #fecaca;
-      background: rgba(127, 29, 29, 0.32);
-      font-size: 24px;
-      font-weight: 800;
-    }
-
-    h1 {
-      position: relative;
-      margin: 34px 0 0;
-      max-width: 850px;
-      font-size: 86px;
-      line-height: 0.94;
-      letter-spacing: 0;
-    }
-
-    .role {
-      position: relative;
-      margin-top: 28px;
-      color: #67e8f9;
-      font-size: 36px;
-      font-weight: 900;
-    }
-
-    .line {
-      position: relative;
-      margin-top: 24px;
-      max-width: 840px;
-      color: #d1d5db;
-      font-size: 28px;
-      line-height: 1.35;
-      font-weight: 600;
-    }
-
-    .footer {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      color: #e5e7eb;
-      font-size: 24px;
-      font-weight: 800;
-    }
-
-    .mark {
-      display: grid;
-      place-items: center;
-      width: 72px;
-      height: 72px;
-      border-radius: 18px;
-      background: #ffffff;
-      color: #020617;
-      font-size: 28px;
-      font-weight: 950;
-    }
+    .badge { position: absolute; right: 118px; top: 92px; width: 272px;
+      transform: rotate(-3deg);
+      background: rgba(11, 14, 16, 0.94); border: 1px solid var(--border-strong);
+      border-radius: 18px; padding: 16px;
+      box-shadow: 0 40px 80px -30px rgba(0,0,0,0.9), 0 0 0 1px rgba(0,0,0,0.4); }
+    .slot { width: 48px; height: 6px; border-radius: 9px; background: var(--border-strong); margin: 0 auto 12px; }
+    .bhead { display: flex; justify-content: space-between; }
+    .bhead .micro { font-size: 10px; }
+    .photo { position: relative; margin-top: 12px; aspect-ratio: 4/5; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+    .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 46% 36%; filter: url(#duo) contrast(1.05); }
+    .photo::after { content: ""; position: absolute; inset: 0; opacity: .35; mix-blend-mode: overlay;
+      background: repeating-linear-gradient(0deg, rgba(0,0,0,.35) 0 1px, transparent 1px 3px); }
+    .bname { margin-top: 14px; font-size: 19px; font-weight: 600; letter-spacing: -0.02em; }
+    .brole { margin-top: 4px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+    .bars { margin-top: 14px; height: 26px; display: flex; gap: 0; }
+    .bars i { display: block; height: 100%; background: var(--text); opacity: .85; }
   </style>
 </head>
 <body>
-  <main class="frame">
-    <div class="grid"></div>
-    <section>
-      <div class="badge">AirAsia MOVE</div>
-      <h1>Rahul Prajapati</h1>
-      <div class="role">Senior Software Engineer Platform</div>
-      <div class="line">Cloud systems, AI agents, and automations that stay calm under pressure.</div>
-    </section>
-    <section class="footer">
-      <div class="mark">RP</div>
-      <div>GCP · Kubernetes · Terraform · Cloud SQL · AI Agents · SRE</div>
-    </section>
-  </main>
+  <svg width="0" height="0" style="position:absolute">
+    <filter id="duo" color-interpolation-filters="sRGB">
+      <feColorMatrix type="matrix" values="0.30 0.59 0.11 0 0  0.30 0.59 0.11 0 0  0.30 0.59 0.11 0 0  0 0 0 1 0" />
+      <feComponentTransfer>
+        <feFuncR type="gamma" amplitude="1.08" exponent="0.9" offset="-0.02" />
+        <feFuncG type="gamma" amplitude="1.08" exponent="0.9" offset="-0.02" />
+        <feFuncB type="gamma" amplitude="1.08" exponent="0.9" offset="-0.02" />
+      </feComponentTransfer>
+      <feComponentTransfer>
+        <feFuncR type="table" tableValues="0.024 0.875" />
+        <feFuncG type="table" tableValues="0.035 0.953" />
+        <feFuncB type="table" tableValues="0.039 0.918" />
+      </feComponentTransfer>
+    </filter>
+  </svg>
+
+  <div class="grid"></div>
+  <div class="ticks"></div>
+
+  <div class="rail">
+    <span class="micro">RP / Platform engineering</span>
+    <span class="micro" style="color: var(--muted)">rahulkprajapati.github.io</span>
+  </div>
+
+  <div class="left">
+    <div class="status">
+      <span class="dot"></span>
+      <span class="micro" style="color: var(--muted)">GCP · Kubernetes · Terraform · SRE</span>
+    </div>
+    <h1>Rahul<br />Prajapati<span>.</span></h1>
+    <p class="role">Senior Platform Engineer <em>— AirAsia MOVE</em></p>
+  </div>
+
+  <div class="badge">
+    <div class="slot"></div>
+    <div class="bhead">
+      <span class="micro" style="color: var(--text)">Platform access</span>
+      <span class="micro" style="color: var(--accent)">● Prod</span>
+    </div>
+    <div class="photo"><img src="portrait.jpg" alt="" /></div>
+    <p class="bname">Rahul Prajapati</p>
+    <p class="brole">Senior Platform Engineer</p>
+    <div class="bars" id="bars"></div>
+  </div>
+
+  <div class="readout">
+    <div class="cell"><div class="micro">Production platforms</div><div class="num">5+<small>yrs</small></div></div>
+    <div class="cell"><div class="micro">Kubernetes clusters</div><div class="num">100<small>+</small></div></div>
+    <div class="cell"><div class="micro">Manual ops removed</div><div class="num">70<small>%</small></div></div>
+  </div>
+
+  <script>
+    // Same deterministic barcode as the site badge (IdBadge.jsx)
+    const bars = document.getElementById('bars');
+    let seed = [...'RP-2021-BLR'].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
+    for (let i = 0; i < 42; i++) {
+      seed = (seed * 1103515245 + 12345) >>> 0;
+      const b = document.createElement('i');
+      b.style.width = (1 + (seed % 3)) + 'px';
+      b.style.marginRight = (1 + ((seed >> 3) % 2)) + 'px';
+      bars.appendChild(b);
+    }
+  </script>
 </body>
 </html>

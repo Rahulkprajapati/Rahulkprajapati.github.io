@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion as Motion } from 'framer-motion';
 import { FaCubes, FaDatabase, FaDollarSign, FaLayerGroup, FaProjectDiagram, FaShieldAlt } from 'react-icons/fa';
 import { SiGithubactions, SiGrafana, SiKubernetes, SiTerraform } from 'react-icons/si';
+import { SectionHeader } from './Frame';
 
 const architectureNodes = [
     {
@@ -111,22 +112,14 @@ const PlatformLab = () => {
 
     return (
         <section id="platform-lab" className="section section-divider">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <Motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    viewport={{ once: true }}
-                    className="mb-12 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"
-                >
-                    <div>
-                        <p className="eyebrow">Platform Lab</p>
-                        <h2 className="mt-4 text-3xl font-bold leading-[1.1] tracking-tight md:text-5xl" style={{ color: 'var(--text)' }}>A sanitized view of how I think.</h2>
-                    </div>
-                    <p className="max-w-2xl text-base leading-[1.75]" style={{ color: 'var(--text-muted)' }}>
-                        A portfolio surface for the usually invisible work: architecture tradeoffs, self-service DevEx, GitOps delivery, observability, migration evidence, and efficiency.
-                    </p>
-                </Motion.div>
+            <div className="shell">
+                <SectionHeader
+                    index="02"
+                    label="Platform Lab"
+                    meta="Sanitised · no client data"
+                    title="A sanitised view of how I think."
+                    aside="A surface for the usually invisible work: architecture trade-offs, self-service DevEx, GitOps delivery, observability, migration evidence and efficiency."
+                />
 
                 <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
                     <Motion.div
@@ -144,7 +137,7 @@ const PlatformLab = () => {
                                 </div>
                                 <h3 className="mt-2.5 text-2xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>Production platform control plane</h3>
                             </div>
-                            <span className="rounded-full px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-wider" style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}>Sanitized</span>
+                            <span className="rounded-full px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-wider" style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}>Sanitised</span>
                         </div>
 
                         <div className="relative mt-6 min-h-[440px] overflow-hidden rounded-lg border border-gray-200 bg-gray-950 dark:border-white/10">

@@ -2,6 +2,7 @@ import React from 'react';
 import { motion as Motion } from 'framer-motion';
 import { FaEnvelope, FaGithub, FaLinkedin, FaMapMarkerAlt, FaMedium, FaMobileAlt, FaPaperPlane } from 'react-icons/fa';
 import { profile } from '../data/profile';
+import { SectionHeader } from './Frame';
 
 const Contact = () => {
     const [submitStatus, setSubmitStatus] = React.useState('');
@@ -68,19 +69,14 @@ ${message}`;
     return (
         <section id="contact" className="section section-divider">
             <div className="shell">
-                <Motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    viewport={{ once: true }}
-                    className="mb-14 text-center"
-                >
-                    <p className="eyebrow">Contact</p>
-                    <h2 className="mt-4 text-3xl font-bold leading-[1.1] tracking-tight md:text-5xl" style={{ color: 'var(--text)' }}>Let’s build something reliable.</h2>
-                    <p className="mx-auto mt-5 max-w-2xl text-base leading-[1.75]" style={{ color: 'var(--text-muted)' }}>
-                        Reach out for platform engineering, DevOps automation, Kubernetes reliability, or cloud architecture conversations.
-                    </p>
-                </Motion.div>
+                <SectionHeader
+                    index="04"
+                    label="Contact"
+                    meta="Bangalore · IST (UTC+5:30)"
+                    align="center"
+                    title="Let’s build something reliable."
+                    aside="Platform engineering, DevOps automation, Kubernetes reliability or cloud architecture — happy to talk shop."
+                />
 
                 <div className="grid gap-8 lg:grid-cols-[1fr_0.72fr]">
                     <Motion.div

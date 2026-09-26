@@ -2,18 +2,19 @@ import React, { useEffect, useRef } from 'react';
 import { useTheme } from '../context/ThemeContext';
 
 const getPalette = (darkMode) => ({
-    bgTop: darkMode ? '#020617' : '#ffffff',
-    bgMid: darkMode ? '#07111f' : '#f8fafc',
-    bgBottom: darkMode ? '#0f172a' : '#eef6ff',
-    grid: darkMode ? 'rgba(148, 163, 184, 0.07)' : 'rgba(15, 23, 42, 0.05)',
-    gridAccent: darkMode ? 'rgba(34, 211, 238, 0.14)' : 'rgba(14, 165, 233, 0.12)',
-    trace: darkMode ? 'rgba(103, 232, 249, 0.18)' : 'rgba(8, 145, 178, 0.14)',
-    traceHot: darkMode ? 'rgba(248, 113, 113, 0.18)' : 'rgba(220, 38, 38, 0.12)',
-    text: darkMode ? 'rgba(226, 232, 240, 0.30)' : 'rgba(15, 23, 42, 0.28)',
-    panel: darkMode ? 'rgba(15, 23, 42, 0.36)' : 'rgba(255, 255, 255, 0.58)',
-    panelBorder: darkMode ? 'rgba(148, 163, 184, 0.14)' : 'rgba(15, 23, 42, 0.10)',
-    packet: darkMode ? '#67e8f9' : '#0891b2',
-    packetHot: darkMode ? '#fb7185' : '#dc2626',
+    bgTop: darkMode ? '#07090b' : '#f5f1e8',
+    bgMid: darkMode ? '#090d0f' : '#f3efe6',
+    bgBottom: darkMode ? '#0b1012' : '#efe9dc',
+    grid: darkMode ? 'rgba(206, 230, 219, 0.045)' : 'rgba(40, 34, 20, 0.05)',
+    gridAccent: darkMode ? 'rgba(124, 245, 198, 0.10)' : 'rgba(14, 122, 85, 0.09)',
+    trace: darkMode ? 'rgba(124, 245, 198, 0.14)' : 'rgba(14, 122, 85, 0.12)',
+    traceHot: darkMode ? 'rgba(180, 164, 255, 0.16)' : 'rgba(91, 70, 214, 0.12)',
+    text: darkMode ? 'rgba(232, 239, 235, 0.07)' : 'rgba(22, 20, 15, 0.06)',
+    panel: darkMode ? 'rgba(13, 17, 19, 0.40)' : 'rgba(255, 253, 247, 0.55)',
+    panelBorder: darkMode ? 'rgba(206, 230, 219, 0.11)' : 'rgba(40, 34, 20, 0.10)',
+    packet: darkMode ? '#7cf5c6' : '#0e7a55',
+    packetHot: darkMode ? '#b4a4ff' : '#5b46d6',
+    pulse: darkMode ? '124, 245, 198' : '14, 122, 85',
 });
 
 const drawRoundedRect = (ctx, x, y, width, height, radius) => {
@@ -166,7 +167,7 @@ const BackgroundAnimation = () => {
 
             rows.forEach((row, index) => {
                 const pulse = 0.35 + Math.sin(phase + index * 1.7) * 0.16;
-                ctx.fillStyle = index === 1 ? `rgba(103, 232, 249, ${pulse})` : palette.panelBorder;
+                ctx.fillStyle = index === 1 ? `rgba(${palette.pulse}, ${pulse})` : palette.panelBorder;
                 drawRoundedRect(ctx, x + 14, y + 38 + index * 15, row, 4, 2);
                 ctx.fill();
             });

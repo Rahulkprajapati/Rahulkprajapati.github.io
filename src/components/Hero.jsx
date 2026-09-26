@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { motion as Motion } from 'framer-motion';
-import Typewriter from 'typewriter-effect';
-import { FaArrowRight, FaDownload, FaGithub, FaLinkedin, FaMedium, FaTerminal } from 'react-icons/fa';
+import { FaArrowDown, FaDownload, FaGithub, FaLinkedin, FaMedium, FaTerminal } from 'react-icons/fa';
 import profileImage from '../assets/profile.jpg';
-import Terminal from './Terminal';
-import PipelineAnimation from './PipelineAnimation';
-import { highlights, profile } from '../data/profile';
+import IdBadge from './IdBadge';
+import ParticleSphere from './ParticleSphere';
+import { Panel, Readout } from './Frame';
+import { metrics, profile } from '../data/profile';
+
+// xterm is ~300 kB; only fetch it when someone actually opens the terminal
+const Terminal = lazy(() => import('./Terminal'));
 
 const socials = [
     { key: 'github', label: 'GitHub', icon: FaGithub },
@@ -14,12 +17,31 @@ const socials = [
 ];
 
 const fadeUp = {
-    hidden: { opacity: 0, y: 22 },
+    hidden: { opacity: 0, y: 20 },
     show: (i = 0) => ({
         opacity: 1,
         y: 0,
-        transition: { duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] },
+        transition: { duration: 0.7, delay: 0.1 + i * 0.07, ease: [0.22, 1, 0.36, 1] },
     }),
+};
+
+const istFormat = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Asia/Kolkata',
+    hour: '2-digit',
+    minute: '2-digit',
+});
+
+const LocalTime = () => {
+    const [now, setNow] = useState(() => new Date());
+    useEffect(() => {
+        const id = setInterval(() => setNow(new Date()), 30_000);
+        return () => clearInterval(id);
+    }, []);
+    return (
+        <span className="micro tabular-nums">
+            BLR <span style={{ color: 'var(--text)' }}>{istFormat.format(now)}</span> IST
+        </span>
+    );
 };
 
 const Hero = () => {
@@ -27,227 +49,177 @@ const Hero = () => {
 
     return (
         <>
-            <section id="home" className="relative flex min-h-screen items-center overflow-hidden pt-28 pb-20">
-                {/* Soft accent wash anchoring the fold */}
-                <div
-                    aria-hidden
-                    className="pointer-events-none absolute -top-40 left-1/2 h-[38rem] w-[70rem] -translate-x-1/2 opacity-60 blur-3xl"
-                    style={{
-                        background:
-                            'radial-gradient(45% 50% at 30% 40%, var(--accent-soft), transparent 70%), radial-gradient(40% 45% at 72% 55%, var(--tech-soft), transparent 70%)',
-                    }}
-                />
+            <section id="home" className="relative overflow-hidden pt-20 pb-16 lg:pb-20">
+                <div className="shell">
+                    {/* Meta rail, like the header strip on a spec sheet */}
+                    <div
+                        className="flex items-center justify-between gap-4 py-4"
+                        style={{ borderBottom: '1px solid var(--border)' }}
+                    >
+                        <span className="micro">RP / Platform engineering</span>
+                        <span className="micro hidden md:inline">12.97°N 77.59°E</span>
+                        <LocalTime />
+                    </div>
 
-                <div className="shell relative grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
-                    <div className="text-center lg:text-left">
-                        <Motion.div variants={fadeUp} initial="hidden" animate="show" custom={0}>
-                            <span
-                                className="inline-flex items-center gap-2.5 rounded-full px-3.5 py-1.5 text-xs font-medium"
-                                style={{
-                                    border: '1px solid var(--border)',
-                                    background: 'var(--surface-muted)',
-                                    color: 'var(--text-muted)',
-                                }}
-                            >
-                                <span className="relative flex h-2 w-2">
-                                    <span
-                                        className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-70"
-                                        style={{ background: 'var(--accent)' }}
-                                    />
-                                    <span className="relative inline-flex h-2 w-2 rounded-full" style={{ background: 'var(--accent)' }} />
+                    <div className="grid items-center gap-14 pt-12 lg:grid-cols-[1fr_1fr] lg:gap-8 lg:pt-16 xl:gap-14">
+                        <div>
+                            <Motion.div variants={fadeUp} initial="hidden" animate="show" custom={0} className="flex items-center gap-2.5">
+                                <span className="signal-dot" />
+                                <span className="micro" style={{ color: 'var(--text-muted)' }}>
+                                    Systems nominal · AirAsia MOVE
                                 </span>
-                                Building cloud platforms at travel scale &mdash; AirAsia MOVE
-                            </span>
-                        </Motion.div>
+                            </Motion.div>
 
-                        <Motion.h1
-                            variants={fadeUp}
-                            initial="hidden"
-                            animate="show"
-                            custom={1}
-                            className="mt-7 text-5xl font-extrabold leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl"
-                            style={{ color: 'var(--text)' }}
-                        >
-                            Rahul
-                            <br />
-                            <span
-                                style={{
-                                    background: 'linear-gradient(120deg, var(--accent), var(--tech))',
-                                    WebkitBackgroundClip: 'text',
-                                    backgroundClip: 'text',
-                                    color: 'transparent',
-                                }}
+                            <Motion.h1
+                                variants={fadeUp}
+                                initial="hidden"
+                                animate="show"
+                                custom={1}
+                                className="mt-7 text-[3.6rem] font-semibold leading-[0.9] sm:text-7xl lg:text-[6.2rem]"
+                                style={{ color: 'var(--text)', letterSpacing: '-0.05em' }}
                             >
-                                Prajapati
-                            </span>
-                        </Motion.h1>
+                                Rahul
+                                <br />
+                                Prajapati<span style={{ color: 'var(--accent)' }}>.</span>
+                            </Motion.h1>
 
-                        <Motion.div
-                            variants={fadeUp}
-                            initial="hidden"
-                            animate="show"
-                            custom={2}
-                            className="mt-5 flex min-h-8 items-center justify-center font-mono text-base sm:text-lg lg:justify-start"
-                            style={{ color: 'var(--tech)' }}
-                        >
-                            <span aria-hidden className="mr-2 opacity-50">&gt;</span>
-                            <Typewriter
-                                options={{
-                                    strings: [
-                                        'Senior Software Engineer, Platform',
-                                        'Kubernetes Platform Builder',
-                                        'Terraform Automation Engineer',
-                                        'GitOps & Observability Specialist',
-                                    ],
-                                    autoStart: true,
-                                    loop: true,
-                                    deleteSpeed: 40,
-                                    delay: 70,
-                                }}
-                            />
-                        </Motion.div>
-
-                        <Motion.p
-                            variants={fadeUp}
-                            initial="hidden"
-                            animate="show"
-                            custom={3}
-                            className="mx-auto mt-6 max-w-2xl text-base leading-[1.75] sm:text-lg lg:mx-0"
-                            style={{ color: 'var(--text-muted)' }}
-                        >
-                            {profile.summary} {profile.current}
-                        </Motion.p>
-
-                        <Motion.div
-                            variants={fadeUp}
-                            initial="hidden"
-                            animate="show"
-                            custom={4}
-                            className="mt-9 flex flex-wrap justify-center gap-3 lg:justify-start"
-                        >
-                            <button onClick={() => setShowTerminal(true)} className="btn btn-primary">
-                                <FaTerminal size={14} />
-                                <span>Try the terminal</span>
-                            </button>
-                            <a href="/Rahul_Prajapati.pdf" target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
-                                <FaDownload size={14} />
-                                <span>Resume</span>
-                            </a>
-                            <button
-                                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                                className="btn btn-ghost group"
+                            <Motion.p
+                                variants={fadeUp}
+                                initial="hidden"
+                                animate="show"
+                                custom={2}
+                                className="mt-7 font-mono text-sm sm:text-[0.95rem]"
+                                style={{ color: 'var(--text)' }}
                             >
-                                <span>Get in touch</span>
-                                <FaArrowRight size={13} className="transition-transform duration-200 group-hover:translate-x-1" />
-                            </button>
-                        </Motion.div>
+                                {profile.headline}
+                                <span style={{ color: 'var(--text-subtle)' }}> — GCP · Kubernetes · Terraform · SRE</span>
+                            </Motion.p>
 
-                        <Motion.div
-                            variants={fadeUp}
-                            initial="hidden"
-                            animate="show"
-                            custom={5}
-                            className="mt-7 flex items-center justify-center gap-2.5 lg:justify-start"
-                        >
-                            {socials.map((social) => {
-                                const Icon = social.icon;
-                                return (
-                                <a
-                                    key={social.key}
-                                    href={profile.links[social.key]}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label={social.label}
-                                    className="grid h-11 w-11 place-items-center rounded-xl transition-all duration-200 hover:-translate-y-0.5"
-                                    style={{
-                                        border: '1px solid var(--border)',
-                                        background: 'var(--surface-muted)',
-                                        color: 'var(--text-muted)',
-                                    }}
-                                    onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.borderColor = 'var(--accent-ring)'; }}
-                                    onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-muted)'; e.currentTarget.style.borderColor = 'var(--border)'; }}
+                            <Motion.p
+                                variants={fadeUp}
+                                initial="hidden"
+                                animate="show"
+                                custom={3}
+                                className="mt-5 max-w-xl text-base leading-[1.75] sm:text-[1.05rem]"
+                                style={{ color: 'var(--text-muted)' }}
+                            >
+                                {profile.summary} {profile.current}
+                            </Motion.p>
+
+                            <Motion.div
+                                variants={fadeUp}
+                                initial="hidden"
+                                animate="show"
+                                custom={4}
+                                className="mt-9 flex flex-wrap gap-3"
+                            >
+                                <button
+                                    onClick={() => document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' })}
+                                    className="btn btn-primary group"
                                 >
-                                    <Icon size={19} />
+                                    <span>View experience</span>
+                                    <FaArrowDown size={12} className="transition-transform duration-200 group-hover:translate-y-0.5" />
+                                </button>
+                                <a href="/Rahul_Prajapati.pdf" target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
+                                    <FaDownload size={12} />
+                                    <span>Résumé</span>
+                                    <span className="micro">PDF</span>
                                 </a>
-                                );
-                            })}
-                        </Motion.div>
+                                <button onClick={() => setShowTerminal(true)} className="btn btn-ghost hidden sm:inline-flex" aria-label="Open interactive terminal">
+                                    <FaTerminal size={12} />
+                                    <span className="font-mono text-sm">~/rp</span>
+                                </button>
+                            </Motion.div>
+
+                            <Motion.div
+                                variants={fadeUp}
+                                initial="hidden"
+                                animate="show"
+                                custom={5}
+                                className="mt-8 flex items-center gap-5"
+                            >
+                                {socials.map((social) => {
+                                    const Icon = social.icon;
+                                    return (
+                                        <a
+                                            key={social.key}
+                                            href={profile.links[social.key]}
+                                            target="_blank"
+                                            rel="noopener noreferrer me"
+                                            className="group flex items-center gap-2 transition-colors duration-200"
+                                            style={{ color: 'var(--text-muted)' }}
+                                        >
+                                            <Icon size={15} className="transition-colors group-hover:text-[var(--accent)]" />
+                                            <span className="micro transition-colors group-hover:text-[var(--text)]">{social.label}</span>
+                                        </a>
+                                    );
+                                })}
+                            </Motion.div>
+                        </div>
 
                         <Motion.div
-                            variants={fadeUp}
-                            initial="hidden"
-                            animate="show"
-                            custom={6}
-                            className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4"
+                            initial={{ opacity: 0, y: 24 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.9, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                            className="relative"
                         >
-                            {highlights.map((item) => (
-                                <div key={item.label} className="surface-flat lift p-4 text-left">
-                                    <div
-                                        className="font-mono text-[0.7rem] font-semibold tracking-[0.18em]"
-                                        style={{ color: 'var(--accent)' }}
-                                    >
-                                        {item.value}
-                                    </div>
-                                    <div className="mt-1.5 text-sm font-medium leading-snug" style={{ color: 'var(--text)' }}>
-                                        {item.label}
-                                    </div>
-                                </div>
-                            ))}
+                            {/* On mobile the badge sits above the panel; on desktop it floats inside it */}
+                            <div className="relative z-20 flex justify-center lg:absolute lg:-left-[2%] lg:top-1/2 xl:-left-[3%] lg:block lg:-translate-y-1/2">
+                                <Motion.div
+                                    initial={{ rotate: 0 }}
+                                    animate={{ rotate: -3 }}
+                                    transition={{ duration: 1.2, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                                >
+                                    <IdBadge photo={profileImage} name={profile.name} role={profile.headline} />
+                                </Motion.div>
+                            </div>
+
+                            <Panel
+                                className="grid-paper -mt-28 aspect-square w-full overflow-hidden sm:aspect-[4/3] lg:mt-0 lg:aspect-square"
+                                // Annotations live on the right: the badge covers the left edge on desktop
+                                tr={
+                                    <span className="hidden flex-col items-end gap-1 lg:flex">
+                                        <span style={{ color: 'var(--text)' }}>Fig. 01 — Fleet topology</span>
+                                        <span>100+ clusters · 3 clouds</span>
+                                    </span>
+                                }
+                                // On mobile the badge covers the top of the panel, so the
+                                // figure caption moves to the bottom-left corner instead
+                                bl={<span className="lg:hidden">Fig. 01 — Fleet topology</span>}
+                                br={
+                                    <span className="flex items-center gap-1.5">
+                                        <span className="hidden sm:inline">Drag to rotate</span>
+                                        <span aria-hidden className="hidden sm:inline" style={{ color: 'var(--border-strong)' }}>/</span>
+                                        <span className="signal-dot" style={{ width: 5, height: 5 }} />
+                                        Live
+                                    </span>
+                                }
+                            >
+                                <ParticleSphere className="absolute inset-0 h-full w-full" />
+                            </Panel>
                         </Motion.div>
                     </div>
 
                     <Motion.div
-                        initial={{ opacity: 0, scale: 0.96, y: 24 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                        className="relative"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.8, delay: 0.7 }}
+                        className="mt-16"
                     >
-                        <div
-                            aria-hidden
-                            className="absolute -inset-5 rounded-[2.5rem] opacity-70 blur-2xl"
-                            style={{
-                                background:
-                                    'linear-gradient(140deg, var(--accent-soft), var(--tech-soft), var(--ok-soft))',
-                            }}
-                        />
-                        <div className="surface relative overflow-hidden" style={{ borderRadius: 'var(--r-xl)' }}>
-                            <div className="relative aspect-[4/3] overflow-hidden">
-                                <img
-                                    src={profileImage}
-                                    alt="Rahul Prajapati"
-                                    className="h-full w-full object-cover"
-                                    loading="eager"
-                                />
-                                <div
-                                    aria-hidden
-                                    className="absolute inset-0"
-                                    style={{ background: 'linear-gradient(to top, rgba(3,7,18,0.45), transparent 55%)' }}
-                                />
-                            </div>
-
-                            <div className="p-5" style={{ borderTop: '1px solid var(--border)' }}>
-                                <div className="flex items-center justify-between gap-4">
-                                    <div>
-                                        <p className="eyebrow" style={{ color: 'var(--text-subtle)' }}>Current focus</p>
-                                        <p className="mt-1.5 text-lg font-semibold tracking-tight" style={{ color: 'var(--text)' }}>
-                                            AirAsia MOVE Platform
-                                        </p>
-                                    </div>
-                                    <span
-                                        className="rounded-xl px-3 py-1.5 font-mono text-sm font-semibold"
-                                        style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}
-                                    >
-                                        2026
-                                    </span>
-                                </div>
-                                <PipelineAnimation />
-                            </div>
+                        <div className="mb-3 flex items-center justify-between">
+                            <span className="micro">Telemetry · from the CV</span>
+                            <span className="micro hidden sm:inline">Hover a reading for its source</span>
                         </div>
+                        <Readout items={metrics} />
                     </Motion.div>
                 </div>
             </section>
 
-            {showTerminal && <Terminal onClose={() => setShowTerminal(false)} />}
+            {showTerminal && (
+                <Suspense fallback={null}>
+                    <Terminal onClose={() => setShowTerminal(false)} />
+                </Suspense>
+            )}
         </>
     );
 };

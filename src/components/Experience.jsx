@@ -1,167 +1,164 @@
 import React, { useState } from 'react';
 import { AnimatePresence, motion as Motion } from 'framer-motion';
-import { FaCalendarAlt, FaChevronDown, FaMapMarkerAlt } from 'react-icons/fa';
-import { experiences } from '../data/profile';
+import { FaPlus } from 'react-icons/fa';
+import { experiences, profile } from '../data/profile';
+import { logos } from '../data/logos';
+import { Panel, SectionHeader } from './Frame';
 
-const COLLAPSED_COUNT = 4;
+const COLUMNS = 'lg:grid-cols-[3.5rem_10.5rem_1fr_14rem_2.5rem]';
+const pad = (n) => String(n).padStart(2, '0');
 
-const ExperienceCard = ({ exp, index }) => {
-    const [expanded, setExpanded] = useState(false);
-    const isCurrent = index === 0;
-    const hasMore = exp.description.length > COLLAPSED_COUNT;
-    const visible = expanded ? exp.description : exp.description.slice(0, COLLAPSED_COUNT);
+const ManifestRow = ({ exp, number, total, open, onToggle }) => {
+    const panelId = `manifest-${number}`;
 
     return (
-        <Motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: Math.min(index, 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
-            viewport={{ once: true, margin: '-60px' }}
-            className="relative grid gap-4 md:grid-cols-[3.5rem_1fr]"
-        >
-            {/* Timeline node */}
-            <div className="hidden md:flex md:justify-center">
+        <li style={{ borderTop: '1px solid var(--border)' }}>
+            <button
+                type="button"
+                onClick={onToggle}
+                aria-expanded={open}
+                aria-controls={panelId}
+                className={`group grid w-full cursor-pointer grid-cols-[2.5rem_1fr_2rem] items-center gap-x-4 gap-y-1 border-none bg-transparent px-5 py-5 text-left transition-colors duration-200 sm:px-6 ${COLUMNS}`}
+                style={{ background: open ? 'var(--surface-inset)' : 'transparent' }}
+            >
+                <span className="micro row-span-2 self-start pt-1 lg:row-span-1 lg:self-center lg:pt-0" style={{ color: open ? 'var(--accent)' : undefined }}>
+                    {pad(number)}
+                </span>
+
+                <span className="micro order-3 col-start-2 lg:order-none lg:col-start-auto" style={{ color: 'var(--text-muted)' }}>
+                    {exp.period}
+                </span>
+
+                <span className="col-start-2 row-start-1 flex min-w-0 items-center gap-3 lg:col-start-auto lg:row-start-auto">
+                    <img
+                        src={logos[exp.logo]}
+                        alt=""
+                        width="36"
+                        height="36"
+                        loading="lazy"
+                        className={`h-9 w-9 flex-shrink-0 rounded-md bg-white object-contain p-1 transition-all duration-300 ${open ? '' : 'grayscale group-hover:grayscale-0'}`}
+                        style={{ border: '1px solid var(--border)' }}
+                    />
+                    <span className="min-w-0">
+                        <span className="flex flex-wrap items-center gap-2">
+                            <span className="text-base font-semibold tracking-tight sm:text-lg" style={{ color: 'var(--text)' }}>
+                                {exp.company}
+                            </span>
+                            {exp.status && (
+                                <span
+                                    className="micro flex items-center gap-1.5 rounded-full px-2 py-0.5"
+                                    style={{ background: 'var(--accent-soft)', color: 'var(--accent)', fontSize: '0.58rem' }}
+                                >
+                                    <span className="signal-dot" style={{ width: 4, height: 4 }} />
+                                    {exp.status}
+                                </span>
+                            )}
+                        </span>
+                        <span className="mt-0.5 block font-mono text-xs lg:truncate" style={{ color: 'var(--tech)' }}>
+                            {exp.role}
+                        </span>
+                    </span>
+                </span>
+
+                <span className="micro hidden lg:block">{exp.location}</span>
+
                 <span
-                    className="relative z-10 mt-6 grid h-4 w-4 place-items-center rounded-full"
+                    aria-hidden
+                    className="col-start-3 row-span-2 row-start-1 grid h-8 w-8 place-items-center self-start justify-self-end rounded-full transition-all duration-300 lg:col-start-auto lg:row-span-1 lg:row-start-auto lg:self-center"
                     style={{
-                        background: isCurrent ? 'var(--accent)' : 'var(--surface-strong)',
-                        border: `2px solid ${isCurrent ? 'var(--accent)' : 'var(--border-strong)'}`,
-                        boxShadow: isCurrent ? '0 0 0 5px var(--accent-soft)' : 'none',
+                        border: '1px solid var(--border-strong)',
+                        color: open ? 'var(--on-accent)' : 'var(--text-muted)',
+                        background: open ? 'var(--accent)' : 'transparent',
+                        transform: open ? 'rotate(45deg)' : 'none',
                     }}
                 >
-                    {isCurrent && (
-                        <span
-                            className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60"
-                            style={{ background: 'var(--accent)' }}
-                        />
-                    )}
+                    <FaPlus size={10} />
                 </span>
-            </div>
+            </button>
 
-            <div className="surface lift p-6">
-                <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-                    <div className="flex items-center gap-4">
-                        <img
-                            src={exp.icon}
-                            alt=""
-                            className="h-14 w-14 flex-shrink-0 rounded-xl bg-white object-contain p-2"
-                            style={{ border: '1px solid var(--border)' }}
-                        />
-                        <div className="min-w-0">
-                            <div className="flex flex-wrap items-center gap-2">
-                                <h3 className="text-xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>
-                                    {exp.company}
-                                </h3>
-                                {exp.status && (
-                                    <span
-                                        className="rounded-full px-2.5 py-0.5 text-[0.68rem] font-semibold uppercase tracking-wider"
-                                        style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}
-                                    >
-                                        {exp.status}
-                                    </span>
-                                )}
-                            </div>
-                            <p className="mt-1 text-sm font-medium" style={{ color: 'var(--tech)' }}>
-                                {exp.role}
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className="flex flex-wrap gap-2">
-                        <span className="chip font-mono">
-                            <FaCalendarAlt size={11} style={{ color: 'var(--accent)' }} />
-                            {exp.period}
-                        </span>
-                        <span className="chip">
-                            <FaMapMarkerAlt size={11} style={{ color: 'var(--ok)' }} />
-                            {exp.location}
-                        </span>
-                    </div>
-                </div>
-
-                <p className="mt-5 text-base leading-[1.75]" style={{ color: 'var(--text-muted)' }}>
-                    {exp.summary}
-                </p>
-
-                <ul className="mt-5 grid gap-x-6 gap-y-3 lg:grid-cols-2">
-                    <AnimatePresence initial={false}>
-                        {visible.map((item) => (
-                            <Motion.li
-                                key={item}
-                                initial={{ opacity: 0, y: -4 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.22 }}
-                                className="flex items-start gap-3 text-sm leading-[1.7]"
-                                style={{ color: 'var(--text-muted)' }}
-                            >
-                                <span
-                                    aria-hidden
-                                    className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full"
-                                    style={{ background: 'var(--tech)' }}
-                                />
-                                <span>{item}</span>
-                            </Motion.li>
-                        ))}
-                    </AnimatePresence>
-                </ul>
-
-                {hasMore && (
-                    <button
-                        onClick={() => setExpanded((prev) => !prev)}
-                        className="mt-5 inline-flex cursor-pointer items-center gap-2 rounded-lg border-none bg-transparent p-0 text-sm font-semibold transition-colors"
-                        style={{ color: 'var(--accent)' }}
-                        aria-expanded={expanded}
+            <AnimatePresence initial={false}>
+                {open && (
+                    <Motion.div
+                        id={panelId}
+                        key="content"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                        className="overflow-hidden"
+                        style={{ background: 'var(--surface-inset)' }}
                     >
-                        {expanded ? 'Show less' : `Show ${exp.description.length - COLLAPSED_COUNT} more`}
-                        <Motion.span animate={{ rotate: expanded ? 180 : 0 }} transition={{ duration: 0.2 }} className="grid place-items-center">
-                            <FaChevronDown size={11} />
-                        </Motion.span>
-                    </button>
+                        <div className={`grid gap-6 px-5 pb-7 sm:px-6 ${COLUMNS}`}>
+                            {/* Mobile hides the Base column, so show it here instead */}
+                            <p className="micro lg:hidden">{exp.location}</p>
+                            <div className="lg:col-span-2 lg:col-start-3">
+                                <p className="max-w-3xl text-[0.95rem] leading-[1.75]" style={{ color: 'var(--text)' }}>
+                                    {exp.summary}
+                                </p>
+                                <ol className="mt-5 grid gap-x-8 gap-y-3 xl:grid-cols-2">
+                                    {exp.description.map((item, i) => (
+                                        <li key={item} className="grid grid-cols-[2rem_1fr] text-sm leading-[1.7]" style={{ color: 'var(--text-muted)' }}>
+                                            <span className="micro pt-[0.2rem]">{pad(i + 1)}</span>
+                                            <span>{item}</span>
+                                        </li>
+                                    ))}
+                                </ol>
+                                <p className="micro mt-6">
+                                    Entry {pad(number)} of {pad(total)} · {exp.description.length} line items
+                                </p>
+                            </div>
+                        </div>
+                    </Motion.div>
                 )}
-            </div>
-        </Motion.div>
+            </AnimatePresence>
+        </li>
     );
 };
 
 const Experience = () => {
+    const [openIndex, setOpenIndex] = useState(0);
+    const total = experiences.length;
+    const firstYear = profile.startYear;
+
     return (
         <section id="experience" className="section section-divider">
-            <div className="shell max-w-6xl">
+            <div className="shell">
+                <SectionHeader
+                    index="03"
+                    label="Experience"
+                    meta={`Manifest RP-${pad(total)} · ${firstYear} — present`}
+                    title="Production platform work"
+                    aside="Travel, analytics, customer data and cloud consulting — with hands-on depth in infrastructure automation, migrations and reliability."
+                />
+
                 <Motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 18 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                    viewport={{ once: true, margin: '-80px' }}
-                    className="mb-14 flex flex-col gap-5 md:flex-row md:items-end md:justify-between"
+                    viewport={{ once: true, margin: '-60px' }}
                 >
-                    <div>
-                        <p className="eyebrow">Experience</p>
-                        <h2 className="mt-4 text-3xl font-bold leading-[1.1] tracking-tight md:text-5xl" style={{ color: 'var(--text)' }}>
-                            Production platform work
-                        </h2>
-                    </div>
-                    <p className="max-w-md text-base leading-[1.75]" style={{ color: 'var(--text-muted)' }}>
-                        A career path across travel, analytics, customer data, and cloud consulting, with hands-on depth in infrastructure automation.
-                    </p>
+                    <Panel className="overflow-hidden">
+                        <div className={`hidden gap-x-4 px-6 pb-3 pt-10 lg:grid ${COLUMNS}`}>
+                            <span className="micro">No.</span>
+                            <span className="micro">Period</span>
+                            <span className="micro">Operator / Role</span>
+                            <span className="micro">Base</span>
+                            <span />
+                        </div>
+                        <ol className="m-0 list-none p-0 pt-6 lg:pt-0">
+                            {experiences.map((exp, index) => (
+                                <ManifestRow
+                                    key={`${exp.company}-${exp.period}`}
+                                    exp={exp}
+                                    number={total - index}
+                                    total={total}
+                                    open={openIndex === index}
+                                    onToggle={() => setOpenIndex(openIndex === index ? -1 : index)}
+                                />
+                            ))}
+                        </ol>
+                    </Panel>
                 </Motion.div>
-
-                <div className="relative grid gap-6">
-                    {/* Timeline spine */}
-                    <Motion.div
-                        initial={{ scaleY: 0 }}
-                        whileInView={{ scaleY: 1 }}
-                        transition={{ duration: 1.4, ease: 'easeInOut' }}
-                        viewport={{ once: true }}
-                        aria-hidden
-                        className="absolute left-7 top-6 bottom-6 hidden w-px origin-top md:block"
-                        style={{ background: 'linear-gradient(to bottom, var(--accent), var(--tech), transparent)' }}
-                    />
-
-                    {experiences.map((exp, index) => (
-                        <ExperienceCard key={`${exp.company}-${exp.period}`} exp={exp} index={index} />
-                    ))}
-                </div>
             </div>
         </section>
     );
