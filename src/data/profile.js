@@ -58,7 +58,7 @@ export const metrics = [
     { value: '100', unit: '+', label: 'Kubernetes clusters', source: 'Alteryx' },
     { value: '30', unit: '+', label: 'Terraform modules', source: 'Alteryx' },
     { value: '70', unit: '%', label: 'Manual ops removed', source: 'Alteryx' },
-    { value: '60', unit: '%', label: 'Frontend cost cut', source: 'AirAsia, App Engine to Cloud Run' },
+    { value: '60', unit: '%', label: 'Cloud cost cut', source: 'AirAsia, App Engine to Cloud Run migration' },
 ];
 
 export const experiences = [

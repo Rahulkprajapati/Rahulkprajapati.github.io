@@ -16,6 +16,13 @@ Each release gets a version bump in `package.json`, an entry here, and an annota
 
 ## [Unreleased]
 
+## [2.1.1] - 2026-09-27
+
+### Changed
+
+- Hero telemetry label "Frontend cost cut" is now the more general "Cloud cost
+  cut". The hover source still names the App Engine to Cloud Run migration.
+
 ## [2.1.0] - 2026-09-26
 
 ### Added
@@ -157,7 +164,8 @@ First versioned release. A full visual redesign built on a real design system.
   `@theme` inside `src/index.css`.
 - The production JS bundle is ~806 kB (~245 kB gzipped) and is not yet code-split.
 
-[Unreleased]: https://github.com/Rahulkprajapati/Rahulkprajapati.github.io/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/Rahulkprajapati/Rahulkprajapati.github.io/compare/v2.1.1...HEAD
+[2.1.1]: https://github.com/Rahulkprajapati/Rahulkprajapati.github.io/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/Rahulkprajapati/Rahulkprajapati.github.io/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/Rahulkprajapati/Rahulkprajapati.github.io/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/Rahulkprajapati/Rahulkprajapati.github.io/releases/tag/v1.0.0
