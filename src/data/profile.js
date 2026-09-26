@@ -48,7 +48,7 @@ export const profile = {
         'AI Agents',
     ],
     summary:
-        'Senior software engineer platform building reliable, automated platforms across GCP, AWS, Azure, Kubernetes, Terraform, GitOps, AI agents, and observability.',
+        'Senior platform engineer building reliable, automated platforms across GCP, AWS, Azure, Kubernetes, Terraform, GitOps, AI agents, and observability.',
     current:
         'Currently at AirAsia MOVE, focused on Landing Zone migration, data-layer consolidation, AI-driven automation, platform hardening, and resilient systems for high-traffic travel products.',
 };

@@ -36,3 +36,5 @@ jobs:
         with:
           branch: gh-pages
           folder: dist
+          # Keep only the latest build; old deploy history is not retained
+          single-commit: true

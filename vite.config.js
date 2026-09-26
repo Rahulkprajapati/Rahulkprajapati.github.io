@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { readFileSync, writeFileSync } from 'node:fs'
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { SITE_URL, certifications, experiences, metrics, profile } from './src/data/profile.js'
 
 const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf-8'))
@@ -116,7 +116,7 @@ const sitemap = () => `<?xml version="1.0" encoding="UTF-8"?>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>${SITE_URL}blogs</loc>
+    <loc>${SITE_URL}blogs/</loc>
     <lastmod>${today}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -141,6 +141,18 @@ const seoPrerender = () => ({
   },
   closeBundle() {
     writeFileSync(new URL('./dist/sitemap.xml', import.meta.url), sitemap())
+
+    // GitHub Pages only returns 200 for paths that exist as files. Without
+    // this, /blogs is served by the 404.html SPA fallback: visitors see the
+    // page, but crawlers get HTTP 404. Give the route its own index.html.
+    const home = readFileSync(new URL('./dist/index.html', import.meta.url), 'utf-8')
+    const blogsUrl = `${SITE_URL}blogs/`
+    const blogs = home
+      .replace(/<title>[^<]*<\/title>/, `<title>Writing — ${profile.name} | Cloud, Kubernetes, Terraform</title>`)
+      .replace(/<link rel="canonical" href="[^"]*"/, `<link rel="canonical" href="${blogsUrl}"`)
+      .replace(/<meta property="og:url" content="[^"]*"/, `<meta property="og:url" content="${blogsUrl}"`)
+    mkdirSync(new URL('./dist/blogs/', import.meta.url), { recursive: true })
+    writeFileSync(new URL('./dist/blogs/index.html', import.meta.url), blogs)
   },
 })
 

@@ -16,6 +16,26 @@ Each release gets a version bump in `package.json`, an entry here, and an annota
 
 ## [Unreleased]
 
+## [2.1.3] - 2026-09-27
+
+### Fixed
+
+- `/blogs` returned HTTP 404 to crawlers because GitHub Pages served it through
+  the `404.html` SPA fallback. The build now writes `blogs/index.html` with its
+  own title and canonical URL, and the sitemap lists `/blogs/`.
+- Small mono labels (`--text-subtle`) failed WCAG AA contrast in both themes
+  (3.3:1 light, 3.7:1 dark). They now meet 4.5:1 on every surface.
+- Hero summary grammar: "Senior platform engineer building…".
+
+### Changed
+
+- Terminal `date` shows Bangalore, Kuala Lumpur and UTC.
+- Deploys keep only the latest build on `gh-pages` (`single-commit`).
+
+### Removed
+
+- Unused `vite.svg` from the Vite template.
+
 ## [2.1.2] - 2026-09-27
 
 ### Fixed
@@ -172,7 +192,8 @@ First versioned release. A full visual redesign built on a real design system.
   `@theme` inside `src/index.css`.
 - The production JS bundle is ~806 kB (~245 kB gzipped) and is not yet code-split.
 
-[Unreleased]: https://github.com/Rahulkprajapati/Rahulkprajapati.github.io/compare/v2.1.2...HEAD
+[Unreleased]: https://github.com/Rahulkprajapati/Rahulkprajapati.github.io/compare/v2.1.3...HEAD
+[2.1.3]: https://github.com/Rahulkprajapati/Rahulkprajapati.github.io/compare/v2.1.2...v2.1.3
 [2.1.2]: https://github.com/Rahulkprajapati/Rahulkprajapati.github.io/compare/v2.1.1...v2.1.2
 [2.1.1]: https://github.com/Rahulkprajapati/Rahulkprajapati.github.io/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/Rahulkprajapati/Rahulkprajapati.github.io/compare/v2.0.0...v2.1.0

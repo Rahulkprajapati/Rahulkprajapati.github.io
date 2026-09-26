@@ -30,7 +30,7 @@
 
   --text: #16140f;
   --text-muted: #555045;
-  --text-subtle: #8a8374;
+  --text-subtle: #6b6557; /* 4.6:1+ on every light surface (WCAG AA) */
 
   --accent: #0e7a55;
   --accent-hover: #0a5f42;
@@ -72,7 +72,7 @@
 
   --text: #e8efeb;
   --text-muted: #9aa8a2;
-  --text-subtle: #64716c;
+  --text-subtle: #7b8883; /* 4.7:1+ on every dark surface (WCAG AA) */
 
   --accent: #7cf5c6;
   --accent-hover: #a8fadb;
