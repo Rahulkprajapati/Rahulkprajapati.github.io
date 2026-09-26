@@ -70,14 +70,18 @@ const About = () => {
                     className="mb-16 grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start"
                 >
                     <div className="lg:sticky lg:top-28">
-                        <p className="eyebrow">About</p>
+                        <div className="flex items-center gap-4">
+                            <span className="micro" style={{ color: 'var(--accent)' }}>01</span>
+                            <span className="micro" style={{ color: 'var(--text)' }}>About</span>
+                            <span aria-hidden className="h-px flex-1" style={{ background: 'var(--border)' }} />
+                        </div>
                         <h2
-                            className="mt-4 text-3xl font-bold leading-[1.1] tracking-tight md:text-5xl"
+                            className="mt-8 text-3xl font-semibold leading-[1.05] tracking-tight md:text-5xl"
                             style={{ color: 'var(--text)' }}
                         >
                             Cloud systems that stay calm under pressure.
                         </h2>
-                        <div className="mt-6 h-1 w-16 rounded-full" style={{ background: 'linear-gradient(90deg, var(--accent), var(--tech))' }} />
+                        <p className="micro mt-6">Principle 01 — If it needs luck, it isn’t finished.</p>
                     </div>
 
                     <div className="space-y-5">
@@ -164,12 +168,12 @@ const About = () => {
                                 transition={{ duration: 0.3, delay: index * 0.015 }}
                                 viewport={{ once: true }}
                                 whileHover={{ y: -4 }}
-                                className="flex min-h-24 flex-col items-center justify-center gap-2 rounded-xl p-3 text-center transition-colors duration-200"
+                                className="group flex min-h-24 flex-col items-center justify-center gap-2 rounded-lg p-3 text-center transition-colors duration-200"
                                 style={{ background: 'var(--surface-inset)', border: '1px solid var(--border)' }}
                                 title={tool.name}
                             >
-                                <div className="text-[1.65rem]">{tool.icon}</div>
-                                <span className="text-[0.7rem] font-medium leading-tight" style={{ color: 'var(--text-muted)' }}>
+                                <div className="text-[1.5rem] opacity-60 grayscale transition-all duration-300 group-hover:opacity-100 group-hover:grayscale-0">{tool.icon}</div>
+                                <span className="font-mono text-[0.62rem] uppercase leading-tight tracking-wider" style={{ color: 'var(--text-muted)' }}>
                                     {tool.name}
                                 </span>
                             </Motion.div>

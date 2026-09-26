@@ -16,8 +16,8 @@ const Footer = () => {
                     <div className="text-center md:text-left">
                         <div className="flex items-center justify-center gap-3 md:justify-start">
                             <span
-                                className="grid h-9 w-9 place-items-center rounded-xl text-xs font-bold text-white"
-                                style={{ background: 'linear-gradient(135deg, var(--accent), var(--tech))' }}
+                                className="grid h-9 w-9 place-items-center rounded-lg font-mono text-xs font-medium"
+                                style={{ border: '1px solid var(--border-strong)', color: 'var(--text)' }}
                             >
                                 RP
                             </span>
@@ -62,8 +62,8 @@ const Footer = () => {
                     className="mt-10 flex flex-col items-center justify-between gap-2 pt-6 text-center text-xs sm:flex-row sm:text-left"
                     style={{ borderTop: '1px solid var(--border)', color: 'var(--text-subtle)' }}
                 >
-                    <p>&copy; {new Date().getFullYear()} {profile.name}. All rights reserved.</p>
-                    <p className="font-mono">Built with React, Vite &amp; Tailwind</p>
+                    <p className="micro">&copy; {new Date().getFullYear()} {profile.name}</p>
+                    <p className="micro">Build v{import.meta.env.APP_VERSION} · React · Vite · Tailwind</p>
                 </div>
             </div>
         </footer>

@@ -91,19 +91,17 @@ const Navbar = () => {
                         className="group flex cursor-pointer items-center gap-3 border-none bg-transparent text-left"
                     >
                         <span
-                            className="grid h-10 w-10 place-items-center rounded-xl text-sm font-bold text-white transition-transform duration-300 group-hover:scale-105"
-                            style={{
-                                background: 'linear-gradient(135deg, var(--accent), var(--tech))',
-                                boxShadow: '0 8px 20px -10px var(--accent-ring)',
-                            }}
+                            className="relative grid h-9 w-9 place-items-center rounded-lg font-mono text-xs font-medium transition-colors duration-300"
+                            style={{ border: '1px solid var(--border-strong)', color: 'var(--text)' }}
                         >
                             RP
+                            <span className="signal-dot absolute -right-0.5 -top-0.5" style={{ width: 5, height: 5 }} />
                         </span>
                         <span className="hidden sm:block">
                             <span className="block text-sm font-semibold tracking-tight" style={{ color: 'var(--text)' }}>
                                 Rahul Prajapati
                             </span>
-                            <span className="block text-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
+                            <span className="micro block" style={{ fontSize: '0.58rem' }}>
                                 Platform Engineer
                             </span>
                         </span>
@@ -113,7 +111,7 @@ const Navbar = () => {
                         {navLinks.map((link) => {
                             const active = isActive(link);
                             const classes =
-                                'relative rounded-lg border-none bg-transparent px-3 py-2 text-sm font-medium transition-colors duration-200';
+                                'relative rounded-lg border-none bg-transparent px-3 py-2 font-mono text-[0.68rem] uppercase tracking-[0.14em] transition-colors duration-200';
                             const content = (
                                 <>
                                     {link.name}
@@ -151,7 +149,7 @@ const Navbar = () => {
 
                         <button
                             onClick={toggleTheme}
-                            className="ml-2 grid h-10 w-10 cursor-pointer place-items-center rounded-xl border transition-colors duration-200"
+                            className="ml-2 grid h-9 w-9 cursor-pointer place-items-center rounded-full border transition-colors duration-200"
                             style={{ borderColor: 'var(--border)', background: 'var(--surface-muted)', color: 'var(--text-muted)' }}
                             aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
                         >

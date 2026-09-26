@@ -1,11 +1,14 @@
-import alteryxIcon from '../assets/alteryx-icon.png';
-import airasiaIcon from '../assets/airasia-icon.png';
-import searceIcon from '../assets/searce-icon.png';
-import zeotapIcon from '../assets/zeotap-icon.jpeg';
+// Pure data, no asset imports: vite.config.js also reads this file in Node to
+// pre-render a crawlable copy of the CV and the JSON-LD into index.html.
+// Company logos are mapped from the `logo` key in src/data/logos.js.
+
+export const SITE_URL = 'https://rahulkprajapati.github.io/';
 
 export const profile = {
     name: 'Rahul Prajapati',
     title: 'Senior Software Engineer Platform',
+    headline: 'Senior Platform Engineer',
+    startYear: 2021,
     location: 'Bangalore, India',
     email: 'rahulkpkprajapati147@gmail.com',
     phone: '+91 6386658827',
@@ -14,17 +17,48 @@ export const profile = {
         linkedin: 'https://linkedin.com/in/rahulkumarprajapati',
         medium: 'https://medium.com/@rahulkprajapati',
     },
+    // Search vocabulary for structured data and the pre-rendered CV. Every item
+    // appears in the experience entries or toolkit, so nothing here is claimed
+    // that the page doesn't already show.
+    expertise: [
+        'Platform Engineering',
+        'Site Reliability Engineering (SRE)',
+        'DevOps',
+        'Google Cloud Platform (GCP)',
+        'Google Kubernetes Engine (GKE)',
+        'Kubernetes',
+        'Terraform',
+        'Infrastructure as Code',
+        'GitOps',
+        'Argo CD',
+        'Helm',
+        'Amazon Web Services (AWS)',
+        'Microsoft Azure',
+        'Cloud SQL',
+        'Database Migration',
+        'Redis',
+        'Istio / Anthos Service Mesh',
+        'Observability',
+        'Prometheus',
+        'Grafana',
+        'CI/CD',
+        'GitLab CI',
+        'Python',
+        'Go',
+        'AI Agents',
+    ],
     summary:
         'Senior software engineer platform building reliable, automated platforms across GCP, AWS, Azure, Kubernetes, Terraform, GitOps, AI agents, and observability.',
     current:
         'Currently at AirAsia MOVE, focused on Landing Zone migration, data-layer consolidation, AI-driven automation, platform hardening, and resilient systems for high-traffic travel products.',
 };
 
-export const highlights = [
-    { value: 'MOVE', label: 'Landing Zone migrations' },
-    { value: 'DATA', label: 'Layer consolidation' },
-    { value: 'SRE', label: 'Incident response' },
-    { value: 'GKE', label: 'Security hardening' },
+export const metrics = [
+    { value: '5+', unit: 'yrs', label: 'Production platforms', source: 'Aug 2021 to present' },
+    { value: '100', unit: '+', label: 'Kubernetes clusters', source: 'Alteryx' },
+    { value: '30', unit: '+', label: 'Terraform modules', source: 'Alteryx' },
+    { value: '70', unit: '%', label: 'Manual ops removed', source: 'Alteryx' },
+    { value: '60', unit: '%', label: 'Frontend cost cut', source: 'AirAsia, App Engine to Cloud Run' },
 ];
 
 export const experiences = [
@@ -33,7 +67,7 @@ export const experiences = [
         role: 'Senior Software Engineer Platform',
         period: 'Jun 2026 - Present',
         location: 'Bangalore, IN / Kuala Lumpur, MY',
-        icon: airasiaIcon,
+        logo: 'airasia',
         status: 'Current',
         summary:
             'Leading Hotels platform modernization across Cloud SQL consolidation, Landing Zone migration, Redis and Firestore planning, GKE hardening, AI-assisted automation, and SRE incident response.',
@@ -54,7 +88,7 @@ export const experiences = [
         role: 'Cloud Engineer',
         period: 'Jun 2024 - Jul 2026',
         location: 'Bangalore, IN',
-        icon: alteryxIcon,
+        logo: 'alteryx',
         summary:
             'Automated multi-cloud infrastructure and platform tooling across data, control, and management planes.',
         description: [
@@ -72,7 +106,7 @@ export const experiences = [
         role: 'DevOps Engineer',
         period: 'Nov 2023 - May 2024',
         location: 'Bangalore, IN',
-        icon: zeotapIcon,
+        logo: 'zeotap',
         summary:
             'Improved observability, CI/CD, and private cloud networking for data platform workloads.',
         description: [
@@ -86,7 +120,7 @@ export const experiences = [
         role: 'Software Engineer DevOps',
         period: 'Apr 2022 - Oct 2023',
         location: 'Bangalore, IN',
-        icon: airasiaIcon,
+        logo: 'airasia',
         summary:
             'Scaled product infrastructure, Kubernetes delivery, and frontend platform migrations.',
         description: [
@@ -102,7 +136,7 @@ export const experiences = [
         role: 'Cloud Engineer',
         period: 'Aug 2021 - Mar 2022',
         location: 'Mumbai, IN',
-        icon: searceIcon,
+        logo: 'searce',
         summary:
             'Built Google Cloud infrastructure, Terraform modules, and migration foundations.',
         description: [
