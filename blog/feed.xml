@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/blog/feed.xsl" type="text/xsl"?>
+<rss version="2.0"><channel>
+<title>Rahul Prajapati</title><link>https://rahul-prajapati.com/blog/</link><description>Hands-on posts on Google Cloud, GKE, Terraform and platform engineering.</description>
+<item><title>Replace service account JSON keys with Workload Identity on GKE</title><link>https://rahul-prajapati.com/blog/gke-workload-identity-replace-service-account-keys/</link><guid>https://rahul-prajapati.com/blog/gke-workload-identity-replace-service-account-keys/</guid><pubDate>Fri, 13 Nov 2026 03:30:00 GMT</pubDate><description>Move GKE workloads from JSON keys to Workload Identity: why ADC keeps using the key, the IAM binding people skip, and how to verify a token from the pod.</description></item>
+</channel></rss>
