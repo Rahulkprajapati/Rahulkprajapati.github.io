@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rahul Prajapati - Resume</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 9mm;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: #111827;
+      background: #ffffff;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 10px;
+      line-height: 1.32;
+    }
+
+    .page {
+      width: 100%;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #111827;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 27px;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .title {
+      margin-top: 6px;
+      color: #dc2626;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .summary {
+      margin-top: 6px;
+      max-width: 560px;
+      color: #374151;
+    }
+
+    .contact {
+      text-align: right;
+      color: #374151;
+      font-size: 9.3px;
+      line-height: 1.42;
+      white-space: nowrap;
+    }
+
+    section {
+      margin-top: 7px;
+    }
+
+    h2 {
+      margin: 0 0 5px;
+      color: #111827;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border-bottom: 1px solid #d1d5db;
+      padding-bottom: 2px;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4px 14px;
+      color: #374151;
+    }
+
+    .skill-label {
+      color: #111827;
+      font-weight: 700;
+    }
+
+    .job {
+      margin-top: 6px;
+      break-inside: avoid;
+    }
+
+    .job-head {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: baseline;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 12px;
+    }
+
+    .role {
+      color: #dc2626;
+      font-weight: 700;
+    }
+
+    .meta {
+      color: #4b5563;
+      font-size: 9.1px;
+      white-space: nowrap;
+    }
+
+    ul {
+      margin: 3px 0 0 14px;
+      padding: 0;
+    }
+
+    li {
+      margin: 1.5px 0;
+    }
+
+    .columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .certs {
+      margin: 0;
+      padding-left: 15px;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div>
+        <h1>Rahul Prajapati</h1>
+        <div class="title">Senior Software Engineer Platform</div>
+        <p class="summary">
+          Senior software engineer platform building reliable, automated platforms and AI agents across GCP, AWS, Azure, Kubernetes, Terraform, GitOps, service mesh, CI/CD, and observability.
+        </p>
+      </div>
+      <div class="contact">
+        Bangalore, India<br />
+        +91 6386658827<br />
+        rahulkpkprajapati147@gmail.com<br />
+        linkedin.com/in/rahulkumarprajapati<br />
+        github.com/Rahulkprajapati<br />
+        medium.com/@rahulkprajapati
+      </div>
+    </header>
+
+    <section>
+      <h2>Technical Skills</h2>
+      <div class="skills-grid">
+        <div><span class="skill-label">Cloud:</span> GCP, AWS, Azure, IAM, VPC, load balancing, Cloud SQL</div>
+        <div><span class="skill-label">Containers:</span> Kubernetes, GKE, Docker, Helm, ArgoCD, GitOps</div>
+        <div><span class="skill-label">IaC, AI & Automation:</span> Terraform, Ansible, AI agents, n8n, Python, Go, Bash</div>
+        <div><span class="skill-label">CI/CD:</span> GitLab CI, Jenkins, CircleCI, Harness, Cloud Build</div>
+        <div><span class="skill-label">Observability:</span> Prometheus, Grafana, Datadog, New Relic, Google Managed Prometheus</div>
+        <div><span class="skill-label">Platform:</span> Teleport, Istio, Anthos Service Mesh, Apigee, Cloud Run</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Professional Experience</h2>
+
+      <article class="job">
+        <div class="job-head">
+          <div>
+            <h3>AirAsia MOVE</h3>
+            <div class="role">Senior Software Engineer Platform</div>
+          </div>
+          <div class="meta">Jun 2026 - Present | Bangalore, IN / Kuala Lumpur, MY</div>
+        </div>
+        <ul>
+          <li>Own cloud infrastructure end to end on GCP: networking, GKE, managed databases, caching and storage, all defined in Terraform.</li>
+          <li>Lead cloud and database migrations end to end (SQL, cache and NoSQL): inventory, target build, data migration and app switchover, with validation gates, rollback plans and reusable runbooks.</li>
+          <li>Harden the platform: Workload Identity, secrets management, admission policies, private control planes, internal DNS and structured logging.</li>
+          <li>Ship through GitOps with reusable Terraform modules, Argo CD delivery and gated production promotion.</li>
+          <li>Build AI agents and n8n workflows that automate ops: infrastructure inventory, evidence gathering, validation checks, alert triage and runbooks, with least-privilege access and humans approving changes.</li>
+          <li>Run incident response across gateways, load balancers, GKE and Cloud Run, from P0 traffic incidents to 5xx spikes and Cloud NAT exhaustion.</li>
+          <li>Deliver self-service infrastructure for product teams: gateway routing, access, identity federation, DNS and campaign scaling.</li>
+        </ul>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <div>
+            <h3>Alteryx</h3>
+            <div class="role">DevOps Engineer</div>
+          </div>
+          <div class="meta">Jun 2024 - May 2026 | Bangalore, IN</div>
+        </div>
+        <ul>
+          <li>Automated multi-cloud infrastructure across GCP, AWS, and Azure, reducing manual operations by 70%.</li>
+          <li>Built 30+ Terraform modules and CI/CD pipelines, improving infrastructure delivery speed by 3x.</li>
+          <li>Developed internal tools for merge request automation, disk cleanup, and service provisioning, cutting operations time by 40%.</li>
+          <li>Managed 100+ Kubernetes clusters with ArgoCD, Helm, and GitOps-based delivery.</li>
+          <li>Integrated Teleport access for Kubernetes, ArgoCD, databases, and internal tools, reducing onboarding time by 60%.</li>
+          <li>Deployed Apigee Developer Portal and configured Google-managed SSL certificates for internal APIs.</li>
+          <li>Implemented Anthos Service Mesh with Istio to improve microservice observability and security.</li>
+        </ul>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <div>
+            <h3>Zeotap</h3>
+            <div class="role">DevOps Engineer</div>
+          </div>
+          <div class="meta">Nov 2023 - May 2024 | Bangalore, IN</div>
+        </div>
+        <ul>
+          <li>Built monitoring and alerting workflows with New Relic, Grafana, and Google Managed Prometheus, reducing downtime by 25%.</li>
+          <li>Implemented CI/CD pipelines with CircleCI and Harness to streamline artifact and workload delivery.</li>
+          <li>Designed a private cloud networking solution on GCP for a client-facing architecture.</li>
+        </ul>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <div>
+            <h3>AirAsia</h3>
+            <div class="role">Software Engineer DevOps</div>
+          </div>
+          <div class="meta">Apr 2022 - Oct 2023 | Bangalore, IN</div>
+        </div>
+        <ul>
+          <li>Designed product infrastructure architecture for a 10x scaling strategy.</li>
+          <li>Enabled GitLab CI for builds, artifacts, Kubernetes deployments, and end-to-end automation.</li>
+          <li>Implemented multi-cluster architecture to support canary traffic and high availability.</li>
+          <li>Migrated applications from GKE Standard to GKE Autopilot and introduced Anthos Service Mesh with Istio.</li>
+          <li>Led frontend workload migration from App Engine to Cloud Run, reducing costs by 60%.</li>
+        </ul>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <div>
+            <h3>Searce Inc</h3>
+            <div class="role">Cloud Engineer</div>
+          </div>
+          <div class="meta">Aug 2021 - Mar 2022 | Mumbai, IN</div>
+        </div>
+        <ul>
+          <li>Developed infrastructure as code using Terraform with a modularized approach.</li>
+          <li>Built networking infrastructure, GKE clusters, load balancers, managed instance groups, databases, and IAM.</li>
+          <li>Migrated AWS resources into Google Cloud and debugged migration issues.</li>
+          <li>Developed DevOps pipelines using Jenkins and Cloud Build to update managed instance group images.</li>
+          <li>Applied cloud best practices for secure and reliable GCP resource management.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="columns">
+      <div>
+        <h2>Certifications</h2>
+        <ul class="certs">
+          <li>Google Cloud Certified Professional Cloud Architect</li>
+          <li>Google Cloud Certified Professional DevOps Engineer</li>
+          <li>Google Cloud Certified Associate Engineer</li>
+          <li>GitOps with ArgoCD</li>
+          <li>Microsoft Certified Azure Fundamentals</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Community</h2>
+        <ul class="certs">
+          <li>Technical writer on Medium covering cloud, security, and system design.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
